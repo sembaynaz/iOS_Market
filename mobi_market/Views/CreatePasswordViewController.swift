@@ -47,11 +47,11 @@ class CreatePasswordViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    let passwordTextField: UITextField = {
-        let textField = UITextField()
-        textField.textContentType = .password
-        textField.isSecureTextEntry = true
-        textField.text = "qwesdftgyhujikl"
+    let passwordTextField: CreatePasswordTextField = {
+        let textField = CreatePasswordTextField()
+//        textField.textContentType = .password
+//        textField.isSecureTextEntry = true
+//        textField.text = "qwesdftgyhujikl"
         textField.textAlignment = .center
         textField.font = UIFont(name: "GothamPro-Bold", size: 24)
         return textField
@@ -60,10 +60,6 @@ class CreatePasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        imageView.image = UIImage(named: "dot.png")
-        passwordTextField.rightView = imageView
-        passwordTextField.rightViewMode = .whileEditing
     }
 }
 
