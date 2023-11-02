@@ -7,10 +7,21 @@
 
 import UIKit
 
+/*
+ if originalPassword1 == originalPassword2 {
+ nextButton.setActive(true)
+ nextButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+ } else {
+ errorLabel.isHidden = false
+ nextButton.setActive(false)
+ }
+ */
 class CreatePasswordViewController: UIViewController {
-    var passwordText = ""
-    var originalPassword = ""
-    var isSecondPasswordEnter: Bool = false
+    var passwordText1 = ""
+    var originalPassword1 = ""
+    var passwordText2 = ""
+    var originalPassword2 = ""
+    var isNextButtonTapped: Bool = false
     var isSecure: Bool = true
 
     let lockImage: UIImageView = {
@@ -63,6 +74,15 @@ class CreatePasswordViewController: UIViewController {
         textField.font = UIFont(name: "GothamPro-Bold", size: 24)
         return textField
     }()
+    let errorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Пароли не совпадают"
+        label.font = UIFont(name: "GothamPro", size: 15)
+        label.textColor = UIColor(named: "Red")
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,16 +91,10 @@ class CreatePasswordViewController: UIViewController {
 }
 
 extension CreatePasswordViewController {
-    func setShowPasswordButton() {
-        let showPasswordButton = UIBarButtonItem(image: UIImage(named: "Secure2"), style: .plain, target: self, action: #selector(showPasswordButtonTapped))
-        navigationItem.rightBarButtonItem = showPasswordButton
-    }
-    
     func setup() {
         view.backgroundColor = .white
         firstPasswordTextField.delegate = self
         secondPasswordTextField.delegate = self
-        firstPasswordTextField.becomeFirstResponder()
         
         setLockImage()
         setTitleLabel()
@@ -88,6 +102,7 @@ extension CreatePasswordViewController {
         setFirstPasswordTextField()
         setSecondPasswordTextField()
         setSignupButton()
+        setErrorLabel()
         setShowPasswordButton()
     }
     func setLockImage() {
@@ -114,6 +129,7 @@ extension CreatePasswordViewController {
     }
     func setFirstPasswordTextField() {
         view.addSubview(firstPasswordTextField)
+        firstPasswordTextField.becomeFirstResponder()
         firstPasswordTextField.snp.makeConstraints { make in
             make.centerX.equalTo(view.snp.centerX)
             make.height.equalTo(34)
@@ -130,6 +146,13 @@ extension CreatePasswordViewController {
             make.horizontalEdges.equalToSuperview().inset(20)
         }
     }
+    func setErrorLabel() {
+        view.addSubview(errorLabel)
+        errorLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(view.snp.centerX)
+            make.bottom.equalTo(nextButton.snp.top).offset(-21)
+        }
+    }
     func setSignupButton() {
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
@@ -138,31 +161,81 @@ extension CreatePasswordViewController {
             make.height.equalTo(44)
         }
     }
+    func setShowPasswordButton() {
+        let showPasswordButton = UIBarButtonItem(image: UIImage(named: "Secure2"), style: .plain, target: self, action: #selector(showPasswordButtonTapped))
+        navigationItem.rightBarButtonItem = showPasswordButton
+    }
 }
 
 extension CreatePasswordViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == firstPasswordTextField {
-            var hashPassword = String()
+            var hashPassword = ""
             let newChar = string.first
-            let offsetToUpdate = passwordText.index(passwordText.startIndex, offsetBy: range.location)
+            let offsetToUpdate = passwordText1.index(passwordText1.startIndex, offsetBy: range.location)
             
             if string == "" {
-                passwordText.remove(at: offsetToUpdate)
-                return true
+                passwordText1.remove(at: offsetToUpdate)
             } else {
-                passwordText.insert(newChar!, at: offsetToUpdate)
+                passwordText1.insert(newChar!, at: offsetToUpdate)
             }
             
-            for _ in passwordText.enumerated() {
-                hashPassword += "●"
+            originalPassword1 = passwordText1
+            
+            if isSecure {
+                for _ in passwordText1 {
+                    hashPassword += "●"
+                }
+            } else {
+                hashPassword = passwordText1
             }
-            originalPassword = passwordText
+            
             isSpace(textField: textField, hashPassword: hashPassword)
-
-            if passwordText.contains(where: { $0.isLetter }) && passwordText.contains(where: { $0.isNumber }) &&
-                passwordText.count >= 8 {
+            
+            if originalPassword1.contains(where: { $0.isLetter }) && originalPassword1.contains(where: { $0.isNumber }) &&
+                originalPassword1.count >= 8 {
                 nextButton.setActive(true)
+                nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+            } else {
+                nextButton.setActive(false)
+            }
+            
+            return false
+        }
+        
+        if textField == secondPasswordTextField {
+            var hashPassword = ""
+            let newChar = string.first
+            let offsetToUpdate = passwordText2.index(passwordText2.startIndex, offsetBy: range.location)
+            
+            if string == "" {
+                passwordText2.remove(at: offsetToUpdate)
+            } else {
+                passwordText2.insert(newChar!, at: offsetToUpdate)
+            }
+            
+            originalPassword2 = passwordText2
+            
+            if isSecure {
+                for _ in passwordText2 {
+                    hashPassword += "●"
+                }
+            } else {
+                hashPassword = passwordText2
+            }
+            
+            if originalPassword2.count >= 8 {
+                //doneButtonTapped()
+                nextButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+            }
+            
+            isSpace(textField: textField, hashPassword: hashPassword)
+            
+            if originalPassword2.contains(where: { $0.isLetter }) && originalPassword2.contains(where: { $0.isNumber }) &&
+                originalPassword2.count >= 8 {
+                nextButton.setActive(true)
+            } else {
+                nextButton.setActive(false)
             }
             
             return false
@@ -181,15 +254,40 @@ extension CreatePasswordViewController: UITextFieldDelegate {
 
 extension CreatePasswordViewController {
     @objc func nextButtonTapped() {
+        isNextButtonTapped = true
+        secondPasswordTextField.isHidden = false
         
+        titleLabel.text = "Повторите пароль"
+        nextButton.setTitle("Готово", for: .normal)
+        
+        secondPasswordTextField.becomeFirstResponder()
+    }
+    
+    @objc func doneButtonTapped() {
+        if !originalPassword2.isEmpty {
+            if originalPassword2 == originalPassword1 {
+                errorLabel.isHidden = true
+                nextButton.setActive(true)
+                
+            } else {
+                errorLabel.isHidden = false
+                nextButton.setActive(false)
+            }
+        }
     }
     
     @objc func showPasswordButtonTapped() {
         isSecure.toggle()
-        let passwordLength = originalPassword.count
+        
+        let passwordLength = originalPassword1.count
         let maskedPassword = String(repeating: "●", count: passwordLength)
-        firstPasswordTextField.text = isSecure ? maskedPassword : originalPassword
+        firstPasswordTextField.text = isSecure ? maskedPassword : originalPassword1
         isSpace(textField: firstPasswordTextField, hashPassword: firstPasswordTextField.text!)
+        
+        let passwordLength1 = originalPassword2.count
+        let maskedPassword1 = String(repeating: "●", count: passwordLength1)
+        secondPasswordTextField.text = isSecure ? maskedPassword1 : originalPassword2
+        isSpace(textField: secondPasswordTextField, hashPassword: secondPasswordTextField.text!)
     }
 }
 
