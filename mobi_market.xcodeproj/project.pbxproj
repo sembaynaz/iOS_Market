@@ -35,6 +35,7 @@
 		6FFD624C2AF3C98E0036C106 /* MyProductsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD624B2AF3C98E0036C106 /* MyProductsCollectionViewController.swift */; };
 		6FFD624E2AF3CAA90036C106 /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD624D2AF3CAA90036C106 /* ProductDetailsViewController.swift */; };
 		6FFD62502AF3CAC40036C106 /* ChangeProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD624F2AF3CAC40036C106 /* ChangeProductDetailsViewController.swift */; };
+		6FFD625C2AF41A5C0036C106 /* PlusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD625B2AF41A5C0036C106 /* PlusViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		6FFD624B2AF3C98E0036C106 /* MyProductsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductsCollectionViewController.swift; sourceTree = "<group>"; };
 		6FFD624D2AF3CAA90036C106 /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
 		6FFD624F2AF3CAC40036C106 /* ChangeProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeProductDetailsViewController.swift; sourceTree = "<group>"; };
+		6FFD625B2AF41A5C0036C106 /* PlusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 				6FFD62382AF3C7440036C106 /* ChatsViewController.swift */,
 				6FFD623A2AF3C7BE0036C106 /* WalletViewController.swift */,
 				6FFD623C2AF3C7DE0036C106 /* HomeViewController.swift */,
+				6FFD625B2AF41A5C0036C106 /* PlusViewController.swift */,
 			);
 			path = TabBarControllers;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				6FFD623B2AF3C7BF0036C106 /* WalletViewController.swift in Sources */,
 				6FFD62342AF3C5C00036C106 /* TabBarViewController.swift in Sources */,
 				6FFD62392AF3C7440036C106 /* ChatsViewController.swift in Sources */,
+				6FFD625C2AF41A5C0036C106 /* PlusViewController.swift in Sources */,
 				6F3EE8F92AE0326900092A87 /* SceneDelegate.swift in Sources */,
 				6F09D40B2AE2785300C072FE /* BackButton.swift in Sources */,
 				6F3EE9172AE0EFF600092A87 /* TextField.swift in Sources */,
