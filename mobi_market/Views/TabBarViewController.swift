@@ -42,7 +42,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     private func generateTabBar() {
         viewControllers = [
             generateVC(
-                viewController: HomeViewController(),
+                viewController: UINavigationController(rootViewController: HomeViewController()),
                 title: "Главная",
                 image: UIImage(named: "Home"),
                 tag: 0,
@@ -50,7 +50,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
             ),
             
             generateVC(
-                viewController: WalletViewController(),
+                viewController: UINavigationController(rootViewController:  WalletViewController()),
                 title: "Кошелек",
                 image: UIImage(named: "Wallet"),
                 tag: 1,
@@ -58,7 +58,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
             ),
             
             generateVC(
-                viewController: PlusViewController(),
+                viewController: UINavigationController(rootViewController: PlusViewController()),
                 title: "",
                 image: nil,
                 tag: 2,
@@ -66,7 +66,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
             ),
             
             generateVC(
-                viewController: ChatsViewController(),
+                viewController: UINavigationController(rootViewController:ChatsViewController()),
                 title: "Чаты",
                 image: UIImage(named: "Chats"),
                 tag: 3,
@@ -74,7 +74,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
             ),
             
             generateVC(
-                viewController: ProfileViewController(),
+                viewController: UINavigationController(rootViewController:ProfileViewController()),
                 title: "Профиль",
                 image: UIImage(named: "Profile"),
                 tag: 4,

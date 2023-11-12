@@ -22,6 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            }
 //        }
 //        UNUserNotificationCenter.current().delegate = self
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSAttributedString.Key.font:
+                UIFont(name: "GothamPro-Medium",
+                       size: 18)!,
+            NSAttributedString.Key.foregroundColor:
+                UIColor(named: "BlackText") as Any
+        ]
         
         return true
     }
