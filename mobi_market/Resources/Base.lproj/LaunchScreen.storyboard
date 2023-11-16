@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,12 +22,21 @@
                                     <constraint firstAttribute="width" constant="200" id="yhU-js-l9e"/>
                                 </constraints>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MOBI MARKET" translatesAutoresizingMaskIntoConstraints="NO" id="TFG-IW-4QZ">
+                                <rect key="frame" x="81" y="492" width="231" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="231" id="7Ls-vZ-Cak"/>
+                                    <constraint firstAttribute="height" constant="44" id="RtV-gQ-hND"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="VCN-P2-K8y" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="219" id="5g5-Gx-nZu"/>
                             <constraint firstItem="VCN-P2-K8y" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="72" id="9zT-uq-ds0"/>
+                            <constraint firstItem="TFG-IW-4QZ" firstAttribute="top" secondItem="VCN-P2-K8y" secondAttribute="bottom" constant="14" id="CFC-XE-KyI"/>
+                            <constraint firstItem="TFG-IW-4QZ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="htr-ZA-qkk"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -39,8 +47,6 @@
     </scenes>
     <resources>
         <image name="Logo_image" width="200" height="200"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="MOBI MARKET" width="228.33332824707031" height="23.333333969116211"/>
     </resources>
 </document>

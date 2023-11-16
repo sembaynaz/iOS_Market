@@ -126,6 +126,10 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if let imageData = UserDefaults.standard.data(forKey: "profilePhoto"),
            let image = UIImage(data: imageData) {
             profilePhotoImageView.image = image
@@ -134,9 +138,9 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
 }
@@ -195,6 +199,7 @@ extension ProfileViewController {
             firstBackgroundView.addSubview(favoritesButton)
             favoritesButton.addSubview(favoritesImageView)
             favoritesButton.addSubview(arrowImageView1)
+            favoritesButton.addTarget(self, action: #selector(favoritesButtonTapped), for: .touchUpInside)
     
             favoritesButton.snp.makeConstraints { make in
                 make.top.equalTo(firstBackgroundView.snp.top).offset(16)
@@ -278,8 +283,12 @@ extension ProfileViewController {
 
 extension ProfileViewController {
     @objc func changeInfoButtonTapped() {
-        let vc = UINavigationController(rootViewController: UserInfoViewController())
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: false)
+        let vc = UserInfoViewController()
+        navigationController?.show(vc, sender: self)
+    }
+    
+    @objc func favoritesButtonTapped() {
+        let vc = FavoritesViewController()
+        navigationController?.show(vc, sender: self)
     }
 }

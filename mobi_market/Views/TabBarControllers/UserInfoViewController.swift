@@ -86,7 +86,7 @@ class UserInfoViewController: UIViewController {
         let label = UILabel()
         let font = UIFont(name: "GothamPro-Medium", size: 16)
         label.font = font
-        label.textColor = UIColor(named: "Grey")
+        label.textColor = UIColor(named: "Gray")
         label.text = "0(000) 000 000"
         return label
     }()
@@ -110,6 +110,10 @@ class UserInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if let imageData = UserDefaults.standard.data(forKey: "profilePhoto"),
            let image = UIImage(data: imageData) {
             profilePhotoImageView.image = image
@@ -118,14 +122,16 @@ class UserInfoViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
     }
 }
 
 extension UserInfoViewController {
     private func setup() {
         view.backgroundColor = UIColor(named: "Background")
+        
         setNavBarLeftButton()
         setNavBarRightButton()
         setProfilePhotoImageView()
@@ -253,12 +259,14 @@ extension UserInfoViewController {
 
 extension UserInfoViewController {
     @objc private func backButtonTapped() { //close vc
-        dismiss(animated: false)
+        //dismiss(animated: false)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc private func doneButtonTapped() { // close vc and save data
         saveImageToUserDefaults(profilePhotoImageView.image!)
-        dismiss(animated: false)
+        //dismiss(animated: false)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc private func phoneNumberButtonTapped() {
@@ -269,20 +277,19 @@ extension UserInfoViewController {
     }
 }
 
-extension UserInfoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
+extension UserInfoViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     @objc func changePhotoButtonTapped() {
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            imagePicker.allowsEditing = false
-            
-            present(imagePicker, animated: true, completion: nil)
-        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = false
+        
+        present(imagePicker, animated: true, completion: nil)
     }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
-        
+
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             profilePhotoImageView.image = image
             profilePhotoImageView.layer.cornerRadius = profilePhotoImageView.frame.size.width / 2
@@ -291,6 +298,7 @@ extension UserInfoViewController: UIImagePickerControllerDelegate, UINavigationC
             print("Error picking image")
         }
     }
+
     func saveImageToUserDefaults(_ image: UIImage) {
         if let imageData = image.jpegData(compressionQuality: 1.0) {
             UserDefaults.standard.set(imageData, forKey: "profilePhoto")

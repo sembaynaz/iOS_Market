@@ -42,7 +42,7 @@ class CreatePasswordViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont(name: "GothamPro", size: 16)
         label.numberOfLines = 0
-        label.textColor = UIColor(named: "Grey")
+        label.textColor = UIColor(named: "Gray")
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 19.2 / label.font.lineHeight

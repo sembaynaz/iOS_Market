@@ -35,7 +35,7 @@ class ConfirmCodeViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont(name: "GothamPro", size: 16)
         label.numberOfLines = 0
-        label.textColor = UIColor(named: "Grey")
+        label.textColor = UIColor(named: "Gray")
         label.textAlignment = .center
         label.text = "Повторный запрос"
         
@@ -45,7 +45,7 @@ class ConfirmCodeViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont(name: "GothamPro", size: 16)
         label.numberOfLines = 0
-        label.textColor = UIColor(named: "Grey")
+        label.textColor = UIColor(named: "Gray")
         label.textAlignment = .center
         label.text = "1:00"
         
@@ -78,6 +78,7 @@ class ConfirmCodeViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,6 +95,7 @@ extension ConfirmCodeViewController {
         setNumberTextField()
         setRepeatLabel()
         setTimerLabel()
+//        setAnimationSpinner()
         setRepeatButton()
         setErrorLabel()
     }
@@ -124,7 +126,7 @@ extension ConfirmCodeViewController {
     func setNumberTextField() {
         let message = "0 0 0 0"
         numberTextField.text = message
-        var attributedString = textFieldTextColorToGrey(numberTextField, message)
+        var attributedString = textFieldTextColorToGray(numberTextField, message)
         setSpaceBetweenTextField(attributedString)
         numberTextField.attributedText = attributedString
         numberTextField.delegate = self
@@ -164,6 +166,14 @@ extension ConfirmCodeViewController {
             make.top.equalTo(repeatButton.snp.bottom).offset(16)
         }
     }
+//    func setAnimationSpinner() {
+//        view.addSubview(spinner)
+//        profilePhotoImageView.snp.makeConstraints { make in
+//            make.width.height.equalTo(16)
+//            make.bottom.equalTo(timerLabel.snp.bottom).offset(20)
+//            make.centerX.equalTo(view.snp.centerX)
+//        }
+//    }
 }
 
 
@@ -173,7 +183,7 @@ extension ConfirmCodeViewController: UITextFieldDelegate {
         attributedString.addAttribute(NSAttributedString.Key.kern, value: kernValue, range: NSRange(location: 0, length: attributedString.length))
     }
     
-    func textFieldTextColorToGrey(_ textField: UITextField, _ message: String) -> NSMutableAttributedString {
+    func textFieldTextColorToGray(_ textField: UITextField, _ message: String) -> NSMutableAttributedString {
         let attributedString = NSMutableAttributedString(string: message)
         
         let pattern = "0"
@@ -181,7 +191,7 @@ extension ConfirmCodeViewController: UITextFieldDelegate {
         let matches = regex.matches(in: message, range: NSRange(message.startIndex..., in: message))
         
         for match in matches {
-            attributedString.addAttribute(.foregroundColor, value: UIColor(named: "Grey")!, range: match.range)
+            attributedString.addAttribute(.foregroundColor, value: UIColor(named: "Gray")!, range: match.range)
         }
         
         return attributedString
@@ -204,6 +214,7 @@ extension ConfirmCodeViewController {
             timerLabel.isHidden = true
             repeatLabel.isHidden = true
             repeatButton.isHidden = false
+        } else {
         }
     }
 }

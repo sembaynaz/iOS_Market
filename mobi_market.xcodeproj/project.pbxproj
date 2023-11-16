@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F0614F52B00F3FF002D11E6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614F42B00F3FF002D11E6 /* Storage.swift */; };
+		6F0614FA2B0203E7002D11E6 /* ProductCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614F92B0203E7002D11E6 /* ProductCardCollectionViewCell.swift */; };
+		6F0614FC2B0209D7002D11E6 /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614FB2B0209D7002D11E6 /* ProductCard.swift */; };
 		6F09D4092AE2765F00C072FE /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F09D4082AE2765F00C072FE /* SignupViewController.swift */; };
 		6F09D40B2AE2785300C072FE /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F09D40A2AE2785300C072FE /* BackButton.swift */; };
 		6F3EE8F72AE0326900092A87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3EE8F62AE0326900092A87 /* AppDelegate.swift */; };
@@ -39,6 +42,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6F0614F42B00F3FF002D11E6 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		6F0614F92B0203E7002D11E6 /* ProductCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		6F0614FB2B0209D7002D11E6 /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
 		6F09D4082AE2765F00C072FE /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		6F09D40A2AE2785300C072FE /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		6F3EE8F32AE0326900092A87 /* mobi_market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mobi_market.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,11 +89,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F0614F32B00F3DC002D11E6 /* SharedInstance */ = {
+			isa = PBXGroup;
+			children = (
+				6F0614F42B00F3FF002D11E6 /* Storage.swift */,
+			);
+			path = SharedInstance;
+			sourceTree = "<group>";
+		};
+		6F0614F62B01F3A7002D11E6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6F3EE8EA2AE0326900092A87 = {
 			isa = PBXGroup;
 			children = (
 				6F3EE8F52AE0326900092A87 /* mobi_market */,
 				6F3EE8F42AE0326900092A87 /* Products */,
+				6F0614F62B01F3A7002D11E6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +124,7 @@
 		6F3EE8F52AE0326900092A87 /* mobi_market */ = {
 			isa = PBXGroup;
 			children = (
+				6F0614F32B00F3DC002D11E6 /* SharedInstance */,
 				6F3EE90C2AE0338E00092A87 /* Models */,
 				6F3EE9102AE033E100092A87 /* Views */,
 				6F3EE90D2AE0339E00092A87 /* ViewModel */,
@@ -136,6 +159,7 @@
 		6F3EE90C2AE0338E00092A87 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6F0614FB2B0209D7002D11E6 /* ProductCard.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -187,32 +211,57 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		6FFC24A52B064CE9005666A0 /* FavoriteView */ = {
+			isa = PBXGroup;
+			children = (
+				6FFD623F2AF3C8130036C106 /* FavoritesViewController.swift */,
+			);
+			path = FavoriteView;
+			sourceTree = "<group>";
+		};
+		6FFC24A62B064D2E005666A0 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				6FFD623C2AF3C7DE0036C106 /* HomeViewController.swift */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		6FFC24A72B064DB3005666A0 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				6FFD623E2AF3C7F60036C106 /* ProfileView */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		6FFD62352AF3C6ED0036C106 /* TabBarControllers */ = {
 			isa = PBXGroup;
 			children = (
-				6FFD623E2AF3C7F60036C106 /* Profile */,
+				6FFC24A72B064DB3005666A0 /* Profile */,
+				6FFC24A52B064CE9005666A0 /* FavoriteView */,
+				6FFC24A62B064D2E005666A0 /* HomeView */,
+				6FFD62412AF3C82D0036C106 /* LogoutViewController.swift */,
+				6FFD62432AF3C8B10036C106 /* UserInfoViewController.swift */,
+				6FFD62472AF3C9150036C106 /* ConfirmCodeViewController.swift */,
+				6FFD62452AF3C8CD0036C106 /* AddNumberViewController.swift */,
+				6FFD624F2AF3CAC40036C106 /* ChangeProductDetailsViewController.swift */,
+				6FFD624D2AF3CAA90036C106 /* ProductDetailsViewController.swift */,
+				6FFD624B2AF3C98E0036C106 /* MyProductsCollectionViewController.swift */,
 				6FFD62382AF3C7440036C106 /* ChatsViewController.swift */,
 				6FFD623A2AF3C7BE0036C106 /* WalletViewController.swift */,
-				6FFD623C2AF3C7DE0036C106 /* HomeViewController.swift */,
 				6FFD625B2AF41A5C0036C106 /* PlusViewController.swift */,
 			);
 			path = TabBarControllers;
 			sourceTree = "<group>";
 		};
-		6FFD623E2AF3C7F60036C106 /* Profile */ = {
+		6FFD623E2AF3C7F60036C106 /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
+				6F0614F92B0203E7002D11E6 /* ProductCardCollectionViewCell.swift */,
 				6FFD62362AF3C7100036C106 /* ProfileViewController.swift */,
-				6FFD623F2AF3C8130036C106 /* FavoritesViewController.swift */,
-				6FFD62412AF3C82D0036C106 /* LogoutViewController.swift */,
-				6FFD62432AF3C8B10036C106 /* UserInfoViewController.swift */,
-				6FFD62452AF3C8CD0036C106 /* AddNumberViewController.swift */,
-				6FFD62472AF3C9150036C106 /* ConfirmCodeViewController.swift */,
-				6FFD624B2AF3C98E0036C106 /* MyProductsCollectionViewController.swift */,
-				6FFD624D2AF3CAA90036C106 /* ProductDetailsViewController.swift */,
-				6FFD624F2AF3CAC40036C106 /* ChangeProductDetailsViewController.swift */,
 			);
-			path = Profile;
+			path = ProfileView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,11 +347,13 @@
 				6F09D4092AE2765F00C072FE /* SignupViewController.swift in Sources */,
 				6FFD62442AF3C8B10036C106 /* UserInfoViewController.swift in Sources */,
 				6FFD62462AF3C8CD0036C106 /* AddNumberViewController.swift in Sources */,
+				6F0614FC2B0209D7002D11E6 /* ProductCard.swift in Sources */,
 				6FFD62502AF3CAC40036C106 /* ChangeProductDetailsViewController.swift in Sources */,
 				6FFD624E2AF3CAA90036C106 /* ProductDetailsViewController.swift in Sources */,
 				6F3EE9222AE0F3F900092A87 /* Button.swift in Sources */,
 				6FFD62402AF3C8130036C106 /* FavoritesViewController.swift in Sources */,
 				6FFD62372AF3C7100036C106 /* ProfileViewController.swift in Sources */,
+				6F0614FA2B0203E7002D11E6 /* ProductCardCollectionViewCell.swift in Sources */,
 				6F3EE8FB2AE0326900092A87 /* LoginViewController.swift in Sources */,
 				6FFD624C2AF3C98E0036C106 /* MyProductsCollectionViewController.swift in Sources */,
 				6F3EE8F72AE0326900092A87 /* AppDelegate.swift in Sources */,
@@ -310,6 +361,7 @@
 				6FFD62342AF3C5C00036C106 /* TabBarViewController.swift in Sources */,
 				6FFD62392AF3C7440036C106 /* ChatsViewController.swift in Sources */,
 				6FFD625C2AF41A5C0036C106 /* PlusViewController.swift in Sources */,
+				6F0614F52B00F3FF002D11E6 /* Storage.swift in Sources */,
 				6F3EE8F92AE0326900092A87 /* SceneDelegate.swift in Sources */,
 				6F09D40B2AE2785300C072FE /* BackButton.swift in Sources */,
 				6F3EE9172AE0EFF600092A87 /* TextField.swift in Sources */,

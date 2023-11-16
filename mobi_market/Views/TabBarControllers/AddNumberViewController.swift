@@ -32,7 +32,7 @@ class AddNumberViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont(name: "GothamPro", size: 16)
         label.numberOfLines = 0
-        label.textColor = UIColor(named: "Grey")
+        label.textColor = UIColor(named: "Gray")
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 19.2 / label.font.lineHeight
@@ -128,7 +128,7 @@ extension AddNumberViewController {
         let matches = regex.matches(in: message, range: NSRange(message.startIndex..., in: message))
         
         for match in matches {
-            attributedString.addAttribute(.foregroundColor, value: UIColor(named: "Grey")!, range: match.range)
+            attributedString.addAttribute(.foregroundColor, value: UIColor(named: "Gray")!, range: match.range)
         }
         
         numberTextField.attributedText = attributedString
