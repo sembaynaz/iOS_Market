@@ -234,6 +234,8 @@ extension ProfileViewController {
             myProductsButton.addSubview(myProductsImageView)
             myProductsButton.addSubview(arrowImageView2)
             
+            myProductsButton.addTarget(self, action: #selector(myProductsButtonTapped), for: .touchUpInside)
+            
             myProductsButton.snp.makeConstraints { make in
                 make.top.equalTo(favoritesButton.snp.bottom).offset(13)
                 make.height.equalTo(38)
@@ -289,6 +291,11 @@ extension ProfileViewController {
     
     @objc func favoritesButtonTapped() {
         let vc = FavoritesViewController()
+        navigationController?.show(vc, sender: self)
+    }
+    
+    @objc func myProductsButtonTapped() {
+        let vc = MyProductsViewController()
         navigationController?.show(vc, sender: self)
     }
 }

@@ -19,6 +19,13 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         return button
     }()
     
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -30,6 +37,11 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
     private func makeUI() {
+        tabBar.insertSubview(backgroundView, at: 0)
+        backgroundView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         tabBar.addSubview(middleButton)
         middleButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
         middleButton.snp.makeConstraints { make in
@@ -58,7 +70,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
             ),
             
             generateVC(
-                viewController: UINavigationController(rootViewController: PlusViewController()),
+                viewController: UINavigationController(rootViewController: AddProductViewController()),
                 title: "",
                 image: nil,
                 tag: 2,
@@ -93,8 +105,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
 
     private func setTabBarAppearance() {
-        tabBar.backgroundColor = .white
-        tabBar.layer.cornerRadius = 20
+        tabBar.backgroundColor = .clear
         tabBar.clipsToBounds = true
         tabBar.unselectedItemTintColor = UIColor(red: 214/255, green: 213/255, blue: 219/255, alpha: 1)
         tabBar.tintColor = UIColor(red: 93/255, green: 95/255, blue: 239/255, alpha: 1)
@@ -119,8 +130,8 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
     @objc func plusButtonTapped() {
-        let vc = PlusViewController()
-        navigationItem.title = ""
-        navigationController?.pushViewController(vc, animated: false)
+        let vc = UINavigationController(rootViewController: AddProductViewController())
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: false)
     }
 }

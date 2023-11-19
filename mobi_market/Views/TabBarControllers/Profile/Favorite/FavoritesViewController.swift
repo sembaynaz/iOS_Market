@@ -11,7 +11,7 @@ class FavoritesViewController: UIViewController {
 
     var products: [ProductCard] = []
     
-    var collectionView: UICollectionView = {
+    private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 13
@@ -37,10 +37,32 @@ class FavoritesViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    private let emptyImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "Empty")
+        imageView.isHidden = true
+        return imageView
+    }()
+    private let emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Ой, пусто!"
+        label.isHidden = true
+        label.font = UIFont(name: "GothamPro-Bold", size: 18)
+        label.textColor = UIColor(named: "BlackText")
+        return  label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        
+        if products.isEmpty {
+            emptyImageView.isHidden = false
+            emptyLabel.isHidden = false
+        } else {
+            emptyImageView.isHidden = true
+            emptyLabel.isHidden = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +78,7 @@ extension FavoritesViewController {
         
         setCollectionView()
         setNavBarLeftButton()
+        setEmptyImageView()
     }
     
     private func setNavBarLeftButton() {
@@ -71,6 +94,22 @@ extension FavoritesViewController {
         
         collectionView.snp.makeConstraints { make in
             make.top.bottom.left.right.equalToSuperview()
+        }
+    }
+    
+    func setEmptyImageView() {
+        view.addSubview(emptyImageView)
+        view.addSubview(emptyLabel)
+        emptyImageView.snp.makeConstraints { make in
+            make.height.equalTo(185 * UIScreen.main.bounds.height / 812)
+            make.width.equalTo(168 * UIScreen.main.bounds.width / 375)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(96)
+            make.centerX.equalTo(view.snp.centerX)
+        }
+        
+        emptyLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(view.snp.centerX)
+            make.top.equalTo(emptyImageView.snp.bottom).offset(44)
         }
     }
 }

@@ -11,11 +11,16 @@ protocol ProductCardDelegate: AnyObject {
     func didTapLikeButton(index: Int)
 }
 
+protocol InfoButtonDelegate: AnyObject {
+    func didTapInfoButton(index: Int)
+}
+
 class ProductCardCollectionViewCell: UICollectionViewCell {
-    
+    var infoButtonHidden = true
     static let identifier = "ProductCard"
     private var currentProductCard: ProductCard!
     weak var delegate: ProductCardDelegate?
+    weak var infoDelegate: InfoButtonDelegate?
     var isAdded = false
     var index = 0
     
@@ -58,6 +63,11 @@ class ProductCardCollectionViewCell: UICollectionViewCell {
         label.textColor = UIColor(named: "Gray")
         return label
     }()
+    let infoButton: UIButton  = { // show pop up
+        let button = UIButton()
+        button.setImage(UIImage(named: "Info"), for: .normal)
+        return button
+    }()
     
     func configure(card: ProductCard, index: Int) {
         self.currentProductCard = card
@@ -79,6 +89,7 @@ extension ProductCardCollectionViewCell {
         setTitleLabel()
         setCostLabel()
         setLikeButton()
+        setInfoButton()
         setLikeCountLabel()
     }
     func setBackground() {
@@ -94,8 +105,6 @@ extension ProductCardCollectionViewCell {
     func setCardImageView() {
         addSubview(cardImageView)
         cardImageView.snp.makeConstraints { make in
-            make.width.equalTo(149)
-            make.height.equalTo(85)
             make.horizontalEdges.equalToSuperview().inset(6)
             make.top.equalToSuperview().inset(6)
             make.bottom.equalToSuperview().offset(-93)
@@ -135,7 +144,16 @@ extension ProductCardCollectionViewCell {
             make.bottom.equalToSuperview().offset(-12.5)
         }
     }
-    
+    func setInfoButton() {
+        addSubview(infoButton)
+        infoButton.isHidden = infoButtonHidden
+        infoButton.addTarget(self, action: #selector(infoButtonTapped), for: .touchUpInside)
+        
+        infoButton.snp.makeConstraints { make in
+            make.height.width.equalTo(24)
+            make.bottom.right.equalToSuperview().offset(-6)
+        }
+    }
     func dropShadow(scale: Bool = true) {
         background.layer.cornerRadius = 12
         background.layer.masksToBounds = false
@@ -165,5 +183,9 @@ extension ProductCardCollectionViewCell {
         }
         
         currentProductCard.isFavorite = isAdded
+    }
+    
+    @objc func infoButtonTapped() {
+        infoDelegate?.didTapInfoButton(index: self.index)
     }
 }

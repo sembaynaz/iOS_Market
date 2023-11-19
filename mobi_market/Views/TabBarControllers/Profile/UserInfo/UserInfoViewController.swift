@@ -104,6 +104,7 @@ class UserInfoViewController: UIViewController {
         let textFiled = TextField()
         textFiled.setupProfileTextFieled(true)
         textFiled.setPlaceholderText("Email")
+        textFiled.font = UIFont(name: "GothamPro-Medium", size: 16)
         return textFiled
     }()
     
@@ -194,7 +195,7 @@ extension UserInfoViewController {
         firstBackgroundView.addSubview(nameTextField)
         nameTextField.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.horizontalEdges.equalToSuperview().inset(20)
+            make.horizontalEdges.equalToSuperview().inset(0)
             make.height.equalTo(39)
         }
     }
@@ -202,7 +203,7 @@ extension UserInfoViewController {
         firstBackgroundView.addSubview(lastNameTextField)
         lastNameTextField.snp.makeConstraints { make in
             make.top.equalTo(nameTextField.snp.bottom).offset(6)
-            make.horizontalEdges.equalToSuperview().inset(20)
+            make.horizontalEdges.equalToSuperview().inset(0)
             make.height.equalTo(39)
         }
     }
@@ -210,7 +211,7 @@ extension UserInfoViewController {
         firstBackgroundView.addSubview(secondNameTextField)
         secondNameTextField.snp.makeConstraints { make in
             make.top.equalTo(lastNameTextField.snp.bottom).offset(6)
-            make.horizontalEdges.equalToSuperview().inset(20)
+            make.horizontalEdges.equalToSuperview().inset(0)
             make.height.equalTo(39)
         }
     }
@@ -218,7 +219,7 @@ extension UserInfoViewController {
         firstBackgroundView.addSubview(birthDateTextField)
         birthDateTextField.snp.makeConstraints { make in
             make.top.equalTo(secondNameTextField.snp.bottom).offset(6)
-            make.horizontalEdges.equalToSuperview().inset(20)
+            make.horizontalEdges.equalToSuperview().inset(0)
             make.height.equalTo(39)
         }
     }
@@ -251,7 +252,7 @@ extension UserInfoViewController {
         secondBackgroundView.addSubview(emailTextField)
         emailTextField.snp.makeConstraints { make in
             make.top.equalTo(separatorView.snp.bottom)
-            make.horizontalEdges.equalToSuperview().inset(20)
+            make.horizontalEdges.equalToSuperview().inset(0)
             make.height.equalTo(39)
         }
     }

@@ -8,6 +8,8 @@
 import UIKit
 
 class AddNumberViewController: UIViewController {
+    var isFirstEdit = true
+    
     let profilePhotoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Phone")
@@ -119,6 +121,8 @@ extension AddNumberViewController {
         }
     }
     func setNumberTextField() {
+        numberTextField.delegate = self
+        
         let message = "+7(000) 000 00 00"
         numberTextField.text = message
         let attributedString = NSMutableAttributedString(string: message)
@@ -177,6 +181,14 @@ extension AddNumberViewController {
 }
 
 extension AddNumberViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if isFirstEdit {
+            textField.textColor = UIColor(named: "BlackText")
+            textField.text = "+7 "
+            isFirstEdit = false
+        }
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
         let newString = (text as NSString).replacingCharacters(in: range, with: string)
@@ -201,3 +213,4 @@ extension AddNumberViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
 }
+

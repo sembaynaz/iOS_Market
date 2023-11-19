@@ -8,6 +8,7 @@
 import UIKit
 
 class ConfirmCodeViewController: UIViewController {
+    var isFirstEdit = true
     var time = 60
     var timer = Timer()
     
@@ -126,7 +127,7 @@ extension ConfirmCodeViewController {
     func setNumberTextField() {
         let message = "0 0 0 0"
         numberTextField.text = message
-        var attributedString = textFieldTextColorToGray(numberTextField, message)
+        let attributedString = textFieldTextColorToGray(numberTextField, message)
         setSpaceBetweenTextField(attributedString)
         numberTextField.attributedText = attributedString
         numberTextField.delegate = self
@@ -195,6 +196,14 @@ extension ConfirmCodeViewController: UITextFieldDelegate {
         }
         
         return attributedString
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if isFirstEdit {
+            textField.textColor = UIColor(named: "BlackText")
+            textField.text = ""
+            isFirstEdit = false
+        }
     }
 }
 

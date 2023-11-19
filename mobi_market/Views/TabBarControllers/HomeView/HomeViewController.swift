@@ -9,7 +9,8 @@ import UIKit
 
 class HomeViewController: UIViewController {
     var isFavoriteTapped = false
-    var products: [ProductCard] = [ProductCard(title: "1"), ProductCard(title: "2"), ProductCard(title: "3"), ProductCard(title: "4")]
+    
+    var products: [ProductCard] = [ProductCard(), ProductCard(), ProductCard(), ProductCard(), ProductCard(), ProductCard(), ProductCard()]
     
     var logoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -33,9 +34,7 @@ class HomeViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 13
-        layout.itemSize = CGSize(width: 161, height: 184)
         layout.minimumLineSpacing = 12
-        layout.sectionInset = UIEdgeInsets(top: 24, left: 20, bottom: 20, right: 20)
         
         let collectionView = UICollectionView(
             frame: .zero,
@@ -47,6 +46,8 @@ class HomeViewController: UIViewController {
         )
         collectionView.backgroundColor = UIColor(named: "Background")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.contentInset.left = 24
+        collectionView.contentInset.right = 24
         return collectionView
     }()
     
@@ -71,7 +72,7 @@ extension HomeViewController {
         
         collectionView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
@@ -99,9 +100,9 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        4
+        7
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -110,10 +111,21 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             for: indexPath) as! ProductCardCollectionViewCell
         
         cell.delegate = self
+        //cell.infoButtonHidden = false
         cell.configure(card: products[indexPath.row], index: indexPath.row)
        
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let availableWidth = collectionView.bounds.width - collectionView.contentInset.left - collectionView.contentInset.right
+        let cellWidth = (availableWidth - 13) / 2 
+        let cellHeight = 184 * UIScreen.main.bounds.height / 812
+        
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+
 }
 
 extension HomeViewController: ProductCardDelegate {

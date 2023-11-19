@@ -43,14 +43,14 @@ extension TextField {
     private func setupTextFieldPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.numberOfLines = 0
-        placeholderLabel.text = "Дата рождения      "
+        placeholderLabel.text = "Дата рождения               "
         placeholderLabel.font = UIFont(name: "GothamPro", size: 16)
         placeholderLabel.textColor = UIColor.lightGray
         placeholderLabel.sizeToFit()
         if !isProfilePLaceholder {
             placeholderLabel.frame.origin = CGPoint(x: 0, y: 25)
         } else {
-            placeholderLabel.frame.origin = CGPoint(x: 0, y: 15)
+            placeholderLabel.frame.origin = CGPoint(x: 16, y: 15)
         }
         addSubview(placeholderLabel)
         
@@ -111,7 +111,7 @@ extension TextField {
             } else {
                 self.placeholderLabel.isHidden = false
                 self.placeholderLabel.font = UIFont(name: "GothamPro-Medium", size: 16)
-                self.placeholderLabel.frame.origin = CGPoint(x: 0, y: 15)
+                self.placeholderLabel.frame.origin = CGPoint(x: 16, y: 15)
                 self.setupTextField()
             }
         } else {
@@ -135,7 +135,7 @@ extension TextField {
         if !isProfilePLaceholder {
             return bounds.inset(by: UIEdgeInsets(top: 32, left: 0, bottom: 9, right: 50))
         } else {
-            return bounds.inset(by: UIEdgeInsets(top: 7, left: 0, bottom: 0, right: 0))
+            return bounds.inset(by: UIEdgeInsets(top: 7, left: 16, bottom: 0, right: 0))
         }
     }
     
@@ -143,7 +143,7 @@ extension TextField {
         if !isProfilePLaceholder {
             return bounds.inset(by: UIEdgeInsets(top: 32, left: 0, bottom: 9, right: 50))
         } else {
-            return bounds.inset(by: UIEdgeInsets(top: 7, left: 0, bottom: 0, right: 0))
+            return bounds.inset(by: UIEdgeInsets(top: 7, left: 16, bottom: 0, right: 0))
         }
     }
     
