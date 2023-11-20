@@ -3,7 +3,7 @@
 //  mobi_market
 //
 //  Created by Nazerke Sembay on 19.10.2023.
-//
+
 
 import UIKit
 import SnapKit
@@ -12,7 +12,6 @@ class TextField: UITextField, UITextFieldDelegate {
     private var placeholderLabel: UILabel!
     private var isError: Bool = false
     private var isPassword: Bool = false
-    private var isProfilePLaceholder: Bool = false
     
     private let showPasswordButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -43,45 +42,25 @@ extension TextField {
     private func setupTextFieldPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.numberOfLines = 0
-        placeholderLabel.text = "Дата рождения               "
+        placeholderLabel.text = "Введите текст             "
         placeholderLabel.font = UIFont(name: "GothamPro", size: 16)
         placeholderLabel.textColor = UIColor.lightGray
         placeholderLabel.sizeToFit()
-        if !isProfilePLaceholder {
-            placeholderLabel.frame.origin = CGPoint(x: 0, y: 25)
-        } else {
-            placeholderLabel.frame.origin = CGPoint(x: 16, y: 15)
-        }
+        placeholderLabel.frame.origin = CGPoint(x: 0, y: 25)
         addSubview(placeholderLabel)
         
         addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
-
+    
     private func setupBorder() {
         let bottomLine = CALayer()
-        if !isProfilePLaceholder {
-            bottomLine.frame = CGRect(x: 0, y: frame.height - 1, width: frame.width, height: 0.5)
-            bottomLine.backgroundColor = isError ? UIColor.red.cgColor : UIColor(named: "Grey")?.cgColor
-        } else {
-            bottomLine.frame = CGRect(x: 0, y: frame.height + 6, width: frame.width, height: 1)
-            bottomLine.backgroundColor = isError ?
-            UIColor.red.cgColor :
-            UIColor(
-                red: 247 / 255,
-                green: 246 / 255,
-                blue: 249 / 255 ,
-                alpha: 1
-            ).cgColor
-        }
+        bottomLine.frame = CGRect(x: 0, y: frame.height - 1, width: frame.width, height: 0.5)
+        bottomLine.backgroundColor = isError ? UIColor.red.cgColor : UIColor(named: "Gray")?.cgColor
         layer.addSublayer(bottomLine)
     }
     
     private func setupTextField() {
-        if isProfilePLaceholder {
-            font = UIFont(name: "GothamPro-Medium", size: 16)
-        } else {
-            font = UIFont(name: "GothamPro", size: 16)
-        }
+        font = UIFont(name: "GothamPro", size: 16)
         textColor = isError ? .red : .black
         setupBorder()
         
@@ -105,46 +84,27 @@ extension TextField {
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        if isProfilePLaceholder {
-            if let text = textField.text, !text.isEmpty {
-                self.placeholderLabel.isHidden = true
-            } else {
-                self.placeholderLabel.isHidden = false
-                self.placeholderLabel.font = UIFont(name: "GothamPro-Medium", size: 16)
-                self.placeholderLabel.frame.origin = CGPoint(x: 16, y: 15)
-                self.setupTextField()
+        if let text = textField.text, !text.isEmpty {
+            UIView.animate(withDuration: 0.3) {
+                self.placeholderLabel.frame.origin = CGPoint(x: 0, y: 13)
+                self.placeholderLabel.font = UIFont(name: "GothamPro-Medium", size: 14)
             }
         } else {
-            if let text = textField.text, !text.isEmpty {
-                UIView.animate(withDuration: 0.3) {
-                    self.placeholderLabel.frame.origin = CGPoint(x: 0, y: 13)
-                    self.placeholderLabel.font = UIFont(name: "GothamPro-Medium", size: 14)
-                }
-            } else {
-                UIView.animate(withDuration: 0.3) {
-                    self.placeholderLabel.font = UIFont(name: "GothamPro", size: 16)
-                    self.placeholderLabel.frame.origin = CGPoint(x: 0, y: 25)
-                    self.isError = false
-                    self.setupTextField()
-                }
+            UIView.animate(withDuration: 0.3) {
+                self.placeholderLabel.font = UIFont(name: "GothamPro", size: 16)
+                self.placeholderLabel.frame.origin = CGPoint(x: 0, y: 25)
+                self.isError = false
+                self.setupTextField()
             }
         }
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        if !isProfilePLaceholder {
-            return bounds.inset(by: UIEdgeInsets(top: 32, left: 0, bottom: 9, right: 50))
-        } else {
-            return bounds.inset(by: UIEdgeInsets(top: 7, left: 16, bottom: 0, right: 0))
-        }
+        return bounds.inset(by: UIEdgeInsets(top: 32, left: 0, bottom: 9, right: 50))
     }
     
     override func editingRect (forBounds bounds: CGRect) -> CGRect {
-        if !isProfilePLaceholder {
-            return bounds.inset(by: UIEdgeInsets(top: 32, left: 0, bottom: 9, right: 50))
-        } else {
-            return bounds.inset(by: UIEdgeInsets(top: 7, left: 16, bottom: 0, right: 0))
-        }
+        return bounds.inset(by: UIEdgeInsets(top: 32, left: 0, bottom: 9, right: 50))
     }
     
     @objc private func showPasswordButtonTapped () {
@@ -175,11 +135,10 @@ extension TextField {
         textFieldDidChange(self)
     }
     
-    func setupProfileTextFieled(_ isProfile: Bool) {
-        self.isProfilePLaceholder = isProfile
-        setupTextField()
-        textFieldDidChange(self)
+    func placesolderToTop() {
+        UIView.animate(withDuration: 0.3) {
+            self.placeholderLabel.frame.origin = CGPoint(x: 0, y: 13)
+            self.placeholderLabel.font = UIFont(name: "GothamPro", size: 12)
+        }
     }
 }
-
-

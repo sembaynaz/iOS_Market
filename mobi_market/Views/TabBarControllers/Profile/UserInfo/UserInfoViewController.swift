@@ -8,17 +8,15 @@
 import UIKit
 
 class UserInfoViewController: UIViewController {
-    
-    private let backButton: Button = {
-        let button = Button()
-        button.setBarButtonItem(true)
+
+    private let backButton: BarButtonItem = {
+        let button = BarButtonItem()
         button.setTitle("Отмена", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    private let doneButton: Button = {
-        let button = Button()
-        button.setBarButtonItem(true)
+    private let doneButton: BarButtonItem = {
+        let button = BarButtonItem()
         button.setTitle("Готово", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -49,29 +47,33 @@ class UserInfoViewController: UIViewController {
         view.layer.cornerRadius = 16
         return view
     }()
-    private let nameTextField: TextField = {
-        let textFiled = TextField()
-        textFiled.setupProfileTextFieled(true)
-        textFiled.setPlaceholderText("Имя")
-        return textFiled
+    private let nameTextField: ProfileTextField = {
+        let textField = ProfileTextField()
+        textField.font = UIFont(name: "Gothampro-Medium", size: 16)
+        let font = UIFont(name: "Gothampro-Medium", size: 16)
+        textField.setPlaceholderText("Имя")
+        return textField
     }()
-    private let secondNameTextField: TextField = {
-        let textFiled = TextField()
-        textFiled.setupProfileTextFieled(true)
-        textFiled.setPlaceholderText("Отчество")
-        return textFiled
+    private let secondNameTextField: ProfileTextField = {
+        let textField = ProfileTextField()
+        textField.font = UIFont(name: "Gothampro-Medium", size: 16)
+        let font = UIFont(name: "Gothampro-Medium", size: 16)
+        textField.setPlaceholderText("Отчество")
+        return textField
     }()
-    private let lastNameTextField: TextField = {
-        let textFiled = TextField()
-        textFiled.setupProfileTextFieled(true)
-        textFiled.setPlaceholderText("Фамилия")
-        return textFiled
+    private let lastNameTextField: ProfileTextField = {
+        let textField = ProfileTextField()
+        textField.font = UIFont(name: "Gothampro-Medium", size: 16)
+        let font = UIFont(name: "Gothampro-Medium", size: 16)
+        textField.setPlaceholderText("Фамилия")
+        return textField
     }()
-    private let birthDateTextField: TextField = {
-        let textFiled = TextField()
-        textFiled.setupProfileTextFieled(true)
-        textFiled.setPlaceholderText("Дата рождения")
-        return textFiled
+    private let birthDateTextField: ProfileTextField = {
+        let textField = ProfileTextField()
+        textField.font = UIFont(name: "Gothampro-Medium", size: 16)
+        let font = UIFont(name: "Gothampro-Medium", size: 16)
+        textField.setPlaceholderText("Дата рождения")
+        return textField
     }()
     private let phoneNumberButton: UIButton = {
         let button = UIButton()
@@ -100,12 +102,12 @@ class UserInfoViewController: UIViewController {
         )
         return view
     }()
-    private let emailTextField: TextField = {
-        let textFiled = TextField()
-        textFiled.setupProfileTextFieled(true)
-        textFiled.setPlaceholderText("Email")
-        textFiled.font = UIFont(name: "GothamPro-Medium", size: 16)
-        return textFiled
+    private let emailTextField: ProfileTextField = {
+        let textField = ProfileTextField()
+        textField.font = UIFont(name: "Gothampro-Medium", size: 16)
+        let font = UIFont(name: "Gothampro-Medium", size: 16)
+        textField.setPlaceholderText("Email")
+        return textField
     }()
     
     override func viewDidLoad() {

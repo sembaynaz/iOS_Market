@@ -27,8 +27,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             viewController = TabBarViewController()
         } else {
             let vc = LoginViewController()
-            let nav = TabBarViewController()//UINavigationController(rootViewController: vc)
-            //nav.customize()
+            let nav = UINavigationController(rootViewController: vc)
+            nav.customize()
             viewController = nav
         }
         

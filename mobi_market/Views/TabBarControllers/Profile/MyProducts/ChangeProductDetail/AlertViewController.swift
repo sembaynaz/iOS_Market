@@ -6,12 +6,16 @@
 //
 
 import UIKit
+protocol AlertDelegate: AnyObject {
+    func didAgreeButtonTapped()
+}
 
 class AlertViewController: UIViewController {
     var imageName = ""
     var messageText = ""
     var activeButtonTitle = ""
     var cancelButtonTitle = ""
+    weak var delegate: AlertDelegate?
     
     let backgroundView: UIView = {
         let view = UIView()
@@ -86,6 +90,8 @@ extension AlertViewController {
     }
     func setAgreeButton() {
         backgroundView.addSubview(agreeButton)
+        
+        agreeButton.addTarget(self, action: #selector(agreeButtonTapped), for: .touchUpInside)
         agreeButton.snp.makeConstraints { make in
             make.top.equalTo(messageLabel.snp.bottom).offset(24 * UIScreen.main.bounds.height / 812)
             make.height.equalTo(44 * UIScreen.main.bounds.height / 812)
@@ -122,10 +128,12 @@ extension AlertViewController {
     //MARK: Functionality
 extension AlertViewController {
     @objc func cancelButtonTapped() {
-        dismiss(animated: true)
+        dismiss(animated: false)
     }
     
     @objc func agreeButtonTapped() {
-        
+        print("tap")
+        delegate?.didAgreeButtonTapped()
+        dismiss(animated: false)
     }
 }

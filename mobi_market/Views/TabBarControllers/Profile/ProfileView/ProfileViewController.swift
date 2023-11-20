@@ -9,9 +9,8 @@ import UIKit
 import SnapKit
 
 class ProfileViewController: UIViewController {
-    let changeInfoButton: Button = {
-        let button = Button()
-        button.setBarButtonItem(true)
+    let changeInfoButton: BarButtonItem = {
+        let button = BarButtonItem()
         button.setTitle("Изм.", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

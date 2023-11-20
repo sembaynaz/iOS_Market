@@ -71,6 +71,7 @@ class ProductCardCollectionViewCell: UICollectionViewCell {
     
     func configure(card: ProductCard, index: Int) {
         self.currentProductCard = card
+        self.index = index
         cardImageView.image = UIImage(named: card.image)
         titleLabel.text = card.title
         costLabel.text = card.cost

@@ -100,6 +100,7 @@ extension LoginViewController {
     }
     func setEmailTextField() {
         view.addSubview(emailTextField)
+        emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         emailTextField.snp.makeConstraints { make in
             make.top.equalTo(logoImage.snp.bottom).offset(120)
             make.horizontalEdges.equalToSuperview().inset(20)
@@ -108,6 +109,7 @@ extension LoginViewController {
     }
     func setPasswordTextField() {
         view.addSubview(passwordTextField)
+        passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         passwordTextField.snp.makeConstraints { make in
             make.top.equalTo(emailTextField.snp.bottom).offset(32)
             make.horizontalEdges.equalToSuperview().inset(20)
@@ -116,7 +118,6 @@ extension LoginViewController {
     }
     func setLoginButton() {
         view.addSubview(loginButton)
-        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         loginButton.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.snp.bottom).offset(82)
             make.horizontalEdges.equalToSuperview().inset(20)
@@ -150,9 +151,13 @@ extension LoginViewController {
     }
     
     @objc func loginButtonTapped() {
-        self.errorImage.isHidden = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.errorImage.isHidden = true
+        if emailTextField.text == "Neobis" && passwordTextField.text == "neobis2023" {
+            startApp()
+        } else {
+            self.errorImage.isHidden = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.errorImage.isHidden = true
+            }
         }
     }
 }
@@ -165,5 +170,34 @@ extension LoginViewController {
     }
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+}
+
+extension LoginViewController {
+    func startApp() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let window = appDelegate.window ?? UIWindow(frame: UIScreen.main.bounds)
+        
+        let tabBarViewController = TabBarViewController()
+        
+        window.rootViewController = tabBarViewController
+        window.makeKeyAndVisible()
+        
+        tabBarViewController.modalPresentationStyle = .fullScreen
+        self.present(tabBarViewController, animated: true)
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        if !passwordTextField.text!.isEmpty && !emailTextField.text!.isEmpty {
+            loginButton.setActive(true)
+            loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        } else {
+            loginButton.setActive(false)
+        }
     }
 }
