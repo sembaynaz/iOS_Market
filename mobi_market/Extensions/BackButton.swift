@@ -15,4 +15,5 @@ extension UINavigationController {
         self.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         self.navigationBar.tintColor = UIColor(named: "Color.backButton")
     }
+    
 }

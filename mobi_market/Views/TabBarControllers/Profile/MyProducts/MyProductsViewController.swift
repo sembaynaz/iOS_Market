@@ -171,6 +171,14 @@ extension MyProductsViewController: UICollectionViewDelegate, UICollectionViewDa
         
         return CGSize(width: cellWidth, height: cellHeight)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ProductDetailsViewController()
+        vc.isMyProduct = true
+        vc.productInfo = products[indexPath.row]
+        navigationItem.title = ""
+        navigationController?.show(vc, sender: self)
+    }
 }
 
 

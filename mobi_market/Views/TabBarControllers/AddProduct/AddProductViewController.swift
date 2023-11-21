@@ -8,11 +8,15 @@
 import UIKit
 
 class AddProductViewController: UIViewController {
+    var product = ProductCard()
     var productImages: [UIImage] = []
     let namePlaceholder = "Название"
     let costPlaceholder = "Цена"
     let descriptionPlaceholder = "Краткое описание"
     let fullDescriptionPlaceholder = "Детальное описание"
+    var isChangeVC = false
+    //var textViewHeightConstraint: NSLayoutConstraint!
+
     
     private let backButton: BarButtonItem = {
         let button = BarButtonItem()
@@ -30,7 +34,6 @@ class AddProductViewController: UIViewController {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 12
-    
         return view
     }()
     private let photoButton: UIButton = {
@@ -61,7 +64,6 @@ class AddProductViewController: UIViewController {
         textView.layer.borderColor = UIColor.clear.cgColor
         return textView
     }()
-    
     private let descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.textContainerInset = UIEdgeInsets(top: 15, left: 16, bottom: 15, right: 16)
@@ -73,7 +75,6 @@ class AddProductViewController: UIViewController {
         textView.layer.borderColor = UIColor.clear.cgColor
         return textView
     }()
-    
     private let fullDescriptionTextView: UITextView = {
         let textView = UITextView()
         textView.textContainerInset = UIEdgeInsets(top: 15, left: 16, bottom: 15, right: 16)
@@ -85,8 +86,7 @@ class AddProductViewController: UIViewController {
         textView.layer.borderColor = UIColor.clear.cgColor
         return textView
     }()
-    
-    var collectionView: UICollectionView = {
+    private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 6
@@ -120,6 +120,13 @@ extension AddProductViewController {
         setFullDescriptionTextView()
         setCollectionView()
     }
+//    private func updateConstraintsForTextViews() {
+//            // Update constraints for text views here
+//        updateTextViewHeight(textView: costTextView)
+//        updateTextViewHeight(textView: nameTextView)
+//        updateTextViewHeight(textView: descriptionTextView)
+//        updateTextViewHeight(textView: fullDescriptionTextView)
+//    }
     private func setPhotoButton() {
         view.addSubview(photoView)
         view.addSubview(photoButton)
@@ -165,37 +172,96 @@ extension AddProductViewController {
     private func setCostTextView() {
         view.addSubview(costTextView)
         costTextView.delegate = self
-        costTextView.snp.makeConstraints { make in
+        
+        if isChangeVC {
+            costTextView.snp.makeConstraints { make in
+                make.top.equalTo(photoView.snp.bottom).offset(26)
+                make.horizontalEdges.equalToSuperview().inset(20)
+                make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
+            costTextView.text = product.cost
+            updateTextViewHeight(textView: costTextView)
+            view.layoutIfNeeded()
+        }
+        else {
+            costTextView.snp.makeConstraints { make in
             make.top.equalTo(photoView.snp.bottom).offset(26)
             make.horizontalEdges.equalToSuperview().inset(20)
             make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
         }
+            
     }
     private func setNameTextView() {
         view.addSubview(nameTextView)
         nameTextView.delegate = self
-        nameTextView.snp.makeConstraints { make in
-            make.top.equalTo(costTextView.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(20)
-            make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+        
+        if isChangeVC {
+            var textViewHeightConstraint: NSLayoutConstraint!
+            textViewHeightConstraint = nameTextView.heightAnchor.constraint(equalToConstant: 40)
+            textViewHeightConstraint.isActive = true
+            nameTextView.snp.makeConstraints { make in
+                make.top.equalTo(costTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+                //make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
+            updateTextViewHeight(textView: nameTextView)
+            nameTextView.text = product.title
+            view.layoutIfNeeded()
+        } else {
+            nameTextView.snp.makeConstraints { make in
+                make.top.equalTo(costTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+                make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
         }
+        
     }
     private func setDescriptionTextView() {
         view.addSubview(descriptionTextView)
         descriptionTextView.delegate = self
-        descriptionTextView.snp.makeConstraints { make in
-            make.top.equalTo(nameTextView.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(20)
-            make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+        
+        if isChangeVC {
+            var textViewHeightConstraint: NSLayoutConstraint!
+            textViewHeightConstraint = descriptionTextView.heightAnchor.constraint(equalToConstant: 40)
+            textViewHeightConstraint.isActive = true
+            descriptionTextView.snp.makeConstraints { make in
+                make.top.equalTo(nameTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+                //make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
+            updateTextViewHeight(textView: descriptionTextView)
+            descriptionTextView.text = product.description
+            view.layoutIfNeeded()
+        } else {
+            descriptionTextView.snp.makeConstraints { make in
+                make.top.equalTo(nameTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+                make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
         }
     }
     private func setFullDescriptionTextView() {
         view.addSubview(fullDescriptionTextView)
         fullDescriptionTextView.delegate = self
-        fullDescriptionTextView.snp.makeConstraints { make in
-            make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(20)
-            make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+        if isChangeVC {
+            var textViewHeightConstraint: NSLayoutConstraint!
+            textViewHeightConstraint = fullDescriptionTextView.heightAnchor.constraint(equalToConstant: 40)
+            textViewHeightConstraint.isActive = true
+            fullDescriptionTextView.snp.makeConstraints { make in
+                make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+                //make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
+            updateTextViewHeight(textView: fullDescriptionTextView)
+            fullDescriptionTextView.text = product.fullDescruption
+            view.layoutIfNeeded()
+        } else {
+            fullDescriptionTextView.snp.makeConstraints { make in
+                make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+                make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
         }
     }
     
@@ -343,6 +409,10 @@ extension AddProductViewController: UITextViewDelegate {
             textView.text = nil
             textView.textColor = UIColor(named: "BlackText")
         }
+        
+        if isChangeVC {
+            textView.textColor = UIColor(named: "BlackText")
+        }
     }
     
     func textViewDidEndEditing (_ textView: UITextView) {
@@ -356,6 +426,8 @@ extension AddProductViewController: UITextViewDelegate {
             case fullDescriptionTextView:  textView.text = fullDescriptionPlaceholder
             default: textView.text = "Описание"
             }
+        } else {
+            textView.textColor = UIColor(named: "BlackText")
         }
     }
     
@@ -371,6 +443,18 @@ extension AddProductViewController: UITextViewDelegate {
         }
         
         view.layoutIfNeeded()
+    }
+    
+    func updateTextViewHeight(textView: UITextView) {
+            // Определите новую высоту, основанную на содержимом
+        let newSize = textView.sizeThatFits(CGSize(width: textView.frame.size.width, height: CGFloat.greatestFiniteMagnitude))
+        
+            // Ограничьте максимальную высоту
+        let maxHeight: CGFloat = 200
+        let newHeight = min(newSize.height, maxHeight)
+        
+            // Обновите высоту
+        textViewHeightConstraint.constant = newHeight
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

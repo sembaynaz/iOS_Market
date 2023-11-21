@@ -72,29 +72,29 @@ extension HomeViewController {
         
         collectionView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            make.top.equalTo(logoImageView.snp.bottom).offset(16)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
     func setLogoImageView() {
-        navigationController?.navigationBar.addSubview(logoImageView)
-        navigationController?.navigationBar.addSubview(logoLabel)
-        navigationController?.navigationBar.addSubview(successImageView)
+        view.addSubview(logoImageView)
+        view.addSubview(logoLabel)
+        view.addSubview(successImageView)
         
         logoImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(8)
+            make.top.equalToSuperview().inset(52)
             make.height.width.equalTo(44)
-            make.left.equalToSuperview().inset(20)
+            make.left.equalToSuperview().inset(23)
         }
         
         logoLabel.snp.makeConstraints { make in
-            make.left.equalTo(logoImageView.snp.left).offset(58)
-            make.top.equalToSuperview().inset(18)
+            make.left.equalTo(logoImageView.snp.right).offset(8)
+            make.top.equalToSuperview().inset(17 + 44)
         }
         
         successImageView.snp.makeConstraints { make in
             make.height.equalTo(60 * UIScreen.main.bounds.height / 812)
-            make.top.equalToSuperview()
+            make.top.equalToSuperview().inset(52)
             make.horizontalEdges.equalToSuperview().inset(20 * UIScreen.main.bounds.width / 375)
         }
     }
@@ -111,7 +111,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             for: indexPath) as! ProductCardCollectionViewCell
         
         cell.delegate = self
-        //cell.infoButtonHidden = false
         cell.configure(card: products[indexPath.row], index: indexPath.row)
        
         return cell
@@ -124,6 +123,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cellHeight = 184 * UIScreen.main.bounds.height / 812
         
         return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ProductDetailsViewController()
+        vc.productInfo = products[indexPath.row]
+        navigationItem.title = ""
+        navigationController?.show(vc, sender: self)
     }
 
 }

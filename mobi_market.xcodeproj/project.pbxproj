@@ -41,7 +41,6 @@
 		6FFD62462AF3C8CD0036C106 /* AddNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD62452AF3C8CD0036C106 /* AddNumberViewController.swift */; };
 		6FFD62482AF3C9150036C106 /* ConfirmCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD62472AF3C9150036C106 /* ConfirmCodeViewController.swift */; };
 		6FFD624E2AF3CAA90036C106 /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD624D2AF3CAA90036C106 /* ProductDetailsViewController.swift */; };
-		6FFD62502AF3CAC40036C106 /* ChangeProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD624F2AF3CAC40036C106 /* ChangeProductDetailsViewController.swift */; };
 		6FFD625C2AF41A5C0036C106 /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD625B2AF41A5C0036C106 /* AddProductViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,7 +80,6 @@
 		6FFD62452AF3C8CD0036C106 /* AddNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNumberViewController.swift; sourceTree = "<group>"; };
 		6FFD62472AF3C9150036C106 /* ConfirmCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCodeViewController.swift; sourceTree = "<group>"; };
 		6FFD624D2AF3CAA90036C106 /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
-		6FFD624F2AF3CAC40036C106 /* ChangeProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeProductDetailsViewController.swift; sourceTree = "<group>"; };
 		6FFD625B2AF41A5C0036C106 /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -318,7 +316,6 @@
 		6FFC24B32B0668E6005666A0 /* ChangeProductDetail */ = {
 			isa = PBXGroup;
 			children = (
-				6FFD624F2AF3CAC40036C106 /* ChangeProductDetailsViewController.swift */,
 				6F4CA7B22B07B69E00313EF9 /* ModalView.swift */,
 				6F4CA7B42B07EE7D00313EF9 /* AlertViewController.swift */,
 			);
@@ -456,7 +453,6 @@
 				6FFD62442AF3C8B10036C106 /* UserInfoViewController.swift in Sources */,
 				6FFD62462AF3C8CD0036C106 /* AddNumberViewController.swift in Sources */,
 				6F0614FC2B0209D7002D11E6 /* ProductCard.swift in Sources */,
-				6FFD62502AF3CAC40036C106 /* ChangeProductDetailsViewController.swift in Sources */,
 				6FFD624E2AF3CAA90036C106 /* ProductDetailsViewController.swift in Sources */,
 				6FB80C032B0BB66B00BC605D /* ProfileTextField.swift in Sources */,
 				6F3EE9222AE0F3F900092A87 /* Button.swift in Sources */,
