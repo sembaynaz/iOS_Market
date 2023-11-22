@@ -159,7 +159,7 @@ extension ProductDetailsViewController {
         
         if isMyProduct {
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: changeButton)
-            //changeButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
+            changeButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
         }
     }
     private func setCollectionView () {
@@ -321,7 +321,6 @@ extension ProductDetailsViewController: AlertDelegate {
     }
     
     @objc private func likeButtonTapped() {
-        //productInfo.isFavorite.toggle()
         if !productInfo.isFavorite {
             productInfo.isFavorite = true
             likeButton.setImage( UIImage(named: "HeartFill"), for: .normal)

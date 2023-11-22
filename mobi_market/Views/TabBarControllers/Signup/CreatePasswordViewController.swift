@@ -7,15 +7,6 @@
 
 import UIKit
 
-/*
- if originalPassword1 == originalPassword2 {
- nextButton.setActive(true)
- nextButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
- } else {
- errorLabel.isHidden = false
- nextButton.setActive(false)
- }
- */
 class CreatePasswordViewController: UIViewController {
     var passwordText1 = ""
     var originalPassword1 = ""
