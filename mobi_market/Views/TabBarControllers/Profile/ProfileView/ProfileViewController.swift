@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 class ProfileViewController: UIViewController {
+
     let changeInfoButton: BarButtonItem = {
         let button = BarButtonItem()
         button.setTitle("Изм.", for: .normal)
@@ -256,7 +257,7 @@ extension ProfileViewController {
             secondBackgroundView.addSubview(logOutButton)
             logOutButton.addSubview(logOutImageView)
             logOutButton.addSubview(arrowImageView3)
-            
+            logOutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
             logOutButton.snp.makeConstraints { make in
                 make.top.equalTo(secondBackgroundView.snp.top).offset(16)
                 make.height.equalTo(38)
@@ -282,7 +283,7 @@ extension ProfileViewController {
     
 }
 
-extension ProfileViewController {
+extension ProfileViewController: AlertDelegate {
     @objc func changeInfoButtonTapped() {
         let vc = UserInfoViewController()
         navigationController?.show(vc, sender: self)
@@ -297,4 +298,26 @@ extension ProfileViewController {
         let vc = MyProductsViewController()
         navigationController?.show(vc, sender: self)
     }
+    
+    @objc func logoutButtonTapped() {
+        let vc = AlertViewController()
+        vc.imageName = "Logout.red"
+        vc.activeButtonTitle = "Выйти"
+        vc.messageText = "Вы действительно хотите выйти с приложения?"
+        vc.cancelButtonTitle = "Отмена"
+        vc.delegate = self
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: false)
+    }
+    
+    func didAgreeButtonTapped() {
+        dismiss(animated: true) {
+            let loginViewController = UINavigationController(rootViewController: LoginViewController())
+            loginViewController.customize()
+            loginViewController.modalPresentationStyle = .fullScreen
+            self.present(loginViewController, animated: true)
+        }
+    }
+
+    
 }

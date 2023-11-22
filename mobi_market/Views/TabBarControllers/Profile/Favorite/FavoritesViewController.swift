@@ -127,6 +127,13 @@ extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDat
 
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ProductDetailsViewController()
+        vc.productInfo = products[indexPath.row]
+        navigationItem.title = ""
+        navigationController?.show(vc, sender: self)
+    }
 }
 
 

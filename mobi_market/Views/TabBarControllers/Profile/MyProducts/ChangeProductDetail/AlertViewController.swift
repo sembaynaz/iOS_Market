@@ -91,6 +91,7 @@ extension AlertViewController {
     func setAgreeButton() {
         backgroundView.addSubview(agreeButton)
         
+        agreeButton.setTitle("\(activeButtonTitle)", for: .normal)
         agreeButton.addTarget(self, action: #selector(agreeButtonTapped), for: .touchUpInside)
         agreeButton.snp.makeConstraints { make in
             make.top.equalTo(messageLabel.snp.bottom).offset(24 * UIScreen.main.bounds.height / 812)
@@ -100,6 +101,7 @@ extension AlertViewController {
     }
     func setCancelButton() {
         backgroundView.addSubview(cancelButton)
+        cancelButton.setTitle("\(cancelButtonTitle)", for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
         cancelButton.snp.makeConstraints { make in
             make.top.equalTo(agreeButton.snp.bottom).offset(4 * UIScreen.main.bounds.height / 812)
@@ -109,6 +111,7 @@ extension AlertViewController {
     }
     func setMessageLabel() {
         backgroundView.addSubview(messageLabel)
+        messageLabel.text = messageText
         messageLabel.snp.makeConstraints { make in
             make.top.equalTo(logoImage.snp.bottom).offset(14 * UIScreen.main.bounds.height / 812)
             make.horizontalEdges.equalToSuperview().inset(16 * UIScreen.main.bounds.width / 375)
@@ -117,6 +120,7 @@ extension AlertViewController {
     
     func setLogoImage() {
         backgroundView.addSubview(logoImage)
+        logoImage.image = UIImage(named: imageName)
         logoImage.snp.makeConstraints { make in
             make.height.width.equalTo(130 * UIScreen.main.bounds.width / 375)
             make.centerX.equalTo(backgroundView.snp.centerX)

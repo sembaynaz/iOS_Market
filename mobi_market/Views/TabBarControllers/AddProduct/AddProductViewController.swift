@@ -175,13 +175,10 @@ extension AddProductViewController {
         
         if isChangeVC {
             costTextView.snp.makeConstraints { make in
-                make.top.equalTo(photoView.snp.bottom).offset(26)
+                make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
                 make.horizontalEdges.equalToSuperview().inset(20)
                 make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
             }
-            costTextView.text = product.cost
-            updateTextViewHeight(textView: costTextView)
-            view.layoutIfNeeded()
         }
         else {
             costTextView.snp.makeConstraints { make in
@@ -197,17 +194,11 @@ extension AddProductViewController {
         nameTextView.delegate = self
         
         if isChangeVC {
-            var textViewHeightConstraint: NSLayoutConstraint!
-            textViewHeightConstraint = nameTextView.heightAnchor.constraint(equalToConstant: 40)
-            textViewHeightConstraint.isActive = true
             nameTextView.snp.makeConstraints { make in
-                make.top.equalTo(costTextView.snp.bottom).offset(8)
+                make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
                 make.horizontalEdges.equalToSuperview().inset(20)
-                //make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+                make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
             }
-            updateTextViewHeight(textView: nameTextView)
-            nameTextView.text = product.title
-            view.layoutIfNeeded()
         } else {
             nameTextView.snp.makeConstraints { make in
                 make.top.equalTo(costTextView.snp.bottom).offset(8)
@@ -222,17 +213,11 @@ extension AddProductViewController {
         descriptionTextView.delegate = self
         
         if isChangeVC {
-            var textViewHeightConstraint: NSLayoutConstraint!
-            textViewHeightConstraint = descriptionTextView.heightAnchor.constraint(equalToConstant: 40)
-            textViewHeightConstraint.isActive = true
             descriptionTextView.snp.makeConstraints { make in
-                make.top.equalTo(nameTextView.snp.bottom).offset(8)
+                make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
                 make.horizontalEdges.equalToSuperview().inset(20)
-                //make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+                make.height.equalTo(100 * UIScreen.main.bounds.height / 812)
             }
-            updateTextViewHeight(textView: descriptionTextView)
-            descriptionTextView.text = product.description
-            view.layoutIfNeeded()
         } else {
             descriptionTextView.snp.makeConstraints { make in
                 make.top.equalTo(nameTextView.snp.bottom).offset(8)
@@ -245,17 +230,11 @@ extension AddProductViewController {
         view.addSubview(fullDescriptionTextView)
         fullDescriptionTextView.delegate = self
         if isChangeVC {
-            var textViewHeightConstraint: NSLayoutConstraint!
-            textViewHeightConstraint = fullDescriptionTextView.heightAnchor.constraint(equalToConstant: 40)
-            textViewHeightConstraint.isActive = true
             fullDescriptionTextView.snp.makeConstraints { make in
                 make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
                 make.horizontalEdges.equalToSuperview().inset(20)
-                //make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+                make.height.equalTo(100 * UIScreen.main.bounds.height / 812)
             }
-            updateTextViewHeight(textView: fullDescriptionTextView)
-            fullDescriptionTextView.text = product.fullDescruption
-            view.layoutIfNeeded()
         } else {
             fullDescriptionTextView.snp.makeConstraints { make in
                 make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
@@ -267,10 +246,32 @@ extension AddProductViewController {
     
 }
 
-extension AddProductViewController {
+extension AddProductViewController: AlertDelegate {
     @objc private func backButtonTapped() {
-        dismiss(animated: true)
+        if nameTextView.text == namePlaceholder &&
+            costTextView.text == costPlaceholder &&
+            descriptionTextView.text == descriptionPlaceholder &&
+            fullDescriptionTextView.text == fullDescriptionPlaceholder {
+            dismiss(animated: true)
+        } else {
+            let vc = AlertViewController()
+            vc.imageName = "Remove"
+            vc.activeButtonTitle = "Да"
+            vc.messageText = "Вы действительно хотите \nотменить добавление товара?"
+            vc.cancelButtonTitle = "Нет"
+            vc.delegate = self
+            vc.modalPresentationStyle = .overFullScreen
+            present(vc, animated: false)
+        }
+                
     }
+    
+    func didAgreeButtonTapped() {
+        dismiss(animated: false)
+        
+        self.dismiss(animated: false)
+    }
+    
     
     @objc private func doneButtonTapped() {
         if nameTextView.text == namePlaceholder &&
@@ -445,17 +446,17 @@ extension AddProductViewController: UITextViewDelegate {
         view.layoutIfNeeded()
     }
     
-    func updateTextViewHeight(textView: UITextView) {
-            // Определите новую высоту, основанную на содержимом
+    private func updateTextViewHeight(textView: UITextView, heightConstraint: NSLayoutConstraint) {
         let newSize = textView.sizeThatFits(CGSize(width: textView.frame.size.width, height: CGFloat.greatestFiniteMagnitude))
-        
-            // Ограничьте максимальную высоту
         let maxHeight: CGFloat = 200
         let newHeight = min(newSize.height, maxHeight)
         
-            // Обновите высоту
-        textViewHeightConstraint.constant = newHeight
+        if heightConstraint.constant != newHeight {
+            heightConstraint.constant = newHeight
+            view.layoutIfNeeded()
+        }
     }
+
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         isErrorTextField(textView: nameTextView, isError: false)

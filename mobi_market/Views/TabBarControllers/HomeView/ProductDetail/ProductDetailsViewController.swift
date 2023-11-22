@@ -159,7 +159,7 @@ extension ProductDetailsViewController {
         
         if isMyProduct {
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: changeButton)
-            changeButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
+            //changeButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
         }
     }
     private func setCollectionView () {
@@ -302,7 +302,13 @@ extension ProductDetailsViewController: UICollectionViewDelegate, UICollectionVi
     }
 }
 
-extension ProductDetailsViewController {
+extension ProductDetailsViewController: AlertDelegate {
+    func didAgreeButtonTapped() {
+        dismiss(animated: false)
+        productInfo.isFavorite = false
+        likeButton.setImage( UIImage(named: "Heart"), for: .normal)
+    }
+    
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
@@ -315,8 +321,21 @@ extension ProductDetailsViewController {
     }
     
     @objc private func likeButtonTapped() {
-        productInfo.isFavorite.toggle()
-        likeButton.setImage( productInfo.isFavorite ? UIImage(named: "HeartFill"): UIImage(named: "Heart"), for: .normal)
+        //productInfo.isFavorite.toggle()
+        if !productInfo.isFavorite {
+            productInfo.isFavorite = true
+            likeButton.setImage( UIImage(named: "HeartFill"), for: .normal)
+        } else {
+            let vc = AlertViewController()
+            vc.imageName = "BigHeart"
+            vc.activeButtonTitle = "Удалить"
+            vc.messageText = "Вы действительно хотите \nудалить из понравившихся"
+            vc.cancelButtonTitle = "Отмена"
+            vc.delegate = self
+            vc.modalPresentationStyle = .overFullScreen
+            present(vc, animated: false)
+            productInfo.isFavorite = true
+        }
     }
     
 }

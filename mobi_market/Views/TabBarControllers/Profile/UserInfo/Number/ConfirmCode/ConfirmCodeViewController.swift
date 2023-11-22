@@ -125,7 +125,7 @@ extension ConfirmCodeViewController {
         }
     }
     func setNumberTextField() {
-        let message = "0 0 0 0"
+        let message = "0000"
         numberTextField.text = message
         let attributedString = textFieldTextColorToGray(numberTextField, message)
         setSpaceBetweenTextField(attributedString)
@@ -180,7 +180,7 @@ extension ConfirmCodeViewController {
 
 extension ConfirmCodeViewController: UITextFieldDelegate {
     func setSpaceBetweenTextField(_ attributedString: NSMutableAttributedString) {
-        let kernValue = 3
+        let kernValue: CGFloat = 10.0
         attributedString.addAttribute(NSAttributedString.Key.kern, value: kernValue, range: NSRange(location: 0, length: attributedString.length))
     }
     
@@ -205,6 +205,17 @@ extension ConfirmCodeViewController: UITextFieldDelegate {
             isFirstEdit = false
         }
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let mutableAttributedString = NSMutableAttributedString(string: textField.text ?? "")
+        
+        setSpaceBetweenTextField(mutableAttributedString)
+        
+        textField.attributedText = mutableAttributedString
+        
+        return true
+    }
+
 }
 
 extension ConfirmCodeViewController {
