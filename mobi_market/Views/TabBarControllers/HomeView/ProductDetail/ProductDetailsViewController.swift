@@ -315,8 +315,8 @@ extension ProductDetailsViewController: AlertDelegate {
     
     @objc private func changeButtonTapped() {
         let vc = AddProductViewController()
-        vc.product = self.productInfo
-        vc.isChangeVC = true
+        vc.contentView.product = self.productInfo
+        vc.contentView.isChangeVC = true
         navigationController?.show(vc, sender: self)
     }
     

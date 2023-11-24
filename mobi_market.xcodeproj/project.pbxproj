@@ -24,6 +24,8 @@
 		6F3EE9222AE0F3F900092A87 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F3EE9212AE0F3F900092A87 /* Button.swift */; };
 		6F3EE9242AE0F8DB00092A87 /* Nunito-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6F3EE9232AE0F8DB00092A87 /* Nunito-ExtraBold.ttf */; };
 		6F3EE9262AE1008C00092A87 /* gothampro_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6F3EE9252AE1008C00092A87 /* gothampro_medium.ttf */; };
+		6F49338A2B0F9F3D00586089 /* AddProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4933892B0F9F3D00586089 /* AddProductView.swift */; };
+		6F49338C2B0FA16300586089 /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F49338B2B0FA16300586089 /* AddProductViewController.swift */; };
 		6F4CA7B12B0712CA00313EF9 /* MyProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4CA7B02B0712CA00313EF9 /* MyProductsViewController.swift */; };
 		6F4CA7B32B07B69E00313EF9 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4CA7B22B07B69E00313EF9 /* ModalView.swift */; };
 		6F4CA7B52B07EE7D00313EF9 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4CA7B42B07EE7D00313EF9 /* AlertViewController.swift */; };
@@ -41,7 +43,6 @@
 		6FFD62462AF3C8CD0036C106 /* AddNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD62452AF3C8CD0036C106 /* AddNumberViewController.swift */; };
 		6FFD62482AF3C9150036C106 /* ConfirmCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD62472AF3C9150036C106 /* ConfirmCodeViewController.swift */; };
 		6FFD624E2AF3CAA90036C106 /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD624D2AF3CAA90036C106 /* ProductDetailsViewController.swift */; };
-		6FFD625C2AF41A5C0036C106 /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD625B2AF41A5C0036C106 /* AddProductViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,8 @@
 		6F3EE9212AE0F3F900092A87 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		6F3EE9232AE0F8DB00092A87 /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
 		6F3EE9252AE1008C00092A87 /* gothampro_medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothampro_medium.ttf; sourceTree = "<group>"; };
+		6F4933892B0F9F3D00586089 /* AddProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductView.swift; sourceTree = "<group>"; };
+		6F49338B2B0FA16300586089 /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
 		6F4CA7B02B0712CA00313EF9 /* MyProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductsViewController.swift; sourceTree = "<group>"; };
 		6F4CA7B22B07B69E00313EF9 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
 		6F4CA7B42B07EE7D00313EF9 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
@@ -80,7 +83,6 @@
 		6FFD62452AF3C8CD0036C106 /* AddNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNumberViewController.swift; sourceTree = "<group>"; };
 		6FFD62472AF3C9150036C106 /* ConfirmCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCodeViewController.swift; sourceTree = "<group>"; };
 		6FFD624D2AF3CAA90036C106 /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
-		6FFD625B2AF41A5C0036C106 /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,7 +343,8 @@
 		6FFC24B62B066933005666A0 /* AddProduct */ = {
 			isa = PBXGroup;
 			children = (
-				6FFD625B2AF41A5C0036C106 /* AddProductViewController.swift */,
+				6F4933892B0F9F3D00586089 /* AddProductView.swift */,
+				6F49338B2B0FA16300586089 /* AddProductViewController.swift */,
 			);
 			path = AddProduct;
 			sourceTree = "<group>";
@@ -451,8 +454,10 @@
 			files = (
 				6F09D4092AE2765F00C072FE /* SignupViewController.swift in Sources */,
 				6FFD62442AF3C8B10036C106 /* UserInfoViewController.swift in Sources */,
+				6F49338C2B0FA16300586089 /* AddProductViewController.swift in Sources */,
 				6FFD62462AF3C8CD0036C106 /* AddNumberViewController.swift in Sources */,
 				6F0614FC2B0209D7002D11E6 /* ProductCard.swift in Sources */,
+				6F49338A2B0F9F3D00586089 /* AddProductView.swift in Sources */,
 				6FFD624E2AF3CAA90036C106 /* ProductDetailsViewController.swift in Sources */,
 				6FB80C032B0BB66B00BC605D /* ProfileTextField.swift in Sources */,
 				6F3EE9222AE0F3F900092A87 /* Button.swift in Sources */,
@@ -464,7 +469,6 @@
 				6FFD623B2AF3C7BF0036C106 /* WalletViewController.swift in Sources */,
 				6FFD62342AF3C5C00036C106 /* TabBarViewController.swift in Sources */,
 				6FFD62392AF3C7440036C106 /* ChatsViewController.swift in Sources */,
-				6FFD625C2AF41A5C0036C106 /* AddProductViewController.swift in Sources */,
 				6F0614F52B00F3FF002D11E6 /* Storage.swift in Sources */,
 				6F3EE8F92AE0326900092A87 /* SceneDelegate.swift in Sources */,
 				6F09D40B2AE2785300C072FE /* BackButton.swift in Sources */,

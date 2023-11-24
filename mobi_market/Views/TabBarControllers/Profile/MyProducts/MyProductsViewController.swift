@@ -80,7 +80,7 @@ class MyProductsViewController: UIViewController {
 extension MyProductsViewController {
     func setup() {
         view.backgroundColor = UIColor(named: "Background")
-        title = "Мои товары"
+        navigationController?.title = "Мои товары"
         
         setDeleteProductImageView()
         setCollectionView()
@@ -238,6 +238,10 @@ extension MyProductsViewController: AlertDelegate {
         
         let vc = AlertViewController()
         vc.modalPresentationStyle = .overFullScreen
+        vc.activeButtonTitle = "Удалить"
+        vc.imageName = "Trash"
+        vc.cancelButtonTitle = "Отмена"
+        vc.messageText = "Вы действительно хотите \nудалить данный товар?"
         present(vc, animated: false)
         vc.delegate = self
     }

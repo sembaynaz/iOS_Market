@@ -130,8 +130,13 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
     @objc func plusButtonTapped() {
-        let vc = UINavigationController(rootViewController: AddProductViewController())
-        vc.modalPresentationStyle = .overFullScreen
-        present(vc, animated: false)
+        do {
+            let vc = UINavigationController(rootViewController: AddProductViewController())
+            vc.modalPresentationStyle = .overFullScreen
+            present(vc, animated: false)
+            print("vc")
+        } catch {
+            print("Error: \(error)")
+        }
     }
 }
