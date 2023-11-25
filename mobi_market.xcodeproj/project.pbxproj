@@ -31,6 +31,7 @@
 		6F4CA7B52B07EE7D00313EF9 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4CA7B42B07EE7D00313EF9 /* AlertViewController.swift */; };
 		6FB80C012B0BB5D500BC605D /* BarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB80C002B0BB5D500BC605D /* BarButtonItem.swift */; };
 		6FB80C032B0BB66B00BC605D /* ProfileTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB80C022B0BB66B00BC605D /* ProfileTextField.swift */; };
+		6FDB76E12B11DAAF00EDB381 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDB76E02B11DAAF00EDB381 /* TabBar.swift */; };
 		6FF487D12AED40E7004E9B2A /* CreatePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF487D02AED40E7004E9B2A /* CreatePasswordViewController.swift */; };
 		6FFD62342AF3C5C00036C106 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD62332AF3C5C00036C106 /* TabBarViewController.swift */; };
 		6FFD62372AF3C7100036C106 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFD62362AF3C7100036C106 /* ProfileViewController.swift */; };
@@ -71,6 +72,7 @@
 		6F4CA7B42B07EE7D00313EF9 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		6FB80C002B0BB5D500BC605D /* BarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButtonItem.swift; sourceTree = "<group>"; };
 		6FB80C022B0BB66B00BC605D /* ProfileTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTextField.swift; sourceTree = "<group>"; };
+		6FDB76E02B11DAAF00EDB381 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		6FF487D02AED40E7004E9B2A /* CreatePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordViewController.swift; sourceTree = "<group>"; };
 		6FFD62332AF3C5C00036C106 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		6FFD62362AF3C7100036C106 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 		6FFD62352AF3C6ED0036C106 /* TabBarControllers */ = {
 			isa = PBXGroup;
 			children = (
+				6FDB76E02B11DAAF00EDB381 /* TabBar.swift */,
 				6FFD62332AF3C5C00036C106 /* TabBarViewController.swift */,
 				6FFC24AB2B06660C005666A0 /* Signup */,
 				6FFC24AA2B066602005666A0 /* Login */,
@@ -461,6 +464,7 @@
 				6FFD624E2AF3CAA90036C106 /* ProductDetailsViewController.swift in Sources */,
 				6FB80C032B0BB66B00BC605D /* ProfileTextField.swift in Sources */,
 				6F3EE9222AE0F3F900092A87 /* Button.swift in Sources */,
+				6FDB76E12B11DAAF00EDB381 /* TabBar.swift in Sources */,
 				6FFD62402AF3C8130036C106 /* FavoritesViewController.swift in Sources */,
 				6FFD62372AF3C7100036C106 /* ProfileViewController.swift in Sources */,
 				6F0614FA2B0203E7002D11E6 /* ProductCardCollectionViewCell.swift in Sources */,

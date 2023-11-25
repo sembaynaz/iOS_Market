@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 class AddProductView: UIView {
+    var textHeightOne: Int = 40
+    var textHeightTwo: Int = 40
     private var viewHeightAnchor: NSLayoutConstraint?
     var product = ProductCard()
     var productImages: [UIImage] = [] {
@@ -88,6 +90,8 @@ class AddProductView: UIView {
         textView.text = "Краткое описание"
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.clear.cgColor
+        textView.textContainer.maximumNumberOfLines = 10
+        textView.isScrollEnabled = false
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4
@@ -106,6 +110,7 @@ class AddProductView: UIView {
         textView.text = "Детальное описание"
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.clear.cgColor
+        textView.isScrollEnabled = false
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 4
@@ -119,6 +124,7 @@ class AddProductView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 6
+        
         
         let collectionView = UICollectionView(
             frame: .zero,
@@ -210,6 +216,7 @@ extension AddProductView {
         descriptionTextView.snp.makeConstraints { make in
             make.top.equalTo(nameTextView.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview().inset(20)
+            make.height.equalTo(textHeightOne)
         }
     }
     func setFullDescriptionTextView() {
@@ -221,6 +228,7 @@ extension AddProductView {
         fullDescriptionTextView.snp.makeConstraints { make in
             make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview().inset(20)
+            make.height.equalTo(textHeightTwo)
         }
     }
     
@@ -313,20 +321,83 @@ extension AddProductView: UITextViewDelegate {
         
     }
     
-    
-    func textViewDidChange(_ textView: UITextView) {
-        updateTextViewHeight(textView: textView)
-    }
-    
+//    
+//    func textViewDidChange(_ textView: UITextView) {
+//        if textView == descriptionTextView {
+//            let fixedWidth = textView.frame.size.width
+//            let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+//            textView.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+//            textHeightOne = Int(newSize.height)
+//            print(textHeightOne)
+//            updateConstraints()
+//        } else if textView == fullDescriptionTextView {
+//            let fixedWidth = textView.frame.size.width
+//            let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+//            textView.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+//            textHeightTwo = Int(newSize.height)
+//            updateConstraints()
+//        }
+//    }
+//    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard let currentText = textView.text else {
+            return true
+        }
+        
         isErrorTextField(textView: nameTextView, isError: false)
         isErrorTextField(textView: costTextView, isError: false)
         isErrorTextField(textView: descriptionTextView, isError: false)
         isErrorTextField(textView: fullDescriptionTextView, isError: false)
         setDefaultPhotoButtonStyle(isError: false)
         
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        let numberOfLines = newText.components(separatedBy: CharacterSet.newlines).count
+        
+        let maxLines = 10
+        
+        if text == "\n" {
+            textView.text.append("\n")
+            
+            if textView == descriptionTextView {
+                textHeightOne += 15
+                print(textHeightOne)
+            } else if textView == fullDescriptionTextView {
+                textHeightTwo += 15
+            }
+            
+            updateConstraints()
+            return false
+        }
+        
+        if numberOfLines <= maxLines {
+            let deletedNewlineCount = currentText.countOccurences(of: "\n", in: range)
+            
+            if textView == descriptionTextView {
+                textHeightOne -= deletedNewlineCount * 15
+                print(textHeightOne)
+            } else if textView == fullDescriptionTextView {
+                textHeightTwo -= deletedNewlineCount * 15
+            }
+            
+            updateConstraints()
+            return true
+        } else if text.isEmpty && numberOfLines == maxLines + 1 {
+            let deletedNewlineCount = currentText.countOccurences(of: "\n", in: range)
+            
+            if textView == descriptionTextView {
+                textHeightOne -= deletedNewlineCount * 15
+                print(textHeightOne)
+            } else if textView == fullDescriptionTextView {
+                textHeightTwo -= deletedNewlineCount * 15
+            }
+            
+            updateConstraints()
+            return true
+        }
+        
         return true
     }
+
     
     func isErrorTextField(textView: UITextView, isError: Bool) {
         let isPlaceholderText = { [self] in
@@ -402,3 +473,11 @@ extension AddProductView {
         photoView.layer.borderColor = isError ? UIColor.red.cgColor : UIColor.clear.cgColor
     }
 }
+
+extension String {
+    func countOccurences(of searchString: String, in range: NSRange) -> Int {
+        let substring = (self as NSString).substring(with: range)
+        return substring.components(separatedBy: searchString).count - 1
+    }
+}
+
