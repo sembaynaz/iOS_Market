@@ -1,14 +1,14 @@
 //
-//  ProfileViewController.swift
+//  ProfileView.swift
 //  mobi_market
 //
-//  Created by Nazerke Sembay on 02.11.2023.
+//  Created by Nazerke Sembay on 25.11.2023.
 //
 
+import Foundation
 import UIKit
-import SnapKit
 
-class ProfileViewController: UIViewController {
+class ProfileView: UIView {
 
     let changeInfoButton: BarButtonItem = {
         let button = BarButtonItem()
@@ -123,34 +123,16 @@ class ProfileViewController: UIViewController {
         return view
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func layoutSubviews() {
+        super.layoutSubviews()
         setup()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if let imageData = UserDefaults.standard.data(forKey: "profilePhoto"),
-           let image = UIImage(data: imageData) {
-            profilePhotoImageView.image = image
-            profilePhotoImageView.layer.cornerRadius = profilePhotoImageView.frame.size.width / 2
-            profilePhotoImageView.clipsToBounds = true
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = false
-    }
-    
 }
 
-extension ProfileViewController {
+extension ProfileView {
     func setup() {
-        view.backgroundColor = UIColor(named: "Background")
-        title = "Профиль"
+        backgroundColor = UIColor(named: "Background")
         
-        setChangeInfoButtonTapped()
         setProfilePhotoButton()
         setNameLabel()
         setFirstBackgroundView()
@@ -161,24 +143,24 @@ extension ProfileViewController {
         setLogOutButton()
         
         func setProfilePhotoButton() {
-            view.addSubview(profilePhotoImageView)
+            addSubview(profilePhotoImageView)
             profilePhotoImageView.snp.makeConstraints { make in
                 make.width.height.equalTo(80)
-                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(24)
-                make.centerX.equalTo(view.snp.centerX)
+                make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(24)
+                make.centerX.equalTo(snp.centerX)
             }
         }
         
         func setNameLabel() {
-            view.addSubview(nameLabel)
+            addSubview(nameLabel)
             nameLabel.snp.makeConstraints { make in
                 make.top.equalTo(profilePhotoImageView.snp.bottom).offset(12)
-                make.centerX.equalTo(view.snp.centerX)
+                make.centerX.equalTo(snp.centerX)
             }
         }
         
         func setFirstBackgroundView() {
-            view.addSubview(firstBackgroundView)
+            addSubview(firstBackgroundView)
             firstBackgroundView.snp.makeConstraints { make in
                 make.top.equalTo(nameLabel.snp.bottom).offset(24)
                 make.horizontalEdges.equalToSuperview().inset(20)
@@ -187,7 +169,7 @@ extension ProfileViewController {
         }
         
         func setSecondBackgroundView() {
-            view.addSubview(secondBackgroundView)
+            addSubview(secondBackgroundView)
             secondBackgroundView.snp.makeConstraints { make in
                 make.top.equalTo(firstBackgroundView.snp.bottom).offset(16)
                 make.horizontalEdges.equalToSuperview().inset(20)
@@ -199,8 +181,7 @@ extension ProfileViewController {
             firstBackgroundView.addSubview(favoritesButton)
             favoritesButton.addSubview(favoritesImageView)
             favoritesButton.addSubview(arrowImageView1)
-            favoritesButton.addTarget(self, action: #selector(favoritesButtonTapped), for: .touchUpInside)
-    
+            
             favoritesButton.snp.makeConstraints { make in
                 make.top.equalTo(firstBackgroundView.snp.top).offset(16)
                 make.height.equalTo(38)
@@ -234,8 +215,6 @@ extension ProfileViewController {
             myProductsButton.addSubview(myProductsImageView)
             myProductsButton.addSubview(arrowImageView2)
             
-            myProductsButton.addTarget(self, action: #selector(myProductsButtonTapped), for: .touchUpInside)
-            
             myProductsButton.snp.makeConstraints { make in
                 make.top.equalTo(favoritesButton.snp.bottom).offset(13)
                 make.height.equalTo(38)
@@ -257,7 +236,7 @@ extension ProfileViewController {
             secondBackgroundView.addSubview(logOutButton)
             logOutButton.addSubview(logOutImageView)
             logOutButton.addSubview(arrowImageView3)
-            logOutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+
             logOutButton.snp.makeConstraints { make in
                 make.top.equalTo(secondBackgroundView.snp.top).offset(16)
                 make.height.equalTo(38)
@@ -274,50 +253,6 @@ extension ProfileViewController {
                 make.right.equalToSuperview()
             }
         }
-        
-        func setChangeInfoButtonTapped() {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: changeInfoButton)
-            changeInfoButton.addTarget(self, action: #selector(changeInfoButtonTapped), for: .touchUpInside)
-        }
     }
-    
-}
-
-extension ProfileViewController: AlertDelegate {
-    @objc func changeInfoButtonTapped() {
-        let vc = UserInfoViewController()
-        navigationController?.show(vc, sender: self)
-    }
-    
-    @objc func favoritesButtonTapped() {
-        let vc = FavoritesViewController()
-        navigationController?.show(vc, sender: self)
-    }
-    
-    @objc func myProductsButtonTapped() {
-        let vc = MyProductsViewController()
-        navigationController?.show(vc, sender: self)
-    }
-    
-    @objc func logoutButtonTapped() {
-        let vc = AlertViewController()
-        vc.imageName = "Logout.red"
-        vc.activeButtonTitle = "Выйти"
-        vc.messageText = "Вы действительно хотите выйти с приложения?"
-        vc.cancelButtonTitle = "Отмена"
-        vc.delegate = self
-        vc.modalPresentationStyle = .overFullScreen
-        present(vc, animated: false)
-    }
-    
-    func didAgreeButtonTapped() {
-        dismiss(animated: true) {
-            let loginViewController = UINavigationController(rootViewController: LoginViewController())
-            loginViewController.customize()
-            loginViewController.modalPresentationStyle = .fullScreen
-            self.present(loginViewController, animated: true)
-        }
-    }
-
     
 }
