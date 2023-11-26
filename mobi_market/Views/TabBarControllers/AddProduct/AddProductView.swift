@@ -11,8 +11,9 @@ import UIKit
 class AddProductView: UIView {
     var textHeightOne: Int = 40
     var textHeightTwo: Int = 40
-    private var viewHeightAnchor: NSLayoutConstraint?
+    var viewHeightAnchor: NSLayoutConstraint?
     var product = ProductCard()
+    
     var productImages: [UIImage] = [] {
         didSet {
             collectionView.reloadData()

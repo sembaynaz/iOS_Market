@@ -11,214 +11,28 @@ class ConfirmCodeViewController: UIViewController {
     var isFirstEdit = true
     var time = 60
     var timer = Timer()
-    
-    let profilePhotoImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "Photo")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    let profilePhotoShadowImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "Shadow")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Введите код из СМС"
-        label.font = UIFont(name: "GothamPro-Medium", size: 20)
-        label.textColor = UIColor(named: "Black")
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    let repeatLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "GothamPro", size: 16)
-        label.numberOfLines = 0
-        label.textColor = UIColor(named: "Gray")
-        label.textAlignment = .center
-        label.text = "Повторный запрос"
-        
-        return label
-    }()
-    let timerLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "GothamPro", size: 16)
-        label.numberOfLines = 0
-        label.textColor = UIColor(named: "Gray")
-        label.textAlignment = .center
-        label.text = "1:00"
-        
-        return label
-    }()
-    let numberTextField: UITextField = {
-        let textField = UITextField()
-        textField.textAlignment = .center
-        textField.font = UIFont(name: "GothamPro-Bold", size: 28)
-        textField.text = "0 0 0 0"
-        textField.textColor = UIColor(named: "Black")
-        return textField
-    }()
-    private let repeatButton: UIButton = {
-        let button = UIButton()
-        let font = UIFont(name: "GothamPro-Medium", size: 17)
-        button.titleLabel?.font = font
-        button.contentHorizontalAlignment = .left
-        button.setTitle("Отправить код еще раз", for: .normal)
-        button.setTitleColor(UIColor(named: "Blue"), for: .normal)
-        button.isHidden = true
-        return button
-    }()
-    let errorLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Неверный код"
-        label.font = UIFont(name: "GothamPro-Medium", size: 17)
-        label.textColor = UIColor(named: "Red")
-        label.isHidden = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
+    let customView = ConfirmCodeView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
         setTimer()
+        setupUI()
     }
 }
 
 extension ConfirmCodeViewController {
-    func setup() {
-        view.backgroundColor = UIColor(named: "Background")
-        setProfilePhotoImageView()
-        setTitleLabel()
-        setNumberTextField()
-        setRepeatLabel()
-        setTimerLabel()
-//        setAnimationSpinner()
-        setRepeatButton()
-        setErrorLabel()
-    }
-    func setProfilePhotoImageView() {
-        view.addSubview(profilePhotoShadowImageView)
-        view.addSubview(profilePhotoImageView)
+    func setupUI() {
+        view.addSubview(customView)
+        customView.delegate = self
         
-        profilePhotoShadowImageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(39)
-            make.height.equalTo(80)
-            make.width.equalTo(90)
-            make.centerX.equalTo(view.snp.centerX)
+        customView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        
-        profilePhotoImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(80)
-            make.bottom.equalTo(profilePhotoShadowImageView.snp.bottom).offset(-17)
-            make.centerX.equalTo(view.snp.centerX)
-        }
+        customView.repeatButton.addTarget(self, action: #selector(repeatButtonTapped), for: .touchUpInside)
     }
-    func setTitleLabel() {
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
-            make.top.equalTo(profilePhotoImageView.snp.bottom).offset(32)
-        }
-    }
-    func setNumberTextField() {
-        let message = "0000"
-        numberTextField.text = message
-        let attributedString = textFieldTextColorToGray(numberTextField, message)
-        setSpaceBetweenTextField(attributedString)
-        numberTextField.attributedText = attributedString
-        numberTextField.delegate = self
-        
-        view.addSubview(numberTextField)
-        numberTextField.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(32)
-            make.horizontalEdges.equalTo(view.snp.horizontalEdges).inset(16)
-        }
-    }
-
-    func setRepeatLabel() {
-        view.addSubview(repeatLabel)
-        repeatLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
-            make.top.equalTo(numberTextField.snp.bottom).offset(16)
-        }
-    }
-    func setTimerLabel() {
-        view.addSubview(timerLabel)
-        timerLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
-            make.top.equalTo(repeatLabel.snp.bottom).offset(5.5)
-        }
-    }
-    func setRepeatButton() {
-        view.addSubview(repeatButton)
-        repeatButton.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
-            make.top.equalTo(numberTextField.snp.bottom).offset(24)
-        }
-    }
-    func setErrorLabel() {
-        view.addSubview(errorLabel)
-        errorLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
-            make.top.equalTo(repeatButton.snp.bottom).offset(16)
-        }
-    }
-//    func setAnimationSpinner() {
-//        view.addSubview(spinner)
-//        profilePhotoImageView.snp.makeConstraints { make in
-//            make.width.height.equalTo(16)
-//            make.bottom.equalTo(timerLabel.snp.bottom).offset(20)
-//            make.centerX.equalTo(view.snp.centerX)
-//        }
-//    }
 }
 
-
-extension ConfirmCodeViewController: UITextFieldDelegate {
-    func setSpaceBetweenTextField(_ attributedString: NSMutableAttributedString) {
-        let kernValue: CGFloat = 10.0
-        attributedString.addAttribute(NSAttributedString.Key.kern, value: kernValue, range: NSRange(location: 0, length: attributedString.length))
-    }
-    
-    func textFieldTextColorToGray(_ textField: UITextField, _ message: String) -> NSMutableAttributedString {
-        let attributedString = NSMutableAttributedString(string: message)
-        
-        let pattern = "0"
-        let regex = try! NSRegularExpression(pattern: pattern)
-        let matches = regex.matches(in: message, range: NSRange(message.startIndex..., in: message))
-        
-        for match in matches {
-            attributedString.addAttribute(.foregroundColor, value: UIColor(named: "Gray")!, range: match.range)
-        }
-        
-        return attributedString
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if isFirstEdit {
-            textField.textColor = UIColor(named: "BlackText")
-            textField.text = ""
-            isFirstEdit = false
-        }
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let mutableAttributedString = NSMutableAttributedString(string: textField.text ?? "")
-        
-        setSpaceBetweenTextField(mutableAttributedString)
-        
-        textField.attributedText = mutableAttributedString
-        
-        return true
-    }
-
-}
-
-extension ConfirmCodeViewController {
+extension ConfirmCodeViewController: ConfirmCodeViewDelegate {
     func setTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCount), userInfo: nil, repeats: true)
     }
@@ -226,15 +40,31 @@ extension ConfirmCodeViewController {
     @objc func timerCount() {
         time -= 1
         if time >= 0 {
-            timerLabel.text = String(format: "0:%0.2d", time)
+            customView.timerLabel.text = String(format: "0:%0.2d", time)
         }
         
         if time == 0 {
             timer.invalidate()
-            timerLabel.isHidden = true
-            repeatLabel.isHidden = true
-            repeatButton.isHidden = false
+            customView.timerLabel.isHidden = true
+            customView.repeatLabel.isHidden = true
+            customView.repeatButton.isHidden = false
+            customView.errorLabel.isHidden = false
         } else {
         }
+    }
+    
+    @objc func repeatButtonTapped() {
+        time = 60
+        setTimer()
+        customView.timerLabel.isHidden = false
+        customView.repeatLabel.isHidden = false
+        customView.repeatButton.isHidden = true
+        customView.errorLabel.isHidden = true
+    }
+    
+    func didBeginEditing() {
+        customView.isEdit = false
+        customView.numberTextField.textColor = UIColor(named: "BlackText")
+        customView.numberTextField.text = ""
     }
 }

@@ -88,13 +88,14 @@ extension TextField {
             UIView.animate(withDuration: 0.3) {
                 self.placeholderLabel.frame.origin = CGPoint(x: 0, y: 13)
                 self.placeholderLabel.font = UIFont(name: "GothamPro-Medium", size: 14)
+                
             }
         } else {
             UIView.animate(withDuration: 0.3) {
                 self.placeholderLabel.font = UIFont(name: "GothamPro", size: 16)
                 self.placeholderLabel.frame.origin = CGPoint(x: 0, y: 25)
                 self.isError = false
-                self.setupTextField()
+                //self.setupTextField()
             }
         }
     }

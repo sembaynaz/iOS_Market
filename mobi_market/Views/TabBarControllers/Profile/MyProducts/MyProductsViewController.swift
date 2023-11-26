@@ -14,7 +14,8 @@ class MyProductsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Мои товары"
-        ui()
+        
+        setupUi()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -22,31 +23,43 @@ class MyProductsViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     
-    func ui() {
+    func setupUi() {
         
         view.addSubview(customView)
         customView.delegate = self
+        customView.homeDelegate = self
         customView.snp.makeConstraints{ make in
             make.edges.equalToSuperview()
         }
         
+        setupNavButtons()
+        setupPopupView()
+    }
+    
+    func setupNavButtons() {
         navigationController?.navigationBar.addSubview(customView.deleteProductImage)
         customView.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: customView.backButton)
-        
-        
+    }
+    
+    func setupPopupView() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
         customView.popUp.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-        
-        
     }
 }
 
 
-extension MyProductsViewController: InfoButtonDelegate {
+extension MyProductsViewController: InfoButtonDelegate, MyProductViewDelegate {
+    func didSelectProduct(_ product: ProductCard) {
+        let vc = ProductDetailsViewController()
+        vc.customView.productInfo = product
+        navigationItem.title = ""
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         let touchPoint = gesture.location(in: view)
         if !customView.popUp.frame.contains(touchPoint) {
@@ -59,13 +72,6 @@ extension MyProductsViewController: InfoButtonDelegate {
         self.index = index
         customView.popUp.isHidden = false
         customView.blurContainView()
-    }
-    
-    func didSelectProduct(_ product: ProductCard) {
-        let vc = ProductDetailsViewController()
-        vc.customView.productInfo = product
-        navigationItem.title = ""
-        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

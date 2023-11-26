@@ -30,6 +30,9 @@ extension Button {
         layer.cornerRadius = 23
         backgroundColor = isActive ? UIColor(named: "Blue") : UIColor(named: "Gray")
         setTitleColor(.white, for: .normal)
+        
+        isEnabled = isActive
+        isUserInteractionEnabled = isActive
     }
 }
 

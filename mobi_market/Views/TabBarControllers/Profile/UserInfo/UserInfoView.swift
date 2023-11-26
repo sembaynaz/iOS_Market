@@ -47,32 +47,34 @@ class UserInfoView: UIView {
         view.layer.cornerRadius = 16
         return view
     }()
-    private let nameTextField: ProfileTextField = {
+    let nameTextField: ProfileTextField = {
         let textField = ProfileTextField()
         textField.font = UIFont(name: "Gothampro-Medium", size: 16)
         let font = UIFont(name: "Gothampro-Medium", size: 16)
         textField.setPlaceholderText("Имя")
         return textField
     }()
-    private let secondNameTextField: ProfileTextField = {
+    let secondNameTextField: ProfileTextField = {
         let textField = ProfileTextField()
         textField.font = UIFont(name: "Gothampro-Medium", size: 16)
         let font = UIFont(name: "Gothampro-Medium", size: 16)
         textField.setPlaceholderText("Отчество")
         return textField
     }()
-    private let lastNameTextField: ProfileTextField = {
+    let lastNameTextField: ProfileTextField = {
         let textField = ProfileTextField()
         textField.font = UIFont(name: "Gothampro-Medium", size: 16)
         let font = UIFont(name: "Gothampro-Medium", size: 16)
         textField.setPlaceholderText("Фамилия")
+        textField.setTextToTextField("Алеся")
         return textField
     }()
-    private let birthDateTextField: ProfileTextField = {
+    let birthDateTextField: ProfileTextField = {
         let textField = ProfileTextField()
         textField.font = UIFont(name: "Gothampro-Medium", size: 16)
         let font = UIFont(name: "Gothampro-Medium", size: 16)
         textField.setPlaceholderText("Дата рождения")
+        textField.keyboardType = .numberPad
         return textField
     }()
     let phoneNumberButton: UIButton = {
@@ -84,7 +86,7 @@ class UserInfoView: UIView {
         button.setTitleColor(UIColor(named: "Blue"), for: .normal)
         return button
     }()
-    private let phoneNumberLabel: UILabel = {
+    let phoneNumberLabel: UILabel = {
         let label = UILabel()
         let font = UIFont(name: "GothamPro-Medium", size: 16)
         label.font = font
@@ -102,11 +104,13 @@ class UserInfoView: UIView {
         )
         return view
     }()
-    private let emailTextField: ProfileTextField = {
+    let emailTextField: ProfileTextField = {
         let textField = ProfileTextField()
         textField.font = UIFont(name: "Gothampro-Medium", size: 16)
         let font = UIFont(name: "Gothampro-Medium", size: 16)
         textField.setPlaceholderText("Email")
+        textField.setTextToTextField("nikitina.alesya@gmail.com")
+        textField.isUserInteractionEnabled = false
         return textField
     }()
     
@@ -191,6 +195,8 @@ extension UserInfoView {
     }
     private func setBirthDateTextField() {
         firstBackgroundView.addSubview(birthDateTextField)
+        birthDateTextField.delegate = self
+        
         birthDateTextField.snp.makeConstraints { make in
             make.top.equalTo(secondNameTextField.snp.bottom).offset(6)
             make.horizontalEdges.equalToSuperview().inset(0)
@@ -231,3 +237,48 @@ extension UserInfoView {
     }
 }
 
+extension UserInfoView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let currentText = birthDateTextField.text as NSString? else {
+            return false
+        }
+        
+        let allowedCharacterSet = CharacterSet(charactersIn: "0123456789")
+        let characterSet = CharacterSet(charactersIn: string)
+        let isNumber = allowedCharacterSet.isSuperset(of: characterSet)
+        let newText = currentText.replacingCharacters(in: range, with: string)
+        
+        
+        if string.isEmpty {
+            return true
+        }
+        
+        
+        let newLength = newText.count
+        if isNumber && newLength <= 10 {
+            let formattedText = formatNumber(text: newText)
+            textField.text = formattedText
+            
+            birthDateTextField.setTextToTextField(formattedText)
+        }
+        
+        
+        return false
+    }
+    func handleBirthDateInput() {
+        if let text = birthDateTextField.text, text.count == 8 {
+            let formattedText = "\(text.prefix(2)).\(text.dropFirst(2).prefix(2)).\(text.dropFirst(4))"
+            birthDateTextField.text = formattedText
+        }
+    }
+    func formatNumber(text: String) -> String {
+        var formattedText = text.replacingOccurrences(of: ".", with: "")
+        if formattedText.count >= 2 {
+            formattedText.insert(".", at: formattedText.index(formattedText.startIndex, offsetBy: 2))
+        }
+        if formattedText.count >= 5 {
+            formattedText.insert(".", at: formattedText.index(formattedText.startIndex, offsetBy: 5))
+        }
+        return formattedText
+    }
+}

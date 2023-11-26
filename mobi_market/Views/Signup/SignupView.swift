@@ -22,16 +22,15 @@ class SignupView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    let emailTextField: TextField = {
+    let nameTextField: TextField = {
         let textField = TextField()
         textField.setPlaceholderText("Имя пользователя")
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    let passwordTextField: TextField = {
+    let emailTextField: TextField = {
         let textField = TextField()
-        textField.setPlaceholderText("Пароль")
-        textField.setPasswordTextField(true)
+        textField.setPlaceholderText("Почта")
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -75,17 +74,19 @@ extension SignupView {
         }
     }
     func setEmailTextField() {
-        addSubview(emailTextField)
-        emailTextField.snp.makeConstraints { make in
+        addSubview(nameTextField)
+        nameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        nameTextField.snp.makeConstraints { make in
             make.top.equalTo(logoText.snp.bottom).offset(68)
             make.horizontalEdges.equalToSuperview().inset(20)
             make.height.equalTo(55)
         }
     }
     func setPasswordTextField() {
-        addSubview(passwordTextField)
-        passwordTextField.snp.makeConstraints { make in
-            make.top.equalTo(emailTextField.snp.bottom).offset(52)
+        addSubview(emailTextField)
+        emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        emailTextField.snp.makeConstraints { make in
+            make.top.equalTo(nameTextField.snp.bottom).offset(52)
             make.horizontalEdges.equalToSuperview().inset(20)
             make.height.equalTo(55)
         }
@@ -94,9 +95,26 @@ extension SignupView {
         addSubview(signupButton)
         
         signupButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(46)
+            make.top.equalTo(emailTextField.snp.bottom).offset(46)
             make.horizontalEdges.equalToSuperview().inset(20)
             make.height.equalTo(44)
         }
+    }
+}
+
+extension SignupView {
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        if isValidEmail(emailTextField.text!) && !nameTextField.text!.isEmpty {
+            signupButton.setActive(true)
+        } else {
+            signupButton.setActive(false)
+        }
+    }
+    
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
     }
 }

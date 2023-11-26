@@ -8,6 +8,7 @@
 import UIKit
 
 class UserInfoViewController: UIViewController {
+    var userInfo = UserInfo()
     let customView = UserInfoView()
     
     override func viewDidLoad() {
@@ -62,13 +63,11 @@ extension UserInfoViewController {
 
 extension UserInfoViewController {
     @objc private func backButtonTapped() { //close vc
-        //dismiss(animated: false)
         navigationController?.popViewController(animated: true)
     }
     
     @objc private func doneButtonTapped() { // close vc and save data
         saveImageToUserDefaults(customView.profilePhotoImageView.image!)
-        //dismiss(animated: false)
         navigationController?.popViewController(animated: true)
     }
     
@@ -107,5 +106,17 @@ extension UserInfoViewController: UINavigationControllerDelegate, UIImagePickerC
         if let imageData = image.jpegData(compressionQuality: 1.0) {
             UserDefaults.standard.set(imageData, forKey: "profilePhoto")
         }
+    }
+}
+
+extension UserInfoViewController {
+    func loadUserInfoFromUserDefaults() -> UserInfo? {
+        let userDefaults = UserDefaults.standard
+        let decoder = JSONDecoder()
+        if let savedData = userDefaults.data(forKey: "userInfoKey"),
+           let userInfo = try? decoder.decode(UserInfo.self, from: savedData) {
+            return userInfo
+        }
+        return nil
     }
 }

@@ -13,6 +13,9 @@
 		6F0457772B13341200CFF5C9 /* CreatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0457762B13341200CFF5C9 /* CreatePasswordView.swift */; };
 		6F0457792B1338E200CFF5C9 /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0457782B1338E100CFF5C9 /* ProductView.swift */; };
 		6F04577B2B133FE000CFF5C9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F04577A2B133FE000CFF5C9 /* HomeView.swift */; };
+		6F04577E2B13956600CFF5C9 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F04577D2B13956600CFF5C9 /* UserInfo.swift */; };
+		6F0457802B13AD4300CFF5C9 /* AddNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F04577F2B13AD4300CFF5C9 /* AddNumberView.swift */; };
+		6F0457822B13AF0D00CFF5C9 /* ConfirmCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0457812B13AF0D00CFF5C9 /* ConfirmCodeView.swift */; };
 		6F0614F52B00F3FF002D11E6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614F42B00F3FF002D11E6 /* Storage.swift */; };
 		6F0614FA2B0203E7002D11E6 /* ProductCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614F92B0203E7002D11E6 /* ProductCardCollectionViewCell.swift */; };
 		6F0614FC2B0209D7002D11E6 /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614FB2B0209D7002D11E6 /* ProductCard.swift */; };
@@ -62,6 +65,9 @@
 		6F0457762B13341200CFF5C9 /* CreatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordView.swift; sourceTree = "<group>"; };
 		6F0457782B1338E100CFF5C9 /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
 		6F04577A2B133FE000CFF5C9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		6F04577D2B13956600CFF5C9 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		6F04577F2B13AD4300CFF5C9 /* AddNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNumberView.swift; sourceTree = "<group>"; };
+		6F0457812B13AF0D00CFF5C9 /* ConfirmCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCodeView.swift; sourceTree = "<group>"; };
 		6F0614F42B00F3FF002D11E6 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		6F0614F92B0203E7002D11E6 /* ProductCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		6F0614FB2B0209D7002D11E6 /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
@@ -124,6 +130,15 @@
 				6F0457742B13326E00CFF5C9 /* AlertView.swift */,
 			);
 			path = Alert;
+			sourceTree = "<group>";
+		};
+		6F04577C2B1353F800CFF5C9 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				6FDB76E02B11DAAF00EDB381 /* TabBar.swift */,
+				6FFD62332AF3C5C00036C106 /* TabBarViewController.swift */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 		6F0614F32B00F3DC002D11E6 /* SharedInstance */ = {
@@ -196,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				6F0614FB2B0209D7002D11E6 /* ProductCard.swift */,
+				6F04577D2B13956600CFF5C9 /* UserInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -222,6 +238,8 @@
 		6F3EE9102AE033E100092A87 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6FFC24AB2B06660C005666A0 /* Signup */,
+				6FFC24AA2B066602005666A0 /* Login */,
 				6FFD62352AF3C6ED0036C106 /* TabBarControllers */,
 			);
 			path = Views;
@@ -241,8 +259,8 @@
 		6FDB76E42B11E14900EDB381 /* CreatePassword */ = {
 			isa = PBXGroup;
 			children = (
-				6FF487D02AED40E7004E9B2A /* CreatePasswordViewController.swift */,
 				6F0457762B13341200CFF5C9 /* CreatePasswordView.swift */,
+				6FF487D02AED40E7004E9B2A /* CreatePasswordViewController.swift */,
 			);
 			path = CreatePassword;
 			sourceTree = "<group>";
@@ -283,8 +301,8 @@
 		6FFC24AA2B066602005666A0 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				6F3EE8FA2AE0326900092A87 /* LoginViewController.swift */,
 				6FDB76E52B11E19900EDB381 /* LoginView.swift */,
+				6F3EE8FA2AE0326900092A87 /* LoginViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -321,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				6FFD62472AF3C9150036C106 /* ConfirmCodeViewController.swift */,
+				6F0457812B13AF0D00CFF5C9 /* ConfirmCodeView.swift */,
 			);
 			path = ConfirmCode;
 			sourceTree = "<group>";
@@ -329,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				6FFD62452AF3C8CD0036C106 /* AddNumberViewController.swift */,
+				6F04577F2B13AD4300CFF5C9 /* AddNumberView.swift */,
 			);
 			path = AddNumber;
 			sourceTree = "<group>";
@@ -388,15 +408,12 @@
 		6FFD62352AF3C6ED0036C106 /* TabBarControllers */ = {
 			isa = PBXGroup;
 			children = (
-				6FDB76E02B11DAAF00EDB381 /* TabBar.swift */,
-				6FFD62332AF3C5C00036C106 /* TabBarViewController.swift */,
-				6FFC24AB2B06660C005666A0 /* Signup */,
-				6FFC24AA2B066602005666A0 /* Login */,
+				6F04577C2B1353F800CFF5C9 /* TabBar */,
 				6FFC24A72B064DB3005666A0 /* Profile */,
 				6FFC24A62B064D2E005666A0 /* Home */,
+				6FFC24B62B066933005666A0 /* AddProduct */,
 				6FFC24B42B066921005666A0 /* Chats */,
 				6FFC24B52B066929005666A0 /* Wallet */,
-				6FFC24B62B066933005666A0 /* AddProduct */,
 			);
 			path = TabBarControllers;
 			sourceTree = "<group>";
@@ -518,6 +535,7 @@
 				6F3EE9172AE0EFF600092A87 /* TextField.swift in Sources */,
 				6FFD62482AF3C9150036C106 /* ConfirmCodeViewController.swift in Sources */,
 				6FFD623D2AF3C7DE0036C106 /* HomeViewController.swift in Sources */,
+				6F04577E2B13956600CFF5C9 /* UserInfo.swift in Sources */,
 				6FB80C012B0BB5D500BC605D /* BarButtonItem.swift in Sources */,
 				6FDB76E32B11DFBF00EDB381 /* SignupView.swift in Sources */,
 				6F4CA7B52B07EE7D00313EF9 /* AlertViewController.swift in Sources */,
@@ -527,7 +545,9 @@
 				6F4CA7B12B0712CA00313EF9 /* MyProductsViewController.swift in Sources */,
 				6F0457702B13170100CFF5C9 /* FavotiteView.swift in Sources */,
 				6FDB76E62B11E19900EDB381 /* LoginView.swift in Sources */,
+				6F0457822B13AF0D00CFF5C9 /* ConfirmCodeView.swift in Sources */,
 				6FDB76E82B11E85400EDB381 /* ProfileView.swift in Sources */,
+				6F0457802B13AD4300CFF5C9 /* AddNumberView.swift in Sources */,
 				6FF487D12AED40E7004E9B2A /* CreatePasswordViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

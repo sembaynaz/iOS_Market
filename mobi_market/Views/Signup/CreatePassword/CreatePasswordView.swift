@@ -85,6 +85,7 @@ class CreatePasswordView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         setup()
+        firstPasswordTextField.becomeFirstResponder()
     }
 }
 
@@ -99,7 +100,7 @@ extension CreatePasswordView {
         setDescriptionLabel()
         setFirstPasswordTextField()
         setSecondPasswordTextField()
-        setSignupButton()
+        setNextButton()
         setErrorLabel()
     }
     func setLockImage() {
@@ -126,7 +127,6 @@ extension CreatePasswordView {
     }
     func setFirstPasswordTextField() {
         addSubview(firstPasswordTextField)
-        firstPasswordTextField.becomeFirstResponder()
         firstPasswordTextField.snp.makeConstraints { make in
             make.centerX.equalTo(snp.centerX)
             make.height.equalTo(34)
@@ -150,7 +150,7 @@ extension CreatePasswordView {
             make.bottom.equalTo(nextButton.snp.top).offset(-21)
         }
     }
-    func setSignupButton() {
+    func setNextButton() {
         addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
             make.top.equalTo(firstPasswordTextField.snp.bottom).offset(91)
@@ -162,6 +162,18 @@ extension CreatePasswordView {
 
 extension CreatePasswordView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        errorLabel.isHidden = true
+        let specialCharacters = "!@#$%^&*()_+"
+        //set maximum 15 character
+        let maxCharacterLimit = 15
+        if let text = textField.text, let range = Range(range, in: text) {
+            let updatedText = text.replacingCharacters(in: range, with: string)
+            
+            if updatedText.count > maxCharacterLimit {
+                return false
+            }
+        }
+        
         if textField == firstPasswordTextField {
             var hashPassword = ""
             let newChar = string.first
@@ -185,8 +197,11 @@ extension CreatePasswordView: UITextFieldDelegate {
             
             isSpace(textField: textField, hashPassword: hashPassword)
             
-            if originalPassword1.contains(where: { $0.isLetter }) && originalPassword1.contains(where: { $0.isNumber }) &&
-                originalPassword1.count >= 8 {
+            if originalPassword1.contains(where: { $0.isLowercase }) && originalPassword1.contains(where: { $0.isNumber }) &&
+                originalPassword1.contains(where: { specialCharacters.contains($0) }) &&
+                originalPassword1.contains(where: { $0.isUppercase }) &&
+                originalPassword1.count >= 8
+            {
                 nextButton.setActive(true)
                 nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
             } else {
@@ -217,16 +232,15 @@ extension CreatePasswordView: UITextFieldDelegate {
                 hashPassword = passwordText2
             }
             
-            if originalPassword2.count >= 8 {
-                    //doneButtonTapped()
-                nextButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-            }
-            
             isSpace(textField: textField, hashPassword: hashPassword)
             
-            if originalPassword2.contains(where: { $0.isLetter }) && originalPassword2.contains(where: { $0.isNumber }) &&
-                originalPassword2.count >= 8 {
+            if originalPassword2.contains(where: { $0.isLowercase }) && originalPassword2.contains(where: { $0.isNumber }) &&
+                originalPassword2.contains(where: { specialCharacters.contains($0) }) &&
+                originalPassword2.contains(where: { $0.isUppercase }) &&
+                originalPassword2.count >= 8
+            {
                 nextButton.setActive(true)
+                nextButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
             } else {
                 nextButton.setActive(false)
             }

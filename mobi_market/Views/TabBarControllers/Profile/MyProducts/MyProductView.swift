@@ -8,8 +8,13 @@
 import Foundation
 import UIKit
 
+protocol MyProductViewDelegate: AnyObject {
+    func didSelectProduct(_ product: ProductCard)
+}
+
 class MyProductView: UIView {
     weak var delegate: InfoButtonDelegate?
+    weak var homeDelegate: MyProductViewDelegate?
     var products: [ProductCard] = [ProductCard(title: "0"), ProductCard(title: "1"), ProductCard(title: "2"), ProductCard(title: "3"), ProductCard(title: "4"), ProductCard(title: "5"), ProductCard(title: "6")]
     var blurEffectView: CALayer?
     
@@ -154,7 +159,8 @@ extension MyProductView: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let selectedProduct = products[indexPath.row]
+        homeDelegate?.didSelectProduct(selectedProduct)
     }
 }
 

@@ -23,7 +23,7 @@ extension CreatePasswordViewController {
         customView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
+        customView.delegate = self
         setShowPasswordButton()
     }
     
@@ -36,12 +36,15 @@ extension CreatePasswordViewController {
 extension CreatePasswordViewController: CreatePasswordViewDelegate {
     func didTapNextButton() {
         isNextButtonTapped = true
-        customView.secondPasswordTextField.isHidden = false
         
         customView.titleLabel.text = "Повторите пароль"
         customView.nextButton.setTitle("Готово", for: .normal)
         
-        customView.secondPasswordTextField.becomeFirstResponder()
+        customView.secondPasswordTextField.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.customView.secondPasswordTextField.becomeFirstResponder()
+            print("second \(self.customView.secondPasswordTextField.isFirstResponder)")
+        }
     }
     
     func didTapDoneButton() {
@@ -49,7 +52,7 @@ extension CreatePasswordViewController: CreatePasswordViewDelegate {
             if customView.originalPassword2 == customView.originalPassword1 {
                 customView.errorLabel.isHidden = true
                 customView.nextButton.setActive(true)
-                
+                navigationController?.popToRootViewController(animated: true)
             } else {
                 customView.errorLabel.isHidden = false
                 customView.nextButton.setActive(false)

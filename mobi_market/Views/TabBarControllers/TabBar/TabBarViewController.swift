@@ -17,6 +17,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         setTabBarHeight(height: 62)
         self.setValue(customTabBar, forKey: "tabBar")
         customTabBar.middleButton.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+        selectedIndex = 4
     }
 
     private func generateTabBar() {

@@ -134,7 +134,6 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedProduct = products[indexPath.row]
-        print("tap")
         delegate?.didSelectProduct(selectedProduct)
     }
     
