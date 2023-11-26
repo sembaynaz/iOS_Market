@@ -121,9 +121,9 @@ extension MyProductsViewController: AlertDelegate {
     }
     
     @objc func changeButtonTapped() {
-        let vc = ProductDetailsViewController()
-        vc.isMyProduct = true
-        vc.customView.productInfo = customView.products[index]
+        let vc = AddProductViewController()
+        vc.contentView.product = self.customView.products[index]
+        vc.contentView.isChangeVC = true
         navigationController?.show(vc, sender: self)
         customView.popUp.isHidden = true
         customView.unblurContainView()
