@@ -1,6 +1,6 @@
 # iOS_Market
 
-<img width = "245" height = "500" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/d37dea02-99cd-4173-ade8-4b7ffb6a43e9">
+<img width = "123" height = "250" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/d37dea02-99cd-4173-ade8-4b7ffb6a43e9">
 <img width = "245" height = "500" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/db20714c-51f7-4ace-baa6-fbd933656971">
 <img width = "245" height = "500" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/be8a36fb-ca1e-477e-884b-4dfd9d431463">
 <img width = "245" height = "500" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/74ecf744-3d0b-4971-bc2a-d3a233b229a0">
