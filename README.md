@@ -18,16 +18,17 @@ Libraries used here, that we must instal is **SnapKit**. You can download the pr
 ## Usage
 ## Оглавление
 1. [Components](#Components)
-   - [TextField](#TextField)
-   - [Button](#Button)
-   - [BarButtonItem](#BarButtonItem)
-   - [ProfileTextField](ProfileTextField)
+   - [TextField](#TextField.swift)
+   - [Button](#Button.swift)
+   - [BarButtonItem](#BarButtonItem.swif)
+   - [ProfileTextField](ProfileTextField.swif)
 2. [ViewControllers](#ViewControllers)
-   - [Регистрация и Авторизация](#Регистрация-и-Авторизация)
-   - [TabBarViewController](#TabBarViewController)
-   - [Главная страница](#Главная-страница)
-   - [Добавление новых товаров](Добавление-новых-товаров)
-   - [Профиль пользователя](#Профиль-пользователя)
+   - [Registration and Authorization](#Registration-and-Authorization)
+   - [TabBarViewController](#TabBarViewController.swift)
+   - [Home Page](#Home-Page)
+   - [Adding New Products](Adding-New-Products)
+   - [User Profile](#User-Profile)
+   - [AlertViewController](#AlertViewController)
 
 # Components
 ### TextField.swift
@@ -138,6 +139,11 @@ The `TabBar` class represents a customized tab bar for use on the main screen of
 - **My Products:** Users can edit the products they added themselves.
 ---
 
+## AlertViewController
+- The AlertView and AlertViewController combination allows for the creation of customizable alerts with different messages, images, and button titles.
+- The AlertDelegate protocol provides a way for the alert to communicate with the presenting view controller when the user taps the agree button.
+
+---
 ## Contribution
 Contributions to this project are welcome!
 You can organize my code, add a new functionalities, user interface improvments,testing, error handling, add Combine, add the back-end. 
