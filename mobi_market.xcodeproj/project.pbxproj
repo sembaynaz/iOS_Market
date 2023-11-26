@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6F0457702B13170100CFF5C9 /* FavotiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F04576F2B13170100CFF5C9 /* FavotiteView.swift */; };
 		6F0457722B131B0D00CFF5C9 /* MyProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0457712B131B0D00CFF5C9 /* MyProductView.swift */; };
+		6F0457752B13326E00CFF5C9 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0457742B13326E00CFF5C9 /* AlertView.swift */; };
 		6F0614F52B00F3FF002D11E6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614F42B00F3FF002D11E6 /* Storage.swift */; };
 		6F0614FA2B0203E7002D11E6 /* ProductCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614F92B0203E7002D11E6 /* ProductCardCollectionViewCell.swift */; };
 		6F0614FC2B0209D7002D11E6 /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614FB2B0209D7002D11E6 /* ProductCard.swift */; };
@@ -54,6 +55,7 @@
 /* Begin PBXFileReference section */
 		6F04576F2B13170100CFF5C9 /* FavotiteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavotiteView.swift; sourceTree = "<group>"; };
 		6F0457712B131B0D00CFF5C9 /* MyProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductView.swift; sourceTree = "<group>"; };
+		6F0457742B13326E00CFF5C9 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		6F0614F42B00F3FF002D11E6 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		6F0614F92B0203E7002D11E6 /* ProductCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		6F0614FB2B0209D7002D11E6 /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
@@ -109,6 +111,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F0457732B13320B00CFF5C9 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				6F4CA7B42B07EE7D00313EF9 /* AlertViewController.swift */,
+				6F0457742B13326E00CFF5C9 /* AlertView.swift */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
 		6F0614F32B00F3DC002D11E6 /* SharedInstance */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +262,7 @@
 		6FFC24A72B064DB3005666A0 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				6F0457732B13320B00CFF5C9 /* Alert */,
 				6FFD623E2AF3C7F60036C106 /* Profile */,
 				6FFC24AD2B066769005666A0 /* UserInfo */,
 				6FFC24AC2B066757005666A0 /* Number */,
@@ -334,7 +346,6 @@
 			isa = PBXGroup;
 			children = (
 				6F4CA7B22B07B69E00313EF9 /* ModalView.swift */,
-				6F4CA7B42B07EE7D00313EF9 /* AlertViewController.swift */,
 			);
 			path = ChangeProductDetail;
 			sourceTree = "<group>";
@@ -499,6 +510,7 @@
 				6FDB76E32B11DFBF00EDB381 /* SignupView.swift in Sources */,
 				6F4CA7B52B07EE7D00313EF9 /* AlertViewController.swift in Sources */,
 				6F4CA7B32B07B69E00313EF9 /* ModalView.swift in Sources */,
+				6F0457752B13326E00CFF5C9 /* AlertView.swift in Sources */,
 				6F0457722B131B0D00CFF5C9 /* MyProductView.swift in Sources */,
 				6F4CA7B12B0712CA00313EF9 /* MyProductsViewController.swift in Sources */,
 				6F0457702B13170100CFF5C9 /* FavotiteView.swift in Sources */,

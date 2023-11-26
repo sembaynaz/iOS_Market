@@ -1,22 +1,14 @@
 //
-//  AlertViewController.swift
+//  AlertView.swift
 //  mobi_market
 //
-//  Created by Nazerke Sembay on 18.11.2023.
+//  Created by Nazerke Sembay on 26.11.2023.
 //
 
+import Foundation
 import UIKit
-protocol AlertDelegate: AnyObject {
-    func didAgreeButtonTapped()
-}
 
-class AlertViewController: UIViewController {
-    var imageName = ""
-    var messageText = ""
-    var activeButtonTitle = ""
-    var cancelButtonTitle = ""
-    weak var delegate: AlertDelegate?
-    
+class AlertView: UIView {
     let backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -56,22 +48,21 @@ class AlertViewController: UIViewController {
         return button
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    override func layoutSubviews() {
+        super.layoutSubviews()
         setup()
     }
 }
 
-extension AlertViewController {
+extension AlertView {
     func setup() {
-        view.backgroundColor = UIColor(
+        backgroundColor = UIColor(
             red: 19/255,
             green: 19/255,
             blue: 19/255,
             alpha: 0.4
         )
-
+        
         setBackgroundView()
         setLogoImage()
         setMessageLabel()
@@ -80,10 +71,10 @@ extension AlertViewController {
     }
     
     func setBackgroundView() {
-        view.addSubview(backgroundView)
+        addSubview(backgroundView)
         backgroundView.snp.makeConstraints { make in
-            make.centerY.equalTo(view.snp.centerY)
-            make.centerX.equalTo(view.snp.centerX)
+            make.centerY.equalTo(snp.centerY)
+            make.centerX.equalTo(snp.centerX)
             make.horizontalEdges.equalToSuperview().inset(20 * UIScreen.main.bounds.width / 375)
             make.height.equalTo(352 * UIScreen.main.bounds.height / 812)
         }
@@ -91,8 +82,6 @@ extension AlertViewController {
     func setAgreeButton() {
         backgroundView.addSubview(agreeButton)
         
-        agreeButton.setTitle("\(activeButtonTitle)", for: .normal)
-        agreeButton.addTarget(self, action: #selector(agreeButtonTapped), for: .touchUpInside)
         agreeButton.snp.makeConstraints { make in
             make.top.equalTo(messageLabel.snp.bottom).offset(24 * UIScreen.main.bounds.height / 812)
             make.height.equalTo(44 * UIScreen.main.bounds.height / 812)
@@ -101,8 +90,7 @@ extension AlertViewController {
     }
     func setCancelButton() {
         backgroundView.addSubview(cancelButton)
-        cancelButton.setTitle("\(cancelButtonTitle)", for: .normal)
-        cancelButton.addTarget(self, action: #selector(cancelButtonTapped), for: .touchUpInside)
+        
         cancelButton.snp.makeConstraints { make in
             make.top.equalTo(agreeButton.snp.bottom).offset(4 * UIScreen.main.bounds.height / 812)
             make.height.equalTo(44 * UIScreen.main.bounds.height / 812)
@@ -111,7 +99,7 @@ extension AlertViewController {
     }
     func setMessageLabel() {
         backgroundView.addSubview(messageLabel)
-        messageLabel.text = messageText
+
         messageLabel.snp.makeConstraints { make in
             make.top.equalTo(logoImage.snp.bottom).offset(14 * UIScreen.main.bounds.height / 812)
             make.horizontalEdges.equalToSuperview().inset(16 * UIScreen.main.bounds.width / 375)
@@ -120,24 +108,11 @@ extension AlertViewController {
     
     func setLogoImage() {
         backgroundView.addSubview(logoImage)
-        logoImage.image = UIImage(named: imageName)
+
         logoImage.snp.makeConstraints { make in
             make.height.width.equalTo(130 * UIScreen.main.bounds.width / 375)
             make.centerX.equalTo(backgroundView.snp.centerX)
             make.top.equalTo(backgroundView.snp.top).inset(24 * UIScreen.main.bounds.height / 812)
         }
-    }
-}
-
-    //MARK: Functionality
-extension AlertViewController {
-    @objc func cancelButtonTapped() {
-        dismiss(animated: false)
-    }
-    
-    @objc func agreeButtonTapped() {
-        print("tap")
-        delegate?.didAgreeButtonTapped()
-        dismiss(animated: false)
     }
 }
