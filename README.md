@@ -12,7 +12,9 @@
 
 This project is designed to provide users with a convenient and intuitive experience in viewing and purchasing goods. Including a user profile feature that allows you to manage personal information and increases security through phone number verification.
 
+### To authorization
 **Login:** Neobis
+
 **Password:** neobis2023
 
 
