@@ -16,114 +16,127 @@ This project is designed to provide users with a convenient and intuitive experi
 Libraries used here, that we must instal is **SnapKit**. You can download the project from GitHub as a zip file and then open it in the **xCode** application.
 
 ## Usage
+## Оглавление
+1. [Components](#Components)
+   - [TextField](#TextField)
+   - [Button](#Button)
+   - [BarButtonItem](#BarButtonItem)
+   - [ProfileTextField](ProfileTextField)
+2. [ViewControllers](#ViewControllers)
+   - [Регистрация и Авторизация](#Регистрация-и-Авторизация)
+   - [TabBarViewController](#TabBarViewController)
+   - [Главная страница](#Главная-страница)
+   - [Добавление новых товаров](Добавление-новых-товаров)
+   - [Профиль пользователя](#Профиль-пользователя)
 
-### Components
-#### TextField.swift
-Класс `TextField` представляет собой настраиваемый текстовый поле с дополнительной функциональностью, такой как отображение placeholder'а, управление стилем границы, и возможность использования в качестве поля ввода пароля с кнопкой для отображения/скрытия пароля.
+# Components
+### TextField.swift
+The `TextField` class represents a customizable text field with additional functionality, such as displaying a placeholder, managing border style, and the ability to use it as a password input field with a button for showing/hiding the password.
 
-##### Свойства:
+#### Properties:
 
-- `placeholderLabel`: UILabel для отображения placeholder'а.
-- `isError`: Флаг, указывающий на наличие ошибки в поле.
-- `isPassword`: Флаг, указывающий, является ли поле полем для ввода пароля.
-- `showPasswordButton`: Кнопка для отображения/скрытия пароля.
+- `placeholderLabel`: UILabel for displaying the placeholder.
+- `isError`: A flag indicating the presence of an error in the field.
+- `isPassword`: A flag indicating whether the field is a password input field.
+- `showPasswordButton`: Button for showing/hiding the password.
 
-##### Методы:
+#### Methods:
 
-- `setupTextFieldPlaceholder()`: Настройка UILabel для отображения placeholder'а.
-- `setupBorder()`: Настройка стиля границы, включая цвет и положение.
-- `setupTextField()`: Общая настройка текстового поля, включая шрифт, цвет текста и, при необходимости, кнопку отображения/скрытия пароля.
-- `textFieldDidChange(_:)`: Обработчик изменения текста в поле для анимации отображения/скрытия placeholder'а.
-- `textRect(forBounds:)` и `editingRect(forBounds:)`: Переопределенные методы для настройки области текста внутри поля.
+- `setupTextFieldPlaceholder()`: Configures the UILabel for displaying the placeholder.
+- `setupBorder()`: Configures the border style, including color and position.
+- `setupTextField()`: General setup of the text field, including font, text color, and, if needed, a button for showing/hiding the password.
+- `textFieldDidChange(_:)`: Text change handler for animating the display/hiding of the placeholder.
+- `textRect(forBounds:)` and `editingRect(forBounds:)`: Overridden methods for configuring the text area inside the field.
 ---
 
-#### Button.swift
-Класс `Button` представляет собой настраиваемую кнопку с возможностью управления активностью (включено/выключено).
+### Button.swift
+The `Button` class represents a customizable button with the ability to control its activity (enabled/disabled).
 
-##### Свойства:
+#### Properties:
 
-- `isActive`: Флаг, указывающий, активна ли кнопка.
+- `isActive`: A flag indicating whether the button is active.
 
-##### Методы:
+#### Methods:
 
-- `custumize()`: Настройка внешнего вида кнопки, включая шрифт, цвет фона и активность кнопки.
-- `setActive(_:)`: Метод для установки активности кнопки.
+- `customize()`: Configures the appearance of the button, including font, background color, and button activity.
+- `setActive(_:)`: Method for setting the button's activity.
 ---
 
-#### BarButtonItem.swift
-Класс `BarButtonItem` представляет собой настраиваемую кнопку для использования в панели навигации.
+### BarButtonItem.swift
+The `BarButtonItem` class represents a customizable button for use in the navigation bar.
 
-##### Методы:
+#### Methods:
 
-- `custumize()`: Настройка внешнего вида кнопки, включая шрифт, цвет фона и отступы.
+- `customize()`: Configures the appearance of the button, including font, background color, and margins.
 ---
 
-#### ProfileTextField.swift
-Класс `ProfileTextField` представляет собой кастомизированное текстовое поле, предназначенное для использования в профиле пользователя.
+### ProfileTextField.swift
+The `ProfileTextField` class represents a customized text field intended for use in the user profile.
 
-##### Методы:
-- `setupBorder()`: Настройка стиля границы, включая цвет.
-- `setupTextFieldPlaceholder()`: Настройка UILabel для отображения placeholder'а.
-- `setupTextField()`: Общая настройка текстового поля, включая шрифт и цвет текста.
-- `textFieldDidChange(_:)`: Обработчик изменения текста в поле для скрытия/отображения placeholder'а.
-- `textRect(forBounds:)` и `editingRect(forBounds:)`: Переопределенные методы для настройки области текста внутри поля.
+#### Methods:
+
+- `setupBorder()`: Configures the border style, including color.
+- `setupTextFieldPlaceholder()`: Configures the UILabel for displaying the placeholder.
+- `setupTextField()`: General setup of the text field, including font and text color.
+- `textFieldDidChange(_:)`: Text change handler for hiding/displaying the placeholder.
+- `textRect(forBounds:)` and `editingRect(forBounds:)`: Overridden methods for configuring the text area inside the field.
 ---
 
+# ViewControllers
 
-### ViewControllers
+## Registration and Authorization
 
-### Регистрация и Авторизация
+- **Authorization:** Users can register using their login and email address.
 
-- **Авторизация:** Пользователи могут зарегистрироваться с помощью логина и адреса электронной почты.
-
-Из-за того что пока не подключен бэкенд используйте это данные:
-login: Neobis
+Since the backend is not connected yet, use the following test data:
+Login: Neobis
 Password: neobis2023
 
-- **Регистрация:** Тут пользователи могут зарегистрироваться и установить пароль, после успешной установки опять направляются на страницу авторизации.
-
----
-### TabBarViewController.swift
-
-Класс `TabBarViewController` представляет контроллер таббара для организации основного навигационного потока в приложении. Он также включает в себя кастомизированный таббар (`TabBar`), который включает центральную кнопку для добавления продукта.
-
-#### Методы:
-
-- `generateTabBar()`: Создание и настройка контроллеров представлений для таббара, включая вкладки "Главная", "Кошелек", "Чаты", "Профиль", а также центральную вкладку для добавления продукта.
-- `generateVC(viewController:title:image:tag:isEnabled:)`: Вспомогательный метод для создания экземпляра вью-контроллера для таббара с заданными параметрами.
-- `setTabBarHeight(height:)`: Метод для установки высоты таббара.
-- `plusButtonTapped()`: Обработчик нажатия на кнопку "Плюс" (добавление продукта), открывающий соответствующий экран.
-
-### TabBar.swift
-
-Класс `TabBar` представляет кастомизированный таббар для использования в главном экране приложения. Он включает в себя центральную кнопку (плюс), а также настраиваемые стили, цвета и тени.
-
-#### Свойства:
-
-- `middleButton`: Кнопка, расположенная по центру таббара с изображением "Plus".
-- `makeUI()`: Настройка интерфейса таббара, включая фон, центральную кнопку и общий стиль.
-- `setTabBarAppearance()`: Настройка общего вида таббара, включая цвета и прозрачность.
-- `dropShadow(scale:)`: Добавление тени таббару с заданными параметрами.
----
-### Главная страница
-
-- **Лента товаров:** На главной странице представлена визуально привлекательная лента товаров с важной информацией, такой как цена и краткое описание.
-- Нажимая на продукт вы будете направлены на страницу где можете увидеть более подробную иснформацию о продукте.
-- **Добавление в избранное:** Пользователи могут добавлять продукты в избранное для легкого доступа. Добавленные в избранное продукты вы можете увидеть на страницу Профиля -> Понравившиеся.
-  
----
-### Добавление новых товаров
-
-- **Добавление товаров:** Авторизованные пользователи могут добавлять новые товары для расширения и постоянного обновления каталога.
-
+- **Registration:** Here users can register and set a password, after successful registration, they are redirected to the authorization page.
 ---
 
-### Профиль пользователя
+## TabBarViewController.swift
 
-- **Профиль:** Пользователи могут создавать и управлять своими личными данными в профиле. Если же вы только зарегистрировались вам необходима закочить регистрацию нажав на соответсвующую кнопку. Где вы можете редактировать все данные кроме email, так же подтвердить телефон.
-- **Понравившиеся:** Возможность сохранения и просмотра понравившихся товаров.
-- **Мои товары:** Пользователи могут редактировать товары, которые они сами добавили.
+The `TabBarViewController` class represents a tab bar controller for organizing the main navigation flow in the application. It also includes a customized tab bar (`TabBar`), which includes a central button for adding a product.
 
+#### Methods:
+
+- `generateTabBar()`: Creates and configures view controllers for the tab bar, including tabs for "Home," "Wallet," "Chats," "Profile," and a central tab for adding a product.
+- `generateVC(viewController:title:image:tag:isEnabled:)`: Helper method for creating a view controller instance for the tab bar with specified parameters.
+- `setTabBarHeight(height:)`: Method for setting the height of the tab bar.
+- `plusButtonTapped()`: Handler for pressing the "Plus" button (adding a product), opening the corresponding screen.
+---
+
+## TabBar.swift
+
+The `TabBar` class represents a customized tab bar for use on the main screen of the application. It includes a central button (plus) and customizable styles, colors, and shadows.
+
+#### Properties:
+
+- `middleButton`: Button located in the center of the tab bar with the "Plus" image.
+- `makeUI()`: Configures the interface of the tab bar, including the background, central button, and overall style.
+- `setTabBarAppearance()`: Configures the overall appearance of the tab bar, including colors and transparency.
+- `dropShadow(scale:)`: Adds a shadow to the tab bar with specified parameters.
+---
+
+## Home Page
+
+- **Product Feed:** The main page features a visually appealing product feed with important information such as price and a brief description.
+- By clicking on a product, you will be directed to a page where you can see more detailed information about the product.
+- **Add to Favorites:** Users can add products to their favorites for easy access. Added favorite products can be viewed on the Profile page -> Likes.
+---
+
+## Adding New Products
+
+- **Add Products:** Authenticated users can add new products to expand and continuously update the product catalog.
+---
+
+## User Profile
+
+- **Profile:** Users can create and manage their personal data on the profile page. If you have just registered, you need to complete the registration by clicking on the corresponding button. Here, you can edit all data except for email and verify your phone.
+- **Likes:** The ability to save and view liked products.
+- **My Products:** Users can edit the products they added themselves.
+---
 
 ## Contribution
 Contributions to this project are welcome!
@@ -134,9 +147,6 @@ Feel free to customize, extend, or modify these components and view controllers 
 ## Author
 git: sembaynaz
 
+e-mail: nazerke.sembay11@gmail.com 
 
-
-
-## Вклад и обратная связь
-
-Мы приветствуем ваши вклады и обратную связь. Если у вас есть предложения или найдены ошибки, пожалуйста, создайте issue или отправьте pull request.
+telegram: @sembaynaz
