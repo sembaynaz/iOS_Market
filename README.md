@@ -10,12 +10,64 @@
 
 ## Project Description
 
-Этот проект разработан с целью обеспечить пользователям удобный и интуитивно понятный опыт в просмотре и покупке товаров. Включая функцию профиля пользователя, позволяющую управлять личной информацией и повышающую безопасность через проверку номера телефона.
+This project is designed to provide users with a convenient and intuitive experience in viewing and purchasing goods. Including a user profile feature that allows you to manage personal information and increases security through phone number verification.
 
 ## Installation
 Libraries used here, that we must instal is **SnapKit**. You can download the project from GitHub as a zip file and then open it in the **xCode** application.
 
 ## Usage
+
+### Components
+#### TextField.swift
+Класс `TextField` представляет собой настраиваемый текстовый поле с дополнительной функциональностью, такой как отображение placeholder'а, управление стилем границы, и возможность использования в качестве поля ввода пароля с кнопкой для отображения/скрытия пароля.
+
+##### Свойства:
+
+- `placeholderLabel`: UILabel для отображения placeholder'а.
+- `isError`: Флаг, указывающий на наличие ошибки в поле.
+- `isPassword`: Флаг, указывающий, является ли поле полем для ввода пароля.
+- `showPasswordButton`: Кнопка для отображения/скрытия пароля.
+
+##### Методы:
+
+- `setupTextFieldPlaceholder()`: Настройка UILabel для отображения placeholder'а.
+- `setupBorder()`: Настройка стиля границы, включая цвет и положение.
+- `setupTextField()`: Общая настройка текстового поля, включая шрифт, цвет текста и, при необходимости, кнопку отображения/скрытия пароля.
+- `textFieldDidChange(_:)`: Обработчик изменения текста в поле для анимации отображения/скрытия placeholder'а.
+- `textRect(forBounds:)` и `editingRect(forBounds:)`: Переопределенные методы для настройки области текста внутри поля.
+---
+
+#### Button.swift
+Класс `Button` представляет собой настраиваемую кнопку с возможностью управления активностью (включено/выключено).
+
+##### Свойства:
+
+- `isActive`: Флаг, указывающий, активна ли кнопка.
+
+##### Методы:
+
+- `custumize()`: Настройка внешнего вида кнопки, включая шрифт, цвет фона и активность кнопки.
+- `setActive(_:)`: Метод для установки активности кнопки.
+---
+
+#### BarButtonItem.swift
+Класс `BarButtonItem` представляет собой настраиваемую кнопку для использования в панели навигации.
+
+##### Методы:
+
+- `custumize()`: Настройка внешнего вида кнопки, включая шрифт, цвет фона и отступы.
+---
+
+#### ProfileTextField.swift
+Класс `ProfileTextField` представляет собой кастомизированное текстовое поле, предназначенное для использования в профиле пользователя.
+
+##### Методы:
+- `setupBorder()`: Настройка стиля границы, включая цвет.
+- `setupTextFieldPlaceholder()`: Настройка UILabel для отображения placeholder'а.
+- `setupTextField()`: Общая настройка текстового поля, включая шрифт и цвет текста.
+- `textFieldDidChange(_:)`: Обработчик изменения текста в поле для скрытия/отображения placeholder'а.
+- `textRect(forBounds:)` и `editingRect(forBounds:)`: Переопределенные методы для настройки области текста внутри поля.
+---
 
 ### 1. Регистрация и Авторизация
 
