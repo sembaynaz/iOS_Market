@@ -8,7 +8,7 @@
 import UIKit
 
 class ProductDetailsViewController: UIViewController {
-    let customView = ProductDetailView()
+    let customView = ProductView()
     var isMyProduct = false
     
     override func viewDidLoad() {

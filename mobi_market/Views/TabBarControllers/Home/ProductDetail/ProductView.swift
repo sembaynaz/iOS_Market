@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ProductDetailView: UIView {
+class ProductView: UIView {
     var productImages: [String] = ["image 2", "image 2", "image 2", "image 2"]
     var productInfo = ProductCard()
     
@@ -140,7 +140,7 @@ class ProductDetailView: UIView {
     }
 }
 
-extension ProductDetailView {
+extension ProductView {
     private func setup() {
         backgroundColor = .white
         setCollectionView()
@@ -234,7 +234,7 @@ extension ProductDetailView {
     }
 }
 
-extension ProductDetailView {
+extension ProductView {
     private func configurePageControl() {
         let dotSize: CGFloat = 10.0
         let spacing: CGFloat = 10.0
@@ -258,7 +258,7 @@ extension ProductDetailView {
 }
 
 
-extension ProductDetailView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ProductView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return productImages.count
     }

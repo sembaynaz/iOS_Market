@@ -2,23 +2,15 @@
 //  AddProductView.swift
 //  mobi_market
 //
-//  Created by Nazerke Sembay on 23.11.2023.
+//  Created by Nazerke Sembay on 27.11.2023.
 //
 
 import Foundation
 import UIKit
 
 class AddProductView: UIView {
-    var textHeightOne: Int = 40
-    var textHeightTwo: Int = 40
-    var viewHeightAnchor: NSLayoutConstraint?
-    var product = ProductCard()
-    
-    var productImages: [UIImage] = [] {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    var product: ProductCard?
+    var productImages: [UIImage] = []
     let namePlaceholder = "Название"
     let costPlaceholder = "Цена"
     let descriptionPlaceholder = "Краткое описание"
@@ -54,16 +46,10 @@ class AddProductView: UIView {
         textView.textContainerInset = UIEdgeInsets(top: 15, left: 16, bottom: 15, right: 16)
         textView.layer.cornerRadius = 12
         textView.textColor = .lightGray
+        textView.font = UIFont(name: "Gothampro", size: 16)
         textView.text = "Цена"
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.clear.cgColor
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
-        textView.attributedText = NSAttributedString(string: textView.text, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
-        let font = UIFont(name: "Gothampro", size: 16)
-        textView.font = font
-        
         return textView
     }()
     let nameTextView: UITextView = {
@@ -71,16 +57,10 @@ class AddProductView: UIView {
         textView.textContainerInset = UIEdgeInsets(top: 15, left: 16, bottom: 15, right: 16)
         textView.layer.cornerRadius = 12
         textView.textColor = .lightGray
+        textView.font = UIFont(name: "Gothampro", size: 16)
         textView.text = "Название"
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.clear.cgColor
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
-        textView.attributedText = NSAttributedString(string: textView.text, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
-        let font = UIFont(name: "Gothampro", size: 16)
-        textView.font = font
-        
         return textView
     }()
     let descriptionTextView: UITextView = {
@@ -88,44 +68,27 @@ class AddProductView: UIView {
         textView.textContainerInset = UIEdgeInsets(top: 15, left: 16, bottom: 15, right: 16)
         textView.layer.cornerRadius = 12
         textView.textColor = .lightGray
+        textView.font = UIFont(name: "Gothampro", size: 16)
         textView.text = "Краткое описание"
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.clear.cgColor
-        textView.textContainer.maximumNumberOfLines = 10
-        textView.isScrollEnabled = false
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
-        textView.attributedText = NSAttributedString(string: textView.text, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
-        let font = UIFont(name: "Gothampro", size: 16)
-        textView.font = font
-        
         return textView
     }()
     let fullDescriptionTextView: UITextView = {
         let textView = UITextView()
-        
         textView.textContainerInset = UIEdgeInsets(top: 15, left: 16, bottom: 15, right: 16)
         textView.layer.cornerRadius = 12
         textView.textColor = .lightGray
+        textView.font = UIFont(name: "Gothampro", size: 16)
         textView.text = "Детальное описание"
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.clear.cgColor
-        textView.isScrollEnabled = false
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
-        textView.attributedText = NSAttributedString(string: textView.text, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
-        let font = UIFont(name: "Gothampro", size: 16)
-        textView.font = font
-        
         return textView
     }()
     var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 6
-        
         
         let collectionView = UICollectionView(
             frame: .zero,
@@ -142,10 +105,13 @@ class AddProductView: UIView {
     }
 }
 
-// MARK: Constreints
 extension AddProductView {
-    func setup() {
+    private func setup() {
         backgroundColor = UIColor(named: "Background")
+        
+        if isChangeVC {
+            productImages.append(UIImage(named: product!.image)!)
+        }
         
         setPhotoButton()
         setCostTextView()
@@ -154,7 +120,8 @@ extension AddProductView {
         setFullDescriptionTextView()
         setCollectionView()
     }
-    func setPhotoButton() {
+    
+    private func setPhotoButton() {
         addSubview(photoView)
         addSubview(photoButton)
         
@@ -185,60 +152,123 @@ extension AddProductView {
             make.top.equalTo(safeAreaLayoutGuide.snp.top).inset(20)
         }
     }
-    func setCostTextView() {
+
+    private func setCostTextView() {
         addSubview(costTextView)
         costTextView.delegate = self
-        costTextView.text = product.cost
         
-        adjustUITextViewHeight(arg: costTextView)
-        costTextView.snp.makeConstraints { make in
-            make.top.equalTo(photoView.snp.bottom).offset(26)
-            make.horizontalEdges.equalToSuperview().inset(20)
+        if !isChangeVC {
+            costTextView.snp.makeConstraints { make in
+                make.top.equalTo(photoView.snp.bottom).offset(26)
+                make.horizontalEdges.equalToSuperview().inset(20)
+                make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
+        } else {
+            costTextView.text = product?.cost
+            adjustUITextViewHeight(arg: costTextView)
+            costTextView.snp.makeConstraints { make in
+                make.top.equalTo(photoView.snp.bottom).offset(26)
+                make.horizontalEdges.equalToSuperview().inset(20)
+            }
         }
+        
     }
-    func setNameTextView() {
+    private func setNameTextView() {
         addSubview(nameTextView)
         nameTextView.delegate = self
-        nameTextView.text = product.title
         
-        adjustUITextViewHeight(arg: nameTextView)
-        nameTextView.snp.makeConstraints { make in
-            make.top.equalTo(costTextView.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(20)
+        if !isChangeVC {
+            nameTextView.snp.makeConstraints { make in
+                make.top.equalTo(costTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+                make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
+        } else {
+            nameTextView.text = product?.title
+            adjustUITextViewHeight(arg: nameTextView)
+            nameTextView.snp.makeConstraints { make in
+                make.top.equalTo(costTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+            }
         }
         
     }
-    func setDescriptionTextView() {
+    private func setDescriptionTextView() {
         addSubview(descriptionTextView)
         descriptionTextView.delegate = self
-        descriptionTextView.text = product.description
         
-        adjustUITextViewHeight(arg: descriptionTextView)
-        descriptionTextView.snp.makeConstraints { make in
-            make.top.equalTo(nameTextView.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(20)
-            make.height.equalTo(textHeightOne)
+        if !isChangeVC {
+            descriptionTextView.snp.makeConstraints { make in
+                make.top.equalTo(nameTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+                make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
+        } else {
+            descriptionTextView.text = product?.description
+            adjustUITextViewHeight(arg: descriptionTextView)
+            descriptionTextView.snp.makeConstraints { make in
+                make.top.equalTo(nameTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+            }
         }
     }
-    func setFullDescriptionTextView() {
+    private func setFullDescriptionTextView() {
         addSubview(fullDescriptionTextView)
         fullDescriptionTextView.delegate = self
-        fullDescriptionTextView.text = product.fullDescruption
         
-        adjustUITextViewHeight(arg: fullDescriptionTextView)
-        fullDescriptionTextView.snp.makeConstraints { make in
-            make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
-            make.horizontalEdges.equalToSuperview().inset(20)
-            make.height.equalTo(textHeightTwo)
+        if !isChangeVC {
+            fullDescriptionTextView.snp.makeConstraints { make in
+                make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+                make.height.equalTo(40 * UIScreen.main.bounds.height / 812)
+            }
+        } else {
+            fullDescriptionTextView.text = product?.fullDescruption
+            adjustUITextViewHeight(arg: fullDescriptionTextView)
+            fullDescriptionTextView.snp.makeConstraints { make in
+                make.top.equalTo(descriptionTextView.snp.bottom).offset(8)
+                make.horizontalEdges.equalToSuperview().inset(20)
+            }
         }
     }
     
 }
 
-//MARK: CollectionView
+extension AddProductView {
+    func setDefaultPhotoButtonStyle(isError: Bool) {
+        let imageView = isError ? UIImageView(image: UIImage(named: "Image_add_error")) : UIImageView(image: UIImage(named: "Image_add"))
+        imageView.contentMode = .scaleAspectFit
+        
+        let titleLabel = UILabel()
+        titleLabel.font = UIFont(name: "GothamPro-Medium", size: 12)
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 0
+        titleLabel.text = "Добавить \nфото"
+        titleLabel.textColor = isError ? .red : UIColor(named: "Blue")
+        
+        let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 6
+        
+        photoView.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: photoView.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: photoView.centerYAnchor)
+        ])
+        
+        photoView.backgroundColor = .white
+        photoView.layer.cornerRadius = 12
+        photoView.layer.borderWidth = isError ? 1 : 0
+        photoView.layer.borderColor = isError ? UIColor.red.cgColor : UIColor.clear.cgColor
+    }
+}
+
+//MARK: CollectionView delegate
 extension AddProductView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return productImages.count // Assuming you have 5 images in your productImages array
+        return productImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -247,7 +277,7 @@ extension AddProductView: UICollectionViewDelegate, UICollectionViewDataSource, 
         cell.subviews.forEach { $0.removeFromSuperview() }
         
         let productImageView = UIImageView()
-        productImageView.contentMode = .scaleAspectFit
+        productImageView.contentMode = .scaleAspectFill
         productImageView.layer.cornerRadius = 12
         productImageView.clipsToBounds = true
         productImageView.image = productImages[indexPath.row]
@@ -281,7 +311,8 @@ extension AddProductView: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
 }
 
-//MARK: TextFieldDelegate
+
+//MARK: TextField Delegate
 extension AddProductView: UITextViewDelegate {
     func textViewDidBeginEditing (_ textView: UITextView) {
         let isPlaceholderText = { [self] in
@@ -295,13 +326,6 @@ extension AddProductView: UITextViewDelegate {
             textView.text = nil
             textView.textColor = UIColor(named: "BlackText")
         }
-        
-        if isChangeVC {
-            textView.textColor = UIColor(named: "BlackText")
-        }
-        viewHeightAnchor = fullDescriptionTextView.heightAnchor.constraint(equalToConstant: fullDescriptionTextView.frame.height)
-        viewHeightAnchor?.isActive = true
-        fullDescriptionTextView.updateConstraints()
         
     }
     
@@ -319,86 +343,43 @@ extension AddProductView: UITextViewDelegate {
         } else {
             textView.textColor = UIColor(named: "BlackText")
         }
-        
     }
     
-//    
-//    func textViewDidChange(_ textView: UITextView) {
-//        if textView == descriptionTextView {
-//            let fixedWidth = textView.frame.size.width
-//            let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-//            textView.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-//            textHeightOne = Int(newSize.height)
-//            print(textHeightOne)
-//            updateConstraints()
-//        } else if textView == fullDescriptionTextView {
-//            let fixedWidth = textView.frame.size.width
-//            let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-//            textView.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-//            textHeightTwo = Int(newSize.height)
-//            updateConstraints()
-//        }
-//    }
-//    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard let currentText = textView.text else {
-            return true
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let newSize = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+        
+        let minHeight: CGFloat = 40
+        let newHeight = max(newSize.height, minHeight)
+        
+        textView.snp.updateConstraints { make in
+            make.height.equalTo(newHeight)
         }
         
+        layoutIfNeeded()
+    }
+    
+    private func updateTextViewHeight(textView: UITextView, heightConstraint: NSLayoutConstraint) {
+        let newSize = textView.sizeThatFits(CGSize(width: textView.frame.size.width, height: CGFloat.greatestFiniteMagnitude))
+        let maxHeight: CGFloat = 200
+        let newHeight = min(newSize.height, maxHeight)
+        
+        if heightConstraint.constant != newHeight {
+            heightConstraint.constant = newHeight
+            layoutIfNeeded()
+        }
+    }
+    
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         isErrorTextField(textView: nameTextView, isError: false)
         isErrorTextField(textView: costTextView, isError: false)
         isErrorTextField(textView: descriptionTextView, isError: false)
         isErrorTextField(textView: fullDescriptionTextView, isError: false)
         setDefaultPhotoButtonStyle(isError: false)
         
-        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
-        let numberOfLines = newText.components(separatedBy: CharacterSet.newlines).count
-        
-        let maxLines = 10
-        
-        if text == "\n" {
-            textView.text.append("\n")
-            
-            if textView == descriptionTextView {
-                textHeightOne += 15
-                print(textHeightOne)
-            } else if textView == fullDescriptionTextView {
-                textHeightTwo += 15
-            }
-            
-            updateConstraints()
-            return false
-        }
-        
-        if numberOfLines <= maxLines {
-            let deletedNewlineCount = currentText.countOccurences(of: "\n", in: range)
-            
-            if textView == descriptionTextView {
-                textHeightOne -= deletedNewlineCount * 15
-                print(textHeightOne)
-            } else if textView == fullDescriptionTextView {
-                textHeightTwo -= deletedNewlineCount * 15
-            }
-            
-            updateConstraints()
-            return true
-        } else if text.isEmpty && numberOfLines == maxLines + 1 {
-            let deletedNewlineCount = currentText.countOccurences(of: "\n", in: range)
-            
-            if textView == descriptionTextView {
-                textHeightOne -= deletedNewlineCount * 15
-                print(textHeightOne)
-            } else if textView == fullDescriptionTextView {
-                textHeightTwo -= deletedNewlineCount * 15
-            }
-            
-            updateConstraints()
-            return true
-        }
-        
         return true
     }
-
     
     func isErrorTextField(textView: UITextView, isError: Bool) {
         let isPlaceholderText = { [self] in
@@ -421,64 +402,13 @@ extension AddProductView: UITextViewDelegate {
     }
     
     func adjustUITextViewHeight(arg : UITextView) {
-        arg.textColor = UIColor(named: "BlackText")
+        if isChangeVC {
+            arg.textColor = UIColor(named: "BlackText")
+        } else {
+            arg.textColor = .lightGray
+        }
         arg.translatesAutoresizingMaskIntoConstraints = true
         arg.sizeToFit()
         arg.isScrollEnabled = false
     }
-    
-    func updateTextViewHeight(textView: UITextView) {
-        let newSize = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-
-        let minHeight: CGFloat = 40
-        let newHeight = max(newSize.height, minHeight)
-        
-        
-
-        textView.snp.updateConstraints { make in
-            make.height.equalTo(newHeight)
-        }
-
-        layoutIfNeeded()
-    }
 }
-
-//MARK: Add product photo button settings
-extension AddProductView {
-    func setDefaultPhotoButtonStyle(isError: Bool) {
-        let imageView = isError ? UIImageView(image: UIImage(named: "Image_add_error")) : UIImageView(image: UIImage(named: "Image_add"))
-        imageView.contentMode = .scaleAspectFit
-        
-        let titleLabel = UILabel()
-        titleLabel.font = UIFont(name: "GothamPro-Medium", size: 12)
-        titleLabel.textAlignment = .center
-        titleLabel.numberOfLines = 0
-        titleLabel.text = "Добавить \nфото"
-        titleLabel.textColor = isError ? .red : UIColor(named: "Blue")
-        
-        let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.spacing = 6
-        
-        photoView.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stackView.centerXAnchor.constraint(equalTo: photoView.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: photoView.centerYAnchor)
-        ])
-        
-        photoView.backgroundColor = .white
-        photoView.layer.cornerRadius = 12
-        photoView.layer.borderWidth = isError ? 1 : 0
-        photoView.layer.borderColor = isError ? UIColor.red.cgColor : UIColor.clear.cgColor
-    }
-}
-
-extension String {
-    func countOccurences(of searchString: String, in range: NSRange) -> Int {
-        let substring = (self as NSString).substring(with: range)
-        return substring.components(separatedBy: searchString).count - 1
-    }
-}
-
