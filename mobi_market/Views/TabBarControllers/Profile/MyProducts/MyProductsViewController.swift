@@ -48,6 +48,7 @@ class MyProductsViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
         
         customView.popUp.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        customView.popUp.changeButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
     }
 }
 
@@ -56,6 +57,7 @@ extension MyProductsViewController: InfoButtonDelegate, MyProductViewDelegate {
     func didSelectProduct(_ product: ProductCard) {
         let vc = ProductDetailsViewController()
         vc.customView.productInfo = product
+        vc.isMyProduct = true
         navigationItem.title = ""
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -70,6 +72,7 @@ extension MyProductsViewController: InfoButtonDelegate, MyProductViewDelegate {
     
     func didTapInfoButton(index: Int) {
         self.index = index
+        
         customView.popUp.isHidden = false
         customView.blurContainView()
     }
@@ -104,5 +107,15 @@ extension MyProductsViewController: AlertDelegate {
         vc.messageText = "Вы действительно хотите \nудалить данный товар?"
         present(vc, animated: false)
         vc.delegate = self
+    }
+    
+    @objc func changeButtonTapped() {
+        let vc = ProductDetailsViewController()
+        print("info")
+        vc.isMyProduct = true
+        vc.customView.productInfo = customView.products[index]
+        navigationController?.show(vc, sender: self)
+        customView.popUp.isHidden = true
+        customView.unblurContainView()
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 class ModalView: UIView {
     var viewTranslation = CGPoint(x: 0, y: 0)
     var blurEffectView: UIVisualEffectView?
+    var product = ProductCard()
     
     var backgroundView: UIView = {
         let view = UIView()
@@ -126,10 +127,9 @@ extension ModalView {
     @objc func deleteButtonTapped() {
         let vc = AlertViewController()
         vc.modalPresentationStyle = .overFullScreen
-        //self.present(vc, animated: false)
     }
     
     @objc func changeButtonTapped() {
-        
+        print("vcc")
     }
 }

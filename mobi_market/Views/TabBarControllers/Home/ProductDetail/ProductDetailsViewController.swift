@@ -9,6 +9,7 @@ import UIKit
 
 class ProductDetailsViewController: UIViewController {
     let customView = ProductDetailView()
+    var isMyProduct = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,7 @@ extension ProductDetailsViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: customView.backButton)
         customView.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         
-        if customView.isMyProduct {
+        if isMyProduct {
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: customView.changeButton)
             customView.changeButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
         }

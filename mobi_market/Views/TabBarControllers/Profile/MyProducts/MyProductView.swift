@@ -49,6 +49,12 @@ class MyProductView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    let changeInfoButton: BarButtonItem = {
+        let button = BarButtonItem()
+        button.setTitle("Изм.", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     let emptyImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Empty")

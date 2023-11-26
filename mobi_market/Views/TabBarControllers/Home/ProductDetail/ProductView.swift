@@ -11,7 +11,6 @@ import UIKit
 class ProductDetailView: UIView {
     var productImages: [String] = ["image 2", "image 2", "image 2", "image 2"]
     var productInfo = ProductCard()
-    var isMyProduct = false
     
     var pageControl: UIPageControl = {
         let view = UIPageControl()
