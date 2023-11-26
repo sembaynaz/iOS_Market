@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6F0457702B13170100CFF5C9 /* FavotiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F04576F2B13170100CFF5C9 /* FavotiteView.swift */; };
+		6F0457722B131B0D00CFF5C9 /* MyProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0457712B131B0D00CFF5C9 /* MyProductView.swift */; };
 		6F0614F52B00F3FF002D11E6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614F42B00F3FF002D11E6 /* Storage.swift */; };
 		6F0614FA2B0203E7002D11E6 /* ProductCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614F92B0203E7002D11E6 /* ProductCardCollectionViewCell.swift */; };
 		6F0614FC2B0209D7002D11E6 /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0614FB2B0209D7002D11E6 /* ProductCard.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		6F04576F2B13170100CFF5C9 /* FavotiteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavotiteView.swift; sourceTree = "<group>"; };
+		6F0457712B131B0D00CFF5C9 /* MyProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProductView.swift; sourceTree = "<group>"; };
 		6F0614F42B00F3FF002D11E6 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		6F0614F92B0203E7002D11E6 /* ProductCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		6F0614FB2B0209D7002D11E6 /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 			children = (
 				6FFC24B32B0668E6005666A0 /* ChangeProductDetail */,
 				6F4CA7B02B0712CA00313EF9 /* MyProductsViewController.swift */,
+				6F0457712B131B0D00CFF5C9 /* MyProductView.swift */,
 			);
 			path = MyProducts;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				6FDB76E32B11DFBF00EDB381 /* SignupView.swift in Sources */,
 				6F4CA7B52B07EE7D00313EF9 /* AlertViewController.swift in Sources */,
 				6F4CA7B32B07B69E00313EF9 /* ModalView.swift in Sources */,
+				6F0457722B131B0D00CFF5C9 /* MyProductView.swift in Sources */,
 				6F4CA7B12B0712CA00313EF9 /* MyProductsViewController.swift in Sources */,
 				6F0457702B13170100CFF5C9 /* FavotiteView.swift in Sources */,
 				6FDB76E62B11E19900EDB381 /* LoginView.swift in Sources */,

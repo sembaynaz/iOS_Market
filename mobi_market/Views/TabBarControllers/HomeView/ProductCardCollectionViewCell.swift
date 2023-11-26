@@ -13,6 +13,7 @@ protocol ProductCardDelegate: AnyObject {
 
 protocol InfoButtonDelegate: AnyObject {
     func didTapInfoButton(index: Int)
+    func handleTap(_ gesture: UITapGestureRecognizer)
 }
 
 class ProductCardCollectionViewCell: UICollectionViewCell {

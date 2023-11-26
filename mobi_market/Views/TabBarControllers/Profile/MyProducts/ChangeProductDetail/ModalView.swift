@@ -60,14 +60,6 @@ class ModalView: UIView {
         return imageView
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func layoutSubviews() {
         backgroundColor = .white
         layer.cornerRadius = 30 * UIScreen.main.bounds.height / 812

@@ -8,176 +8,40 @@
 import UIKit
 
 class MyProductsViewController: UIViewController {
-    
     var index: Int = 0
-    var products: [ProductCard] = [ProductCard(title: "0"), ProductCard(title: "1"), ProductCard(title: "2"), ProductCard(title: "3"), ProductCard(title: "4"), ProductCard(title: "5"), ProductCard(title: "6")]
-    var blurEffectView: CALayer?
-    
-    let popUp: ModalView = {
-        let view = ModalView()
-        view.isHidden = true
-        return view
-    }()
-    var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 13
-        layout.minimumLineSpacing = 12
-        
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: layout
-        )
-        collectionView.register(
-            ProductCardCollectionViewCell.self,
-            forCellWithReuseIdentifier: ProductCardCollectionViewCell.identifier
-        )
-        collectionView.backgroundColor = UIColor(named: "Background")
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.contentInset.left = 24
-        collectionView.contentInset.right = 24
-        return collectionView
-    }()
-    private let backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "Icon.arrow-left"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    private let emptyImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "Empty")
-        imageView.isHidden = true
-        return imageView
-    }()
-    private let emptyLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Ой, пусто!"
-        label.isHidden = true
-        label.font = UIFont(name: "GothamPro-Bold", size: 18)
-        label.textColor = UIColor(named: "BlackText")
-        return  label
-    }()
-    private let deleteProductImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "DeleteProduct")
-        imageView.isHidden = true
-        return imageView
-    }()
+    let customView = MyProductView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-        checkIsCollectionViewEmpty()
+        title = "Мои товары"
+        ui()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
     }
-}
-
-extension MyProductsViewController {
-    func setup() {
-        view.backgroundColor = UIColor(named: "Background")
-        navigationController?.title = "Мои товары"
-        
-        setDeleteProductImageView()
-        setCollectionView()
-        setNavBarLeftButton()
-        setEmptyImageView()
-        setPopupView()
-    }
     
-    func setDeleteProductImageView() {
-        navigationController?.navigationBar.addSubview(deleteProductImage)
+    func ui() {
         
-        deleteProductImage.snp.makeConstraints { make in
-            make.height.equalTo(60 * UIScreen.main.bounds.height / 812)
-            make.top.equalToSuperview()
-            make.horizontalEdges.equalToSuperview().inset(20 * UIScreen.main.bounds.width / 375)
+        view.addSubview(customView)
+        customView.delegate = self
+        customView.snp.makeConstraints{ make in
+            make.edges.equalToSuperview()
         }
-    }
-    
-    func setPopupView() {
-        view.addSubview(popUp)
+        
+        navigationController?.navigationBar.addSubview(customView.deleteProductImage)
+        customView.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: customView.backButton)
+        
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
-        popUp.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        customView.popUp.deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         
-        popUp.snp.makeConstraints{ make in
-            make.top.equalToSuperview().inset(644 * UIScreen.main.bounds.height / 812)
-            make.leading.trailing.bottom.equalToSuperview()
-        }
-    }
-    
-    private func setNavBarLeftButton() {
-        view.addSubview(backButton)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-    }
-    
-    func setCollectionView () {
-        view.addSubview(collectionView)
-        collectionView.delegate = self
-        collectionView.dataSource = self
         
-        collectionView.snp.makeConstraints { make in
-            make.bottom.left.right.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(24)
-        }
-    }
-    
-    func setEmptyImageView() {
-        view.addSubview(emptyImageView)
-        view.addSubview(emptyLabel)
-        emptyImageView.snp.makeConstraints { make in
-            make.height.equalTo(185 * UIScreen.main.bounds.height / 812)
-            make.width.equalTo(168 * UIScreen.main.bounds.width / 375)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(96)
-            make.centerX.equalTo(view.snp.centerX)
-        }
-        
-        emptyLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
-            make.top.equalTo(emptyImageView.snp.bottom).offset(44)
-        }
-    }
-}
-
-extension MyProductsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return products.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ProductCardCollectionViewCell.identifier,
-            for: indexPath) as! ProductCardCollectionViewCell
-        cell.infoButtonHidden = false
-        cell.infoDelegate = self
-        cell.configure(card: products[indexPath.row], index: indexPath.row)
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let availableWidth = collectionView.bounds.width - collectionView.contentInset.left - collectionView.contentInset.right
-        let cellWidth = (availableWidth - 13) / 2
-        let cellHeight = 184 * UIScreen.main.bounds.height / 812
-        
-        return CGSize(width: cellWidth, height: cellHeight)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = ProductDetailsViewController()
-        vc.isMyProduct = true
-        vc.productInfo = products[indexPath.row]
-        navigationItem.title = ""
-        navigationController?.show(vc, sender: self)
     }
 }
 
@@ -185,46 +49,36 @@ extension MyProductsViewController: UICollectionViewDelegate, UICollectionViewDa
 extension MyProductsViewController: InfoButtonDelegate {
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
         let touchPoint = gesture.location(in: view)
-        if !popUp.frame.contains(touchPoint) {
-            popUp.isHidden = true
-            unblurContainView()
+        if !customView.popUp.frame.contains(touchPoint) {
+            customView.popUp.isHidden = true
+            customView.unblurContainView()
         }
-    }
-    
-    func unblurContainView() {
-        blurEffectView?.removeFromSuperlayer()
-        blurEffectView = nil
-    }
-    
-    func blurContainView() {
-        if blurEffectView == nil {
-            blurEffectView = CALayer()
-        }
-        
-        blurEffectView?.backgroundColor = UIColor(red: 19/255, green: 19/255, blue: 19/255, alpha: 0.4).cgColor
-        blurEffectView!.frame = view.bounds
-        view.layer.addSublayer(blurEffectView!)
-        view.bringSubviewToFront(popUp)
     }
     
     func didTapInfoButton(index: Int) {
         self.index = index
-        popUp.isHidden = false
-        blurContainView()
+        customView.popUp.isHidden = false
+        customView.blurContainView()
+    }
+    
+    func didSelectProduct(_ product: ProductCard) {
+        let vc = ProductDetailsViewController()
+        vc.productInfo = product
+        navigationItem.title = ""
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension MyProductsViewController: AlertDelegate {
     func didAgreeButtonTapped() {
-        print(index)
-        products.remove(at: index)
-        collectionView.reloadData()
-        checkIsCollectionViewEmpty()
+        customView.products.remove(at: index)
+        customView.collectionView.reloadData()
+        customView.checkIsCollectionViewEmpty()
         
-        self.deleteProductImage.isHidden = false
+        customView.deleteProductImage.isHidden = false
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.deleteProductImage.isHidden = true
+            self.customView.deleteProductImage.isHidden = true
         }
     }
     
@@ -233,8 +87,8 @@ extension MyProductsViewController: AlertDelegate {
     }
     
     @objc func deleteButtonTapped() {
-        popUp.isHidden = true
-        unblurContainView()
+        customView.popUp.isHidden = true
+        customView.unblurContainView()
         
         let vc = AlertViewController()
         vc.modalPresentationStyle = .overFullScreen
@@ -244,17 +98,5 @@ extension MyProductsViewController: AlertDelegate {
         vc.messageText = "Вы действительно хотите \nудалить данный товар?"
         present(vc, animated: false)
         vc.delegate = self
-    }
-}
-
-extension MyProductsViewController {
-    func checkIsCollectionViewEmpty() {
-        if products.isEmpty {
-            emptyImageView.isHidden = false
-            emptyLabel.isHidden = false
-        } else {
-            emptyImageView.isHidden = true
-            emptyLabel.isHidden = true
-        }
     }
 }
