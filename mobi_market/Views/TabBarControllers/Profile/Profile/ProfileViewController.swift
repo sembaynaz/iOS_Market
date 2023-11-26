@@ -39,9 +39,11 @@ class ProfileViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         setChangeInfoButton()
+        
         customView.favoritesButton.addTarget(self, action: #selector(favoritesButtonTapped), for: .touchUpInside)
         customView.myProductsButton.addTarget(self, action: #selector(myProductsButtonTapped), for: .touchUpInside)
         customView.logOutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        customView.finishRegistrationButton.addTarget(self, action: #selector(finishRegistrationButtonTapped), for: .touchUpInside)
     }
     
     func setChangeInfoButton() {
@@ -52,6 +54,11 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: AlertDelegate {
     @objc func changeInfoButtonTapped() {
+        let vc = UserInfoViewController()
+        navigationController?.show(vc, sender: self)
+    }
+    
+    @objc func finishRegistrationButtonTapped() {
         let vc = UserInfoViewController()
         navigationController?.show(vc, sender: self)
     }

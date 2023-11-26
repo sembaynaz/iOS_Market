@@ -8,61 +8,13 @@
 import UIKit
 
 class FavoritesViewController: UIViewController {
-
-    var products: [ProductCard] = []
     
-    private var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 13
-        layout.itemSize = CGSize(width: 161, height: 184)
-        layout.minimumLineSpacing = 12
-        layout.sectionInset = UIEdgeInsets(top: 24, left: 20, bottom: 20, right: 20)
-        
-        let collectionView = UICollectionView(
-            frame: .zero,
-            collectionViewLayout: layout
-        )
-        collectionView.register(
-            ProductCardCollectionViewCell.self,
-            forCellWithReuseIdentifier: ProductCardCollectionViewCell.identifier
-        )
-        
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        return collectionView
-    }()
-    private let backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "Icon.arrow-left"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    private let emptyImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "Empty")
-        imageView.isHidden = true
-        return imageView
-    }()
-    private let emptyLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Ой, пусто!"
-        label.isHidden = true
-        label.font = UIFont(name: "GothamPro-Bold", size: 18)
-        label.textColor = UIColor(named: "BlackText")
-        return  label
-    }()
+    let customView = FavoriteView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-        
-        if products.isEmpty {
-            emptyImageView.isHidden = false
-            emptyLabel.isHidden = false
-        } else {
-            emptyImageView.isHidden = true
-            emptyLabel.isHidden = true
-        }
+        setUI()
+        customView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,74 +23,36 @@ class FavoritesViewController: UIViewController {
     }
 }
 
+//MARK: UI
 extension FavoritesViewController {
-    func setup() {
-        view.backgroundColor = UIColor(named: "Background")
+    func setUI() {
         title = "Понравившиеся"
         
-        setCollectionView()
+        view.addSubview(customView)
+        customView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         setNavBarLeftButton()
-        setEmptyImageView()
     }
     
     private func setNavBarLeftButton() {
-        view.addSubview(backButton)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-    }
-    
-    func setCollectionView () {
-        view.addSubview(collectionView)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        collectionView.snp.makeConstraints { make in
-            make.top.bottom.left.right.equalToSuperview()
-        }
-    }
-    
-    func setEmptyImageView() {
-        view.addSubview(emptyImageView)
-        view.addSubview(emptyLabel)
-        emptyImageView.snp.makeConstraints { make in
-            make.height.equalTo(185 * UIScreen.main.bounds.height / 812)
-            make.width.equalTo(168 * UIScreen.main.bounds.width / 375)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(96)
-            make.centerX.equalTo(view.snp.centerX)
-        }
-        
-        emptyLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
-            make.top.equalTo(emptyImageView.snp.bottom).offset(44)
-        }
+        view.addSubview(customView.backButton)
+        customView.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: customView.backButton)
     }
 }
 
-extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return products.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: ProductCardCollectionViewCell.identifier,
-            for: indexPath) as! ProductCardCollectionViewCell
-        cell.configure(card: products[indexPath.row], index: indexPath.row)
-
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = ProductDetailsViewController()
-        vc.productInfo = products[indexPath.row]
-        navigationItem.title = ""
-        navigationController?.show(vc, sender: self)
-    }
-}
-
-
-extension FavoritesViewController {
+//MARK: Functionality
+extension FavoritesViewController: FavoriteViewDelegate {
     @objc private func backButtonTapped() { //close vc
         navigationController?.popViewController(animated: true)
+    }
+    
+    func didSelectProduct(_ product: ProductCard) {
+        let vc = ProductDetailsViewController()
+        vc.productInfo = product
+        navigationItem.title = ""
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
