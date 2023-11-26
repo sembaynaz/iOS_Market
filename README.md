@@ -12,17 +12,15 @@
 
 This project is designed to provide users with a convenient and intuitive experience in viewing and purchasing goods. Including a user profile feature that allows you to manage personal information and increases security through phone number verification.
 
-### To authorization
-**Login:** Neobis
-
-**Password:** neobis2023
-
-
 ## Installation
 Libraries used here, that we must instal is **SnapKit**. You can download the project from GitHub as a zip file and then open it in the **xCode** application.
 
 ## Usage
-## Оглавление
+
+### To authorization
+**Login:** Neobis
+**Password:** neobis2023
+
 1. [Components](#Components)
    - [TextField](#TextField.swift)
    - [Button](#Button.swift)
