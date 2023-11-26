@@ -51,7 +51,7 @@ extension FavoritesViewController: FavoriteViewDelegate {
     
     func didSelectProduct(_ product: ProductCard) {
         let vc = ProductDetailsViewController()
-        vc.productInfo = product
+        vc.customView.productInfo = product
         navigationItem.title = ""
         navigationController?.pushViewController(vc, animated: true)
     }

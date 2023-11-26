@@ -1,20 +1,27 @@
 //
-//  CreatePasswordViewController.swift
+//  CreatePasswordView.swift
 //  mobi_market
 //
-//  Created by Nazerke Sembay on 28.10.2023.
+//  Created by Nazerke Sembay on 26.11.2023.
 //
 
+import Foundation
 import UIKit
 
-class CreatePasswordViewController: UIViewController {
+protocol CreatePasswordViewDelegate: AnyObject {
+    func didTapNextButton()
+    func didTapDoneButton()
+    func didToggleShowPassword()
+}
+
+class CreatePasswordView: UIView {
     var passwordText1 = ""
     var originalPassword1 = ""
     var passwordText2 = ""
     var originalPassword2 = ""
-    var isNextButtonTapped: Bool = false
     var isSecure: Bool = true
-
+    weak var delegate: CreatePasswordViewDelegate?
+    
     let lockImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Lock")
@@ -34,7 +41,7 @@ class CreatePasswordViewController: UIViewController {
         label.font = UIFont(name: "GothamPro", size: 16)
         label.numberOfLines = 0
         label.textColor = UIColor(named: "Gray")
-
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 19.2 / label.font.lineHeight
         let attributedString = NSMutableAttributedString(string: "Минимальная длина — 8 символов.\nДля надежности пароль должен \nсодержать буквы и цифры.")
@@ -75,15 +82,15 @@ class CreatePasswordViewController: UIViewController {
         return label
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func layoutSubviews() {
+        super.layoutSubviews()
         setup()
     }
 }
 
-extension CreatePasswordViewController {
+extension CreatePasswordView {
     func setup() {
-        view.backgroundColor = .white
+        backgroundColor = .white
         firstPasswordTextField.delegate = self
         secondPasswordTextField.delegate = self
         
@@ -94,71 +101,66 @@ extension CreatePasswordViewController {
         setSecondPasswordTextField()
         setSignupButton()
         setErrorLabel()
-        setShowPasswordButton()
     }
     func setLockImage() {
-        view.addSubview(lockImage)
+        addSubview(lockImage)
         lockImage.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
+            make.centerX.equalTo(snp.centerX)
             make.width.height.equalTo(80)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(32)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(32)
         }
     }
     func setTitleLabel() {
-        view.addSubview(titleLabel)
+        addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
+            make.centerX.equalTo(snp.centerX)
             make.top.equalTo(lockImage.snp.bottom).offset(28)
         }
     }
     func setDescriptionLabel() {
-        view.addSubview(descriptionLabel)
+        addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
+            make.centerX.equalTo(snp.centerX)
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
         }
     }
     func setFirstPasswordTextField() {
-        view.addSubview(firstPasswordTextField)
+        addSubview(firstPasswordTextField)
         firstPasswordTextField.becomeFirstResponder()
         firstPasswordTextField.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
+            make.centerX.equalTo(snp.centerX)
             make.height.equalTo(34)
             make.top.equalTo(descriptionLabel.snp.bottom).offset(28)
             make.horizontalEdges.equalToSuperview().inset(20)
         }
     }
     func setSecondPasswordTextField() {
-        view.addSubview(secondPasswordTextField)
+        addSubview(secondPasswordTextField)
         secondPasswordTextField.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
+            make.centerX.equalTo(snp.centerX)
             make.height.equalTo(34)
             make.top.equalTo(firstPasswordTextField.snp.bottom).offset(8)
             make.horizontalEdges.equalToSuperview().inset(20)
         }
     }
     func setErrorLabel() {
-        view.addSubview(errorLabel)
+        addSubview(errorLabel)
         errorLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
+            make.centerX.equalTo(snp.centerX)
             make.bottom.equalTo(nextButton.snp.top).offset(-21)
         }
     }
     func setSignupButton() {
-        view.addSubview(nextButton)
+        addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
             make.top.equalTo(firstPasswordTextField.snp.bottom).offset(91)
             make.horizontalEdges.equalToSuperview().inset(20)
             make.height.equalTo(44)
         }
     }
-    func setShowPasswordButton() {
-        let showPasswordButton = UIBarButtonItem(image: UIImage(named: "Secure2"), style: .plain, target: self, action: #selector(showPasswordButtonTapped))
-        navigationItem.rightBarButtonItem = showPasswordButton
-    }
 }
 
-extension CreatePasswordViewController: UITextFieldDelegate {
+extension CreatePasswordView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == firstPasswordTextField {
             var hashPassword = ""
@@ -216,7 +218,7 @@ extension CreatePasswordViewController: UITextFieldDelegate {
             }
             
             if originalPassword2.count >= 8 {
-                //doneButtonTapped()
+                    //doneButtonTapped()
                 nextButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
             }
             
@@ -243,52 +245,16 @@ extension CreatePasswordViewController: UITextFieldDelegate {
     }
 }
 
-extension CreatePasswordViewController {
-    @objc func nextButtonTapped() {
-        isNextButtonTapped = true
-        secondPasswordTextField.isHidden = false
-        
-        titleLabel.text = "Повторите пароль"
-        nextButton.setTitle("Готово", for: .normal)
-        
-        secondPasswordTextField.becomeFirstResponder()
+extension CreatePasswordView {
+    @objc private func nextButtonTapped() {
+        delegate?.didTapNextButton()
     }
     
-    @objc func doneButtonTapped() {
-        if !originalPassword2.isEmpty {
-            if originalPassword2 == originalPassword1 {
-                errorLabel.isHidden = true
-                nextButton.setActive(true)
-                
-            } else {
-                errorLabel.isHidden = false
-                nextButton.setActive(false)
-            }
-        }
+    @objc private func doneButtonTapped() {
+        delegate?.didTapDoneButton()
     }
     
-    @objc func showPasswordButtonTapped() {
-        isSecure.toggle()
-        
-        let passwordLength = originalPassword1.count
-        let maskedPassword = String(repeating: "●", count: passwordLength)
-        firstPasswordTextField.text = isSecure ? maskedPassword : originalPassword1
-        isSpace(textField: firstPasswordTextField, hashPassword: firstPasswordTextField.text!)
-        
-        let passwordLength1 = originalPassword2.count
-        let maskedPassword1 = String(repeating: "●", count: passwordLength1)
-        secondPasswordTextField.text = isSecure ? maskedPassword1 : originalPassword2
-        isSpace(textField: secondPasswordTextField, hashPassword: secondPasswordTextField.text!)
-    }
-}
-
-extension CreatePasswordViewController {
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
+    @objc private func showPasswordButtonTapped() {
+        delegate?.didToggleShowPassword()
     }
 }

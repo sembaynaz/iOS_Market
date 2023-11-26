@@ -9,8 +9,7 @@ import Foundation
 import UIKit
 
 class MyProductView: UIView {
-    
-    var delegate: InfoButtonDelegate?
+    weak var delegate: InfoButtonDelegate?
     var products: [ProductCard] = [ProductCard(title: "0"), ProductCard(title: "1"), ProductCard(title: "2"), ProductCard(title: "3"), ProductCard(title: "4"), ProductCard(title: "5"), ProductCard(title: "6")]
     var blurEffectView: CALayer?
     

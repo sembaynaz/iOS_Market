@@ -1,14 +1,21 @@
 //
-//  HomeViewController.swift
+//  HomeView.swift
 //  mobi_market
 //
-//  Created by Nazerke Sembay on 02.11.2023.
+//  Created by Nazerke Sembay on 26.11.2023.
 //
 
+import Foundation
 import UIKit
 
-class HomeViewController: UIViewController {
+protocol HomeViewDelegate: AnyObject {
+    func didSelectProduct(_ product: ProductCard)
+}
+
+class HomeView: UIView {
     var isFavoriteTapped = false
+    weak var delegate: HomeViewDelegate?
+    weak var productDelegate: ProductCardDelegate?
     
     var products: [ProductCard] = [ProductCard(), ProductCard(), ProductCard(), ProductCard(), ProductCard(), ProductCard(), ProductCard()]
     
@@ -51,35 +58,35 @@ class HomeViewController: UIViewController {
         return collectionView
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func layoutSubviews() {
+        super.layoutSubviews()
         setup()
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        view.backgroundColor = UIColor(named: "Background")
     }
+    
 }
 
-extension HomeViewController {
+extension HomeView {
     func setup() {
-        view.backgroundColor = UIColor(named: "Background")
+        backgroundColor = UIColor(named: "Background")
         setLogoImageView()
         setCollectionView()
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
     
     func setCollectionView () {
-        view.addSubview(collectionView)
+        addSubview(collectionView)
         
         collectionView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(logoImageView.snp.bottom).offset(16)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
     }
     func setLogoImageView() {
-        view.addSubview(logoImageView)
-        view.addSubview(logoLabel)
-        view.addSubview(successImageView)
+        addSubview(logoImageView)
+        addSubview(logoLabel)
+        addSubview(successImageView)
         
         logoImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(52)
@@ -100,7 +107,7 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         7
     }
@@ -110,36 +117,25 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             withReuseIdentifier: ProductCardCollectionViewCell.identifier,
             for: indexPath) as! ProductCardCollectionViewCell
         
-        cell.delegate = self
+        cell.delegate = productDelegate
         cell.configure(card: products[indexPath.row], index: indexPath.row)
-       
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
+        
         let availableWidth = collectionView.bounds.width - collectionView.contentInset.left - collectionView.contentInset.right
-        let cellWidth = (availableWidth - 13) / 2 
+        let cellWidth = (availableWidth - 13) / 2
         let cellHeight = 184 * UIScreen.main.bounds.height / 812
         
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = ProductDetailsViewController()
-        vc.productInfo = products[indexPath.row]
-        navigationItem.title = ""
-        navigationController?.show(vc, sender: self)
+        let selectedProduct = products[indexPath.row]
+        print("tap")
+        delegate?.didSelectProduct(selectedProduct)
     }
-
-}
-
-extension HomeViewController: ProductCardDelegate {
-    func didTapLikeButton(index: Int) {
-        self.successImageView.isHidden = false
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.successImageView.isHidden = true
-        }
-    }
+    
 }

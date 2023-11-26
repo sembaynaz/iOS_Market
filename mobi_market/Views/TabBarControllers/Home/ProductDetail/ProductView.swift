@@ -1,31 +1,32 @@
 //
-//  ProductDetailsViewController.swift
+//  ProductView.swift
 //  mobi_market
 //
-//  Created by Nazerke Sembay on 02.11.2023.
+//  Created by Nazerke Sembay on 26.11.2023.
 //
 
+import Foundation
 import UIKit
 
-class ProductDetailsViewController: UIViewController {
-    private var productImages: [String] = ["image 2", "image 2", "image 2", "image 2"]
+class ProductDetailView: UIView {
+    var productImages: [String] = ["image 2", "image 2", "image 2", "image 2"]
     var productInfo = ProductCard()
     var isMyProduct = false
     
-    private var pageControl: UIPageControl = {
+    var pageControl: UIPageControl = {
         let view = UIPageControl()
         view.contentMode = .scaleToFill
         return view
     }()
     
-    private var currentPage = 0 {
+    var currentPage = 0 {
         didSet {
             currentPage = max(0, min(currentPage, productImages.count - 1))
             pageControl.currentPage = currentPage
         }
     }
     
-    private var collectionView: UICollectionView = {
+    var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 0
@@ -41,7 +42,7 @@ class ProductDetailsViewController: UIViewController {
         
         return collectionView
     }()
-    private let costLabel: UILabel = {
+    let costLabel: UILabel = {
         let label = UILabel()
         let font = UIFont(name: "GothamPro-Bold", size: 24)
         label.font = font
@@ -50,19 +51,19 @@ class ProductDetailsViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    private let likeButton: UIButton = {
+    let likeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "Heart"), for: .normal)
         return button
     }()
-    private let likeCountLabel: UILabel = {
+    let likeCountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "GothamPro-Medium", size: 12)
         label.text  = "Нравится: "
         label.textColor = UIColor(named: "Gray")
         return label
     }()
-    private let backButton: UIButton = {
+    let backButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "Icon.arrow-left.white"), for: .normal)
         button.contentEdgeInsets = UIEdgeInsets(
@@ -74,14 +75,14 @@ class ProductDetailsViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    private let changeButton: BarButtonItem = {
+    let changeButton: BarButtonItem = {
         let button = BarButtonItem()
         button.setTitle("Изм.", for: .normal)
         button.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    private let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         let font = UIFont(name: "GothamPro-Bold", size: 18)
         label.font = font
@@ -89,7 +90,7 @@ class ProductDetailsViewController: UIViewController {
         label.textColor = UIColor(named: "BlackText")
         return label
     }()
-    private let descriptionLabel: UILabel = {
+    let descriptionLabel: UILabel = {
         let label = UILabel()
         let font = UIFont(name: "GothamPro", size: 16)
         label.font = font
@@ -106,7 +107,7 @@ class ProductDetailsViewController: UIViewController {
         
         return label
     }()
-    private let fullDescription: UILabel = {
+    let fullDescription: UILabel = {
         let label = UILabel()
         let font = UIFont(name: "GothamPro-Medium", size: 16)
         label.font = font
@@ -115,7 +116,7 @@ class ProductDetailsViewController: UIViewController {
         label.textColor = UIColor(named: "BlackText")
         return label
     }()
-    private let fullDescriptionLabel: UILabel = {
+    let fullDescriptionLabel: UILabel = {
         let label = UILabel()
         let font = UIFont(name: "GothamPro", size: 16)
         label.font = font
@@ -132,50 +133,42 @@ class ProductDetailsViewController: UIViewController {
         return label
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         setup()
         configurePageControl()
     }
 }
 
-extension ProductDetailsViewController {
+extension ProductDetailView {
     private func setup() {
-        view.backgroundColor = .white
+        backgroundColor = .white
         setCollectionView()
         setPageControl()
         setCostLabel()
         setLikeButton()
-        setNavBarItems()
         setLikeCountLabel()
         setTitleLabel()
         setDescriptionLabel()
         setFullDescription()
         setFullDescriptionLabel()
     }
-    private func setNavBarItems() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        
-        if isMyProduct {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: changeButton)
-            changeButton.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
-        }
-    }
+
     private func setCollectionView () {
-        view.addSubview(collectionView)
+        addSubview(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
         
         collectionView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.top.equalToSuperview().inset(-125)
+            make.top.equalToSuperview().inset(-25)
             make.bottom.equalToSuperview().offset(-(484+28))
         }
     }
     private func setPageControl() {
-        view.addSubview(pageControl)
+        addSubview(pageControl)
         pageControl.numberOfPages = productImages.count
         configurePageControl()
         pageControl.snp.makeConstraints { make in
@@ -184,16 +177,16 @@ extension ProductDetailsViewController {
         }
     }
     private func setCostLabel() {
-        view.addSubview(costLabel)
+        addSubview(costLabel)
         costLabel.text = productInfo.cost
         costLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(226 * UIScreen.main.bounds.height / 812)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(226 * UIScreen.main.bounds.height / 812)
             make.left.equalToSuperview().inset(20)
         }
     }
     private func setLikeButton() {
-        view.addSubview(likeButton)
-        likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        addSubview(likeButton)
+    
         likeButton.setImage( productInfo.isFavorite ? UIImage(named: "HeartFill"): UIImage(named: "Heart"), for: .normal)
         likeButton.snp.makeConstraints { make in
             make.height.width.equalTo(24)
@@ -202,7 +195,7 @@ extension ProductDetailsViewController {
         }
     }
     private func setLikeCountLabel() {
-        view.addSubview(likeCountLabel)
+        addSubview(likeCountLabel)
         likeCountLabel.text = String("Нравится: \(productInfo.likeCount)")
         likeCountLabel.snp.makeConstraints { make in
             make.top.equalTo(costLabel.snp.bottom).offset(14.5)
@@ -210,7 +203,7 @@ extension ProductDetailsViewController {
         }
     }
     private func setTitleLabel() {
-        view.addSubview(titleLabel)
+        addSubview(titleLabel)
         titleLabel.text = productInfo.title
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(likeButton.snp.bottom).offset(17)
@@ -218,7 +211,7 @@ extension ProductDetailsViewController {
         }
     }
     private func setDescriptionLabel() {
-        view.addSubview(descriptionLabel)
+        addSubview(descriptionLabel)
         descriptionLabel.text = productInfo.description
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(12)
@@ -226,14 +219,14 @@ extension ProductDetailsViewController {
         }
     }
     private func setFullDescription() {
-        view.addSubview(fullDescription)
+        addSubview(fullDescription)
         fullDescription.snp.makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(14)
             make.horizontalEdges.equalToSuperview().inset(20)
         }
     }
     private func setFullDescriptionLabel() {
-        view.addSubview(fullDescriptionLabel)
+        addSubview(fullDescriptionLabel)
         fullDescriptionLabel.text = productInfo.fullDescruption
         fullDescriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(fullDescription.snp.bottom).offset(8)
@@ -242,7 +235,7 @@ extension ProductDetailsViewController {
     }
 }
 
-extension ProductDetailsViewController {
+extension ProductDetailView {
     private func configurePageControl() {
         let dotSize: CGFloat = 10.0
         let spacing: CGFloat = 10.0
@@ -254,7 +247,7 @@ extension ProductDetailsViewController {
             imageView.frame.size = CGSize(width: 20, height: dotSize)
             imageView.center = CGPoint(x: CGFloat(i) * (dotSize + spacing) + dotSize / 2, y: pageControl.center.y)
             
-            view.addSubview(imageView)
+            addSubview(imageView)
         }
     }
     
@@ -266,14 +259,14 @@ extension ProductDetailsViewController {
 }
 
 
-extension ProductDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ProductDetailView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return productImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-                
+        
         let productImageView = UIImageView()
         productImageView.contentMode = .scaleToFill
         productImageView.image = UIImage(named: productImages[indexPath.row])
@@ -300,41 +293,4 @@ extension ProductDetailsViewController: UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
-}
-
-extension ProductDetailsViewController: AlertDelegate {
-    func didAgreeButtonTapped() {
-        dismiss(animated: false)
-        productInfo.isFavorite = false
-        likeButton.setImage( UIImage(named: "Heart"), for: .normal)
-    }
-    
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func changeButtonTapped() {
-        let vc = AddProductViewController()
-        vc.contentView.product = self.productInfo
-        vc.contentView.isChangeVC = true
-        navigationController?.show(vc, sender: self)
-    }
-    
-    @objc private func likeButtonTapped() {
-        if !productInfo.isFavorite {
-            productInfo.isFavorite = true
-            likeButton.setImage( UIImage(named: "HeartFill"), for: .normal)
-        } else {
-            let vc = AlertViewController()
-            vc.imageName = "BigHeart"
-            vc.activeButtonTitle = "Удалить"
-            vc.messageText = "Вы действительно хотите \nудалить из понравившихся"
-            vc.cancelButtonTitle = "Отмена"
-            vc.delegate = self
-            vc.modalPresentationStyle = .overFullScreen
-            present(vc, animated: false)
-            productInfo.isFavorite = true
-        }
-    }
-    
 }
