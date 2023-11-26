@@ -15,13 +15,22 @@ protocol MyProductViewDelegate: AnyObject {
 class MyProductView: UIView {
     weak var delegate: InfoButtonDelegate?
     weak var homeDelegate: MyProductViewDelegate?
+    weak var productDelegate: ProductCardDelegate?
+
     var products: [ProductCard] = [ProductCard(title: "0"), ProductCard(title: "1"), ProductCard(title: "2"), ProductCard(title: "3"), ProductCard(title: "4"), ProductCard(title: "5"), ProductCard(title: "6")]
     var blurEffectView: CALayer?
+    
     
     let popUp: ModalView = {
         let view = ModalView()
         view.isHidden = true
         return view
+    }()
+    var successImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "Success")
+        imageView.isHidden = true
+        return imageView
     }()
     var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -99,6 +108,12 @@ extension MyProductView {
             make.top.equalToSuperview()
             make.horizontalEdges.equalToSuperview().inset(20 * UIScreen.main.bounds.width / 375)
         }
+        
+        successImageView.snp.makeConstraints { make in
+            make.height.equalTo(60 * UIScreen.main.bounds.height / 812)
+            make.top.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(20 * UIScreen.main.bounds.width / 375)
+        }
     }
     
     func setPopupView() {
@@ -149,8 +164,11 @@ extension MyProductView: UICollectionViewDelegate, UICollectionViewDataSource, U
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: ProductCardCollectionViewCell.identifier,
             for: indexPath) as! ProductCardCollectionViewCell
+        
         cell.infoButtonHidden = false
         cell.infoDelegate = delegate
+        cell.delegate = productDelegate
+        
         cell.configure(card: products[indexPath.row], index: indexPath.row)
         return cell
     }

@@ -13,7 +13,6 @@ protocol HomeViewDelegate: AnyObject {
 }
 
 class HomeView: UIView {
-    var isFavoriteTapped = false
     weak var delegate: HomeViewDelegate?
     weak var productDelegate: ProductCardDelegate?
     

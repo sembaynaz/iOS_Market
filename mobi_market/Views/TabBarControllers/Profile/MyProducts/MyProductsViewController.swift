@@ -28,6 +28,8 @@ class MyProductsViewController: UIViewController {
         view.addSubview(customView)
         customView.delegate = self
         customView.homeDelegate = self
+        customView.productDelegate = self
+        
         customView.snp.makeConstraints{ make in
             make.edges.equalToSuperview()
         }
@@ -38,6 +40,7 @@ class MyProductsViewController: UIViewController {
     
     func setupNavButtons() {
         navigationController?.navigationBar.addSubview(customView.deleteProductImage)
+        navigationController?.navigationBar.addSubview(customView.successImageView)
         customView.backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: customView.backButton)
     }
@@ -53,7 +56,15 @@ class MyProductsViewController: UIViewController {
 }
 
 
-extension MyProductsViewController: InfoButtonDelegate, MyProductViewDelegate {
+extension MyProductsViewController: InfoButtonDelegate, MyProductViewDelegate, ProductCardDelegate {
+    func didTapLikeButton(index: Int) {
+        self.customView.successImageView.isHidden = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.customView.successImageView.isHidden = true
+        }
+    }
+
     func didSelectProduct(_ product: ProductCard) {
         let vc = ProductDetailsViewController()
         vc.customView.productInfo = product
@@ -111,7 +122,6 @@ extension MyProductsViewController: AlertDelegate {
     
     @objc func changeButtonTapped() {
         let vc = ProductDetailsViewController()
-        print("info")
         vc.isMyProduct = true
         vc.customView.productInfo = customView.products[index]
         navigationController?.show(vc, sender: self)
