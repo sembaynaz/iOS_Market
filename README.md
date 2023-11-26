@@ -1,12 +1,12 @@
 # iOS_Market
 
 <img width = "123" height = "250" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/d37dea02-99cd-4173-ade8-4b7ffb6a43e9">
-<img width = "245" height = "500" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/db20714c-51f7-4ace-baa6-fbd933656971">
-<img width = "245" height = "500" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/be8a36fb-ca1e-477e-884b-4dfd9d431463">
-<img width = "245" height = "500" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/74ecf744-3d0b-4971-bc2a-d3a233b229a0">
-<img width = "245" height = "500" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/efa8ff46-a809-4929-9f93-b14887ef0de4">
-<img width = "245" height = "500" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/50837e3c-0f2f-4493-b9e0-6b95cb5e3747">
-<img width = "245" height = "500" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/76740c11-a027-4013-a456-7c189e394e6a">
+<img width = "123" height = "250" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/db20714c-51f7-4ace-baa6-fbd933656971">
+<img width = "123" height = "250" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/be8a36fb-ca1e-477e-884b-4dfd9d431463">
+<img width = "123" height = "250" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/74ecf744-3d0b-4971-bc2a-d3a233b229a0">
+<img width = "123" height = "250" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/efa8ff46-a809-4929-9f93-b14887ef0de4">
+<img width = "123" height = "250" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/50837e3c-0f2f-4493-b9e0-6b95cb5e3747">
+<img width = "123" height = "250" src = "https://github.com/sembaynaz/iOS_Market/assets/96616194/76740c11-a027-4013-a456-7c189e394e6a">
 
 ## Project Description
 
