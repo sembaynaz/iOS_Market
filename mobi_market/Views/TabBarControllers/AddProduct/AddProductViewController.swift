@@ -51,7 +51,6 @@ class AddProductViewController: UIViewController {
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.clear.cgColor
         textView.isScrollEnabled = false
-        textView.textContainer.heightTracksTextView = true
         return textView
     }()
     private let nameTextView: UITextView = {
@@ -64,7 +63,6 @@ class AddProductViewController: UIViewController {
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.clear.cgColor
         textView.isScrollEnabled = false
-        textView.textContainer.heightTracksTextView = true
         return textView
     }()
     private let descriptionTextView: UITextView = {
@@ -77,7 +75,6 @@ class AddProductViewController: UIViewController {
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.clear.cgColor
         textView.isScrollEnabled = false
-        textView.textContainer.heightTracksTextView = true
         return textView
     }()
     private let fullDescriptionTextView: UITextView = {
@@ -90,7 +87,6 @@ class AddProductViewController: UIViewController {
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.clear.cgColor
         textView.isScrollEnabled = false
-        textView.textContainer.heightTracksTextView = true
         return textView
     }()
     private var collectionView: UICollectionView = {
